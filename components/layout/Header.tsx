@@ -126,7 +126,7 @@ export default function Header() {
               action="/search"
               method="GET"
               role="search"
-              className="flex items-center gap-2 rounded-lg border bg-muted/50 p-1 transition-colors focus-within:border-primary"
+              className="flex items-center gap-2 rounded-lg border bg-muted/50 transition-colors focus-within:border-primary"
             >
               <label htmlFor="desktop-search" className="sr-only">
                 Search products
@@ -142,8 +142,7 @@ export default function Header() {
 
               <Button
                 type="submit"
-                size="icon"
-                className="size-9 shrink-0"
+                className="flex-1 rounded-l-none rounded-r-lg border-none"
                 aria-label="Search products"
               >
                 <Search className="size-4" />
@@ -152,7 +151,7 @@ export default function Header() {
 
             {/* Trending Keywords */}
             <div className="flex items-center gap-2 overflow-hidden text-xs whitespace-nowrap">
-              <span className="shrink-0 text-[10px] font-bold text-muted-foreground uppercase">
+              <span className="shrink-0 text-sm font-bold text-muted-foreground uppercase">
                 Trending:
               </span>
 
@@ -160,7 +159,7 @@ export default function Header() {
                 <Link
                   key={keyword}
                   href={`/search?q=${encodeURIComponent(keyword)}`}
-                  className="rounded bg-muted px-1.5 py-0.5 text-muted-foreground transition-colors hover:text-primary"
+                  className="rounded bg-surface-container px-1.5 py-0.5 font-semibold text-muted-foreground transition-colors hover:text-primary"
                 >
                   {keyword}
                 </Link>
@@ -172,95 +171,91 @@ export default function Header() {
           <div className="flex shrink-0 items-center gap-1 sm:gap-2">
             {/* Mobile Search */}
             <Button
-              render={<Link href="/search" />}
-              nativeButton={false}
+              asChild
               variant="ghost"
               size="icon"
               className="lg:hidden"
               aria-label="Search"
             >
-              <Search className="size-5" />
+              <Link href="/search">
+                <Search className="size-5" />
+              </Link>
             </Button>
 
             {/* PC Builder */}
             <Button
-              render={<Link href="/pc-builder" />}
-              nativeButton={false}
+              asChild
               variant="outline"
               className="hidden border-primary/30 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground xl:inline-flex"
             >
-              <Wrench className="size-4" />
-              PC Builder
+              <Link href="/pc-builder">
+                <Wrench className="size-4" />
+                PC Builder
+              </Link>
             </Button>
 
             {/* Compare */}
-            <Button
-              render={<Link href="/compare" aria-label="Compare products" />}
-              nativeButton={false}
-              variant="ghost"
-              size="icon"
-              className="relative"
-            >
-              <GitCompareArrows className="size-5" />
-              <Badge className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-[10px]">
-                2
-              </Badge>
+            <Button asChild variant="ghost" size="icon" className="relative">
+              <Link href="/compare" aria-label="Compare products">
+                <GitCompareArrows className="size-5" />
+                <Badge className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs">
+                  2
+                </Badge>
+              </Link>
             </Button>
 
             {/* Wishlist */}
-            <Button
-              render={<Link href="/wishlist" aria-label="Wishlist" />}
-              nativeButton={false}
-              variant="ghost"
-              size="icon"
-              className="relative"
-            >
-              <Heart className="size-5" />
-              <Badge
-                variant="destructive"
-                className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-[10px]"
-              >
-                4
-              </Badge>
+            <Button asChild variant="ghost" size="icon" className="relative">
+              <Link href="/wishlist" aria-label="Wishlist">
+                <Heart className="size-5" />
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs"
+                >
+                  4
+                </Badge>
+              </Link>
             </Button>
 
             {/* Cart */}
             <Button
-              render={<Link href="/cart" aria-label="Shopping cart" />}
-              nativeButton={false}
-              variant="secondary"
-              className="gap-2 px-2 sm:px-3"
+              asChild
+              className="gap-3 rounded-lg bg-surface-container hover:bg-surface-container-high sm:px-3"
             >
-              <span className="relative">
-                <ShoppingCart className="size-5 text-primary" />
+              <Link
+                href="/cart"
+                aria-label="Shopping cart"
+                className="flex items-center p-6"
+              >
+                <span className="relative">
+                  <ShoppingCart className="size-5 text-primary" />
 
-                <Badge className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full p-0 text-[10px]">
-                  3
-                </Badge>
-              </span>
-
-              <span className="hidden flex-col items-start sm:flex">
-                <span className="text-[10px] leading-none text-muted-foreground">
-                  Cart Value
+                  <Badge className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full p-0 text-xs">
+                    3
+                  </Badge>
                 </span>
 
-                <span className="text-xs font-bold">$1,429.00</span>
-              </span>
+                <span className="hidden flex-col items-start sm:flex">
+                  <span className="text-xs leading-none text-muted-foreground">
+                    Cart Value
+                  </span>
+
+                  <span className="text-sm font-bold text-black">
+                    $1,429.00
+                  </span>
+                </span>
+              </Link>
             </Button>
 
             {/* User */}
-            <Button
-              render={<Link href="/profile" aria-label="Account" />}
-              nativeButton={false}
-              variant="ghost"
-              size="icon"
-              aria-label="Account"
-            >
-              <Avatar className="size-8">
-                <AvatarFallback className="bg-primary text-primary-foreground">
-                  <UserRound className="size-4" />
-                </AvatarFallback>
-              </Avatar>
+            <Button asChild variant="ghost" size="icon" aria-label="Account">
+              <Link href="/profile">
+                <Avatar className="size-8">
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    <UserRound className="size-4" />
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
             </Button>
           </div>
         </div>
@@ -287,8 +282,7 @@ export default function Header() {
               {navigationItems.map((item) => (
                 <Button
                   key={item.href}
-                  render={<Link href={item.href} />}
-                  nativeButton={false}
+                  asChild
                   variant="ghost"
                   size="sm"
                   className={
@@ -297,7 +291,7 @@ export default function Header() {
                       : "text-muted-foreground"
                   }
                 >
-                  {item.label}
+                  <Link href={item.href}>{item.label}</Link>
                 </Button>
               ))}
             </nav>
@@ -305,15 +299,16 @@ export default function Header() {
 
           {/* Offers */}
           <Button
-            render={<Link href="/flash-deals" />}
-            nativeButton={false}
+            asChild
             variant="outline"
             size="sm"
             className="shrink-0 border-amber-500/30 bg-amber-500/10 font-bold text-amber-700 hover:bg-amber-500/20 dark:text-amber-400"
           >
-            <Flame className="size-4" />
-            <span className="hidden sm:inline">OFFERS & DEALS</span>
-            <span className="sm:hidden">OFFERS</span>
+            <Link href="/flash-deals">
+              <Flame className="size-4" />
+              <span className="hidden sm:inline">OFFERS & DEALS</span>
+              <span className="sm:hidden">OFFERS</span>
+            </Link>
           </Button>
         </div>
       </div>
