@@ -30,7 +30,7 @@ export default function BrandsMarquee() {
             Brands we carry
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            95+ global manufacturers, one distributor.
+            20+ global manufacturers, one distributor.
           </p>
         </div>
         <Link
@@ -48,7 +48,7 @@ export default function BrandsMarquee() {
           {duplicatedBrands.map((brand, index) => (
             <Card
               key={index}
-              className="group flex h-24 w-44 shrink-0 cursor-pointer items-center justify-center rounded-xl border-border bg-card p-4 shadow-sm transition-all hover:border-primary/50 hover:shadow-md"
+              className="group flex h-24 w-44 shrink-0 cursor-pointer items-center justify-center rounded-xl border-border bg-card p-0 shadow-sm transition-all hover:border-primary/50 hover:shadow-md"
             >
               <Image
                 src={brand.logo}

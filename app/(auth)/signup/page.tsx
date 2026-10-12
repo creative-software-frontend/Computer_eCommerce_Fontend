@@ -5,31 +5,40 @@ import Link from "next/link"
 import {
   FaUser,
   FaEnvelope,
-  FaLock,
-  FaEye,
-  FaEyeSlash,
   FaCheck,
   FaArrowLeft,
   FaTimes,
   FaShieldAlt,
   FaShippingFast,
   FaHeadset,
+  FaKey,
+  FaMobileAlt,
 } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 
 export default function RegisterPage() {
-  const [showPassword, setShowPassword] = useState(false)
+  const [registerMethod, setRegisterMethod] = useState<"mobile" | "email">(
+    "mobile"
+  )
+  const [step, setStep] = useState<"request" | "verify">("request")
   const [formData, setFormData] = useState({
     fullName: "",
-    email: "",
-    password: "",
+    identifier: "",
+    otp: "",
   })
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handleSendOtp = (e: React.SubmitEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
+    if (formData.fullName && formData.identifier) {
+      setStep("verify")
+    }
+  }
+
+  const handleRegister = (e: React.SubmitEvent) => {
+    e.preventDefault()
+    console.log("Registering with OTP:", formData)
   }
 
   return (
@@ -37,7 +46,6 @@ export default function RegisterPage() {
       <Card className="grid w-full max-w-4xl grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card py-0 shadow-2xl md:grid-cols-2">
         {/* Left Side: Brand Showcase & Value Pillars */}
         <div className="relative hidden flex-col justify-between border-r border-border bg-linear-to-br from-emerald-500/10 via-primary/5 to-background p-8 md:flex lg:p-10">
-          {/* Top Floating Badge */}
           <div className="flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md">
               <FaCheck className="text-lg" />
@@ -47,7 +55,6 @@ export default function RegisterPage() {
             </span>
           </div>
 
-          {/* Center Content */}
           <div className="my-auto py-6">
             <h2 className="font-heading text-3xl leading-tight font-extrabold tracking-tight text-foreground">
               Premium Shopping Experience
@@ -57,7 +64,6 @@ export default function RegisterPage() {
               hardware deals and lightning-fast checkout.
             </p>
 
-            {/* Feature List */}
             <div className="mt-8 space-y-4">
               <div className="flex items-center gap-3">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
@@ -86,16 +92,14 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Bottom Footer Note */}
           <div className="text-[11px] text-muted-foreground">
             © 2026 NexusTech Inc. All rights reserved.
           </div>
         </div>
 
-        {/* Right Side: Registration Form */}
+        {/* Right Side: Registration Form with OTP flow */}
         <div className="relative flex flex-col justify-between bg-background p-6 sm:p-8 lg:p-10">
-          {/* Top Nav Actions (Back & Close) */}
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between">
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground"
@@ -112,108 +116,167 @@ export default function RegisterPage() {
             </Link>
           </div>
 
-          {/* Form Header */}
           <div className="mb-6">
             <h3 className="font-heading text-2xl font-extrabold tracking-tight text-foreground">
               Create Account
             </h3>
             <p className="mt-1 text-xs text-muted-foreground">
-              Join our community today in less than a minute.
+              Join our community today with secure OTP verification.
             </p>
           </div>
 
-          {/* Form Fields */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Full Name */}
-            <div>
-              <label className="mb-1.5 block text-xs font-bold text-foreground">
-                Full Name
-              </label>
-              <div className="relative">
-                <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                  <FaUser className="text-xs" />
-                </span>
-                <Input
-                  type="text"
-                  placeholder="Enter your name"
-                  value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
-                  className="pl-9 text-xs"
-                  required
-                />
-              </div>
-            </div>
+          {/* Toggle Buttons: Mobile / Email */}
+          <div className="mb-6 grid grid-cols-2 gap-2 rounded-xl bg-muted/60 p-1">
+            <button
+              type="button"
+              onClick={() => {
+                setRegisterMethod("mobile")
+                setStep("request")
+              }}
+              className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold transition-all ${
+                registerMethod === "mobile"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <FaMobileAlt className="text-xs text-emerald-600" />
+              <span>Mobile</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setRegisterMethod("email")
+                setStep("request")
+              }}
+              className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold transition-all ${
+                registerMethod === "email"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <FaEnvelope className="text-xs text-emerald-600" />
+              <span>Email</span>
+            </button>
+          </div>
 
-            {/* Email Address */}
-            <div>
-              <label className="mb-1.5 block text-xs font-bold text-foreground">
-                Email Address
-              </label>
-              <div className="relative">
-                <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                  <FaEnvelope className="text-xs" />
-                </span>
-                <Input
-                  type="email"
-                  placeholder="name@example.com"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="pl-9 text-xs"
-                  required
-                />
+          {/* Step 1: Request OTP Form */}
+          {step === "request" ? (
+            <form onSubmit={handleSendOtp} className="space-y-4">
+              <div>
+                <label className="mb-1.5 block text-xs font-bold text-foreground">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                    <FaUser className="text-xs" />
+                  </span>
+                  <Input
+                    type="text"
+                    placeholder="Enter your name"
+                    value={formData.fullName}
+                    onChange={(e) =>
+                      setFormData({ ...formData, fullName: e.target.value })
+                    }
+                    className="pl-9 text-xs"
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Password */}
-            <div>
-              <label className="mb-1.5 block text-xs font-bold text-foreground">
-                Password
-              </label>
-              <div className="relative">
-                <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                  <FaLock className="text-xs" />
-                </span>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                  className="pr-9 pl-9 text-xs"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground transition-colors hover:text-foreground"
+              <div>
+                <label className="mb-1.5 block text-xs font-bold text-foreground">
+                  {registerMethod === "mobile"
+                    ? "Mobile Number"
+                    : "Email Address"}
+                </label>
+                <div className="relative">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                    {registerMethod === "mobile" ? (
+                      <FaMobileAlt className="text-xs" />
+                    ) : (
+                      <FaEnvelope className="text-xs" />
+                    )}
+                  </span>
+                  <Input
+                    type={registerMethod === "mobile" ? "tel" : "email"}
+                    placeholder={
+                      registerMethod === "mobile"
+                        ? "01XXXXXXXXX"
+                        : "name@example.com"
+                    }
+                    value={formData.identifier}
+                    onChange={(e) =>
+                      setFormData({ ...formData, identifier: e.target.value })
+                    }
+                    className="pl-9 text-xs"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  className="w-full bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-lg transition-all hover:bg-emerald-700"
                 >
-                  {showPassword ? (
-                    <FaEyeSlash className="text-xs" />
-                  ) : (
-                    <FaEye className="text-xs" />
-                  )}
-                </button>
+                  <span>Get OTP Code</span>
+                  <FaCheck className="ml-2 text-[10px]" />
+                </Button>
               </div>
-            </div>
+            </form>
+          ) : (
+            /* Step 2: Verify OTP Form */
+            <form onSubmit={handleRegister} className="space-y-4">
+              <div>
+                <div className="mb-1.5 flex items-center justify-between">
+                  <label className="block text-xs font-bold text-foreground">
+                    Enter 4-Digit OTP
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setStep("request")}
+                    className="text-[11px] font-semibold text-emerald-600 hover:underline"
+                  >
+                    Change Details
+                  </button>
+                </div>
+                <div className="relative">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                    <FaKey className="text-xs" />
+                  </span>
+                  <Input
+                    type="text"
+                    maxLength={4}
+                    placeholder="••••"
+                    value={formData.otp}
+                    onChange={(e) =>
+                      setFormData({ ...formData, otp: e.target.value })
+                    }
+                    className="pl-9 text-xs font-bold tracking-widest"
+                    required
+                  />
+                </div>
+                <p className="mt-1.5 text-[11px] text-muted-foreground">
+                  OTP sent to{" "}
+                  <span className="font-semibold text-foreground">
+                    {formData.identifier}
+                  </span>
+                </p>
+              </div>
 
-            {/* Submit Button */}
-            <div className="pt-2">
-              <Button
-                type="submit"
-                className="w-full bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-lg transition-all hover:bg-emerald-700"
-              >
-                <span>Create Account</span>
-                <FaCheck className="ml-2 text-[10px]" />
-              </Button>
-            </div>
-          </form>
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  className="w-full bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-lg transition-all hover:bg-emerald-700"
+                >
+                  <span>Verify & Create Account</span>
+                  <FaCheck className="ml-2 text-[10px]" />
+                </Button>
+              </div>
+            </form>
+          )}
 
-          {/* Footer Login Link & Terms */}
+          {/* Footer Links */}
           <div className="mt-8 space-y-4 text-center">
             <p className="text-xs text-muted-foreground">
               Already have an account?{" "}

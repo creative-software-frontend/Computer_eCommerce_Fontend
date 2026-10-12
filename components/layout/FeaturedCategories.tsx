@@ -64,7 +64,7 @@ export default function FeaturedCategories() {
           return (
             <Link key={index} href={category.href}>
               <Card className="group flex cursor-pointer flex-col items-center justify-center gap-0 rounded-xl border-border bg-card p-4 text-center shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
-                <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg text-foreground/80 transition-colors group-hover:text-primary">
+                <div className="mb-2 flex size-14 items-center justify-center rounded-full bg-surface-container p-3.5 text-foreground/80 transition-colors group-hover:text-primary">
                   <IconComponent className="size-8" />
                 </div>
                 <span className="line-clamp-1 text-xs font-bold text-foreground transition-colors group-hover:text-primary">

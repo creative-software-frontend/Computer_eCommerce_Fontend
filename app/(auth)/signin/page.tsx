@@ -37,7 +37,7 @@ export default function LoginCard() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4 sm:p-6">
-      <Card className="grid w-full max-w-4xl grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card shadow-2xl md:grid-cols-2">
+      <Card className="grid w-full max-w-4xl grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card py-0 shadow-2xl md:grid-cols-2">
         {/* Left Side: Brand Showcase & Value Pillars */}
         <div className="relative hidden flex-col justify-between border-r border-border bg-linear-to-br from-emerald-500/10 via-primary/5 to-background p-8 md:flex lg:p-10">
           <div className="flex items-center gap-2">
