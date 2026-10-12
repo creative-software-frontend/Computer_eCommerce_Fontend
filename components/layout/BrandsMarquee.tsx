@@ -1,24 +1,25 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { FaArrowRight } from "react-icons/fa"
 
 export default function BrandsMarquee() {
   const brands = [
-    { name: "UGREEN" },
-    { name: "PHILIPS" },
-    { name: "RAPOO" },
-    { name: "SEAGATE" },
-    { name: "ADATA" },
-    { name: "ASUS" },
-    { name: "Lenovo" },
-    { name: "DELL" },
-    { name: "STARLINK" },
-    { name: "HP" },
-    { name: "EPSON" },
-    { name: "MSI" },
+    { name: "UGREEN", logo: "/brands/ugreen.png" },
+    { name: "Philips", logo: "/brands/philips.png" },
+    { name: "Rapoo", logo: "/brands/rapoo.png" },
+    { name: "Seagate", logo: "/brands/seagate.png" },
+    { name: "ADATA", logo: "/brands/adata.png" },
+    { name: "ASUS", logo: "/brands/asus.png" },
+    { name: "Lenovo", logo: "/brands/lenovo.png" },
+    { name: "Dell", logo: "/brands/dell.png" },
+    { name: "Starlink", logo: "/brands/starlink.png" },
+    { name: "HP", logo: "/brands/hp.png" },
+    { name: "Epson", logo: "/brands/epson.png" },
+    { name: "MSI", logo: "/brands/msi.png" },
   ]
 
-  // Seamless infinite loop এর জন্য অ্যারে ডুপ্লিকেট করা হয়েছে
+  // Seamless infinite loop এর জন্য অ্যারে ডুপ্লিকেট করা হয়েছে
   const duplicatedBrands = [...brands, ...brands]
 
   return (
@@ -50,9 +51,13 @@ export default function BrandsMarquee() {
               key={index}
               className="group flex h-24 w-44 shrink-0 cursor-pointer items-center justify-center rounded-xl border-border bg-card p-4 shadow-sm transition-all hover:border-primary/50 hover:shadow-md"
             >
-              <span className="font-heading text-lg font-black tracking-wider text-foreground/80 uppercase transition-colors group-hover:text-primary">
-                {brand.name}
-              </span>
+              <Image
+                src={brand.logo}
+                alt={`${brand.name} logo`}
+                width={240}
+                height={120}
+                className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              />
             </Card>
           ))}
         </div>
