@@ -20,6 +20,7 @@ import { Badge } from "../ui/badge"
 import { Separator } from "../ui/separator"
 import { Avatar, AvatarFallback } from "../ui/avatar"
 import { FaRegHeart } from "react-icons/fa"
+import CategoriesSidebar from "./CategoriesSidebar"
 
 type NavigationItem = {
   label: string
@@ -266,13 +267,16 @@ export default function Header() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-2">
             {/* Categories */}
-            <Button
-              type="button"
-              className="shrink-0 rounded-t-lg rounded-b-none"
-            >
-              <FaBars className="size-5" />
-              <span className="hidden sm:inline">All Categories</span>
-            </Button>
+            <div className="group relative -mb-1.5 rounded-t-lg bg-primary">
+              <Button
+                type="button"
+                className="flex w-68 justify-start rounded-b-none"
+              >
+                <FaBars className="size-5" />
+                <span className="hidden sm:inline">All Categories</span>
+              </Button>
+              <CategoriesSidebar className="absolute hidden group-hover:block" />
+            </div>
 
             {/* Navigation Links */}
             <nav
