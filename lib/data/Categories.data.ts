@@ -20,6 +20,8 @@ export interface Category {
   name: string
   icon: IconType
   href: string
+  productCount?: number
+  image?: string
   children?: Category[]
 }
 
@@ -29,6 +31,8 @@ export const categories: Category[] = [
     name: "Laptops",
     icon: FaLaptop,
     href: "/category/laptops",
+    productCount: 412,
+    image: "/products/macbook-air-m5.webp",
     children: [
       {
         id: "laptops-gaming",
@@ -163,6 +167,7 @@ export const categories: Category[] = [
     name: "Desktop PC",
     icon: FaDesktop,
     href: "/category/desktop-pc",
+    productCount: 168,
     children: [
       {
         id: "desktop-pc-gaming",
@@ -245,6 +250,7 @@ export const categories: Category[] = [
     name: "Gaming Console",
     icon: FaGamepad,
     href: "/category/gaming-console",
+    productCount: 54,
     children: [
       {
         id: "gaming-console-playstation",
@@ -333,6 +339,8 @@ export const categories: Category[] = [
     name: "Computer Components",
     icon: FaMicrochip,
     href: "/category/computer-components",
+    productCount: 921,
+    image: "/products/zotac-rtx-5060-amp.webp",
     children: [
       {
         id: "computer-components-processors",
@@ -535,6 +543,8 @@ export const categories: Category[] = [
     name: "Storage Devices",
     icon: FaHdd,
     href: "/category/storage-devices",
+    productCount: 388,
+    image: "/products/silicon-power-us75-1tb.webp",
     children: [
       {
         id: "storage-devices-ssd",
@@ -643,7 +653,53 @@ export const categories: Category[] = [
     name: "Monitors",
     icon: FaTv,
     href: "/category/monitors",
+    productCount: 297,
+    image: "/products/gigabyte-gs27qa.webp",
     children: [
+      {
+        id: "monitors-brand",
+        name: "Shop by Brand",
+        icon: FaTv,
+        href: "/category/monitors/brand",
+        children: [
+          {
+            id: "monitors-brand-gigabyte",
+            name: "Gigabyte",
+            icon: FaTv,
+            href: "/category/monitors/brand/gigabyte",
+          },
+          {
+            id: "monitors-brand-dell",
+            name: "Dell",
+            icon: FaTv,
+            href: "/category/monitors/brand/dell",
+          },
+          {
+            id: "monitors-brand-hp",
+            name: "HP",
+            icon: FaTv,
+            href: "/category/monitors/brand/hp",
+          },
+          {
+            id: "monitors-brand-lenovo",
+            name: "Lenovo",
+            icon: FaTv,
+            href: "/category/monitors/brand/lenovo",
+          },
+          {
+            id: "monitors-brand-value-top",
+            name: "Value-Top",
+            icon: FaTv,
+            href: "/category/monitors/brand/value-top",
+          },
+          {
+            id: "monitors-brand-walton",
+            name: "Walton",
+            icon: FaTv,
+            href: "/category/monitors/brand/walton",
+          },
+        ],
+      },
       {
         id: "monitors-gaming",
         name: "Gaming Monitors",
@@ -731,6 +787,8 @@ export const categories: Category[] = [
     name: "Gaming Accessories",
     icon: FaHeadphones,
     href: "/category/gaming-accessories",
+    productCount: 356,
+    image: "/products/redragon-k522-rgb.webp",
     children: [
       {
         id: "gaming-accessories-headsets",
@@ -839,6 +897,7 @@ export const categories: Category[] = [
     name: "Computer Accessories",
     icon: FaKeyboard,
     href: "/category/computer-accessories",
+    productCount: 512,
     children: [
       {
         id: "computer-accessories-keyboards",
@@ -953,7 +1012,47 @@ export const categories: Category[] = [
     name: "Routers & Networking",
     icon: FaWifi,
     href: "/category/routers-networking",
+    productCount: 243,
+    image: "/products/tp-link-archer-c6.webp",
     children: [
+      {
+        id: "routers-networking-brand",
+        name: "Shop by Brand",
+        icon: FaWifi,
+        href: "/category/routers-networking/brand",
+        children: [
+          {
+            id: "routers-networking-brand-tp-link",
+            name: "TP-Link",
+            icon: FaWifi,
+            href: "/category/routers-networking/brand/tp-link",
+          },
+          {
+            id: "routers-networking-brand-asus",
+            name: "ASUS",
+            icon: FaWifi,
+            href: "/category/routers-networking/brand/asus",
+          },
+          {
+            id: "routers-networking-brand-d-link",
+            name: "D-Link",
+            icon: FaWifi,
+            href: "/category/routers-networking/brand/d-link",
+          },
+          {
+            id: "routers-networking-brand-tenda",
+            name: "Tenda",
+            icon: FaWifi,
+            href: "/category/routers-networking/brand/tenda",
+          },
+          {
+            id: "routers-networking-brand-cudy",
+            name: "Cudy",
+            icon: FaWifi,
+            href: "/category/routers-networking/brand/cudy",
+          },
+        ],
+      },
       {
         id: "routers-networking-routers",
         name: "Routers",
@@ -1061,6 +1160,7 @@ export const categories: Category[] = [
     name: "Security & Surveillance",
     icon: FaShieldAlt,
     href: "/category/security-surveillance",
+    productCount: 176,
     children: [
       {
         id: "security-surveillance-ip-cameras",
@@ -1149,6 +1249,7 @@ export const categories: Category[] = [
     name: "Projectors",
     icon: FaVideo,
     href: "/category/projectors",
+    productCount: 68,
     children: [
       {
         id: "projectors-home",
@@ -1237,6 +1338,7 @@ export const categories: Category[] = [
     name: "Embedded Solution",
     icon: FaFileAlt,
     href: "/category/embedded-solution",
+    productCount: 42,
     children: [
       {
         id: "embedded-solution-single-board-computers",
@@ -1325,6 +1427,7 @@ export const categories: Category[] = [
     name: "Batteries & Reusable Energy",
     icon: FaBatteryFull,
     href: "/category/batteries-energy",
+    productCount: 87,
     children: [
       {
         id: "batteries-energy-laptop-batteries",

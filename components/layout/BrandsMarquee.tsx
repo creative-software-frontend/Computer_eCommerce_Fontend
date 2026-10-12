@@ -5,7 +5,6 @@ import { FaArrowRight } from "react-icons/fa"
 
 export default function BrandsMarquee() {
   const brands = [
-    { name: "UGREEN", logo: "/brands/ugreen.png" },
     { name: "Philips", logo: "/brands/philips.png" },
     { name: "Rapoo", logo: "/brands/rapoo.png" },
     { name: "Seagate", logo: "/brands/seagate.png" },
