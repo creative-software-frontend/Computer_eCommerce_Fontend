@@ -1,40 +1,40 @@
+import { BiCheckShield } from "react-icons/bi"
 import {
-  Award,
-  CreditCard,
-  Headphones,
-  ShieldCheck,
-  Store,
-  Truck,
-} from "lucide-react"
+  FaAward,
+  FaCreditCard,
+  FaHeadphones,
+  FaStore,
+  FaTruck,
+} from "react-icons/fa"
 
 export const pillars = [
   {
-    icon: Truck,
+    icon: FaTruck,
     title: "Fast Delivery",
     subtitle: "Nationwide express",
   },
   {
-    icon: ShieldCheck,
+    icon: BiCheckShield,
     title: "100% Genuine",
     subtitle: "Official brand seal",
   },
   {
-    icon: CreditCard,
+    icon: FaCreditCard,
     title: "0% EMI Scheme",
     subtitle: "Up to 36 months",
   },
   {
-    icon: Store,
+    icon: FaStore,
     title: "In-Store Pickup",
     subtitle: "Ready in 30 mins",
   },
   {
-    icon: Headphones,
+    icon: FaHeadphones,
     title: "Tech Guru Support",
     subtitle: "24/7 engineer hotline",
   },
   {
-    icon: Award,
+    icon: FaAward,
     title: "Authorized Hub",
     subtitle: "Direct partner tier",
   },

@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
 import { flashProducts } from "@/lib/data/flashProducts"
+import { FaArrowRight, FaFire } from "react-icons/fa"
+import { BiShoppingBag } from "react-icons/bi"
 
 export default function FlashDeals() {
   // Live Countdown Timer State (Strict allocation quota style)
@@ -47,16 +49,14 @@ export default function FlashDeals() {
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100 text-amber-600 dark:bg-amber-950/50">
-                <span className="material-symbols-outlined text-[20px]">
-                  local_fire_department
-                </span>
+                <FaFire />
               </div>
               <div>
                 <h2 className="font-heading text-xl leading-none font-extrabold tracking-tight text-foreground">
                   FLASH DEALS OF THE DAY
                 </h2>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  Strict allocation quota · First come first served[cite: 4]
+                  Strict allocation quota · First come first served
                 </p>
               </div>
             </div>
@@ -98,9 +98,7 @@ export default function FlashDeals() {
             className="group inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
           >
             <span>View All 28 Flash Deals</span>
-            <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1">
-              arrow_forward
-            </span>
+            <FaArrowRight size={16} />
           </Link>
         </div>
       </Card>
@@ -112,12 +110,12 @@ export default function FlashDeals() {
             key={product.id}
             className="group relative flex flex-col justify-between rounded-xl border-border bg-card p-4 shadow-sm transition-all duration-200 hover:shadow-md"
           >
-            <div>
+            <div className="flex grow flex-col">
               <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-muted p-2">
                 <span className="absolute top-2 left-2 z-10 rounded bg-tertiary-fixed px-2 py-0.5 text-[11px] font-extrabold text-on-tertiary-fixed uppercase">
                   {product.discount}
                 </span>
-                <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                {/* <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                   <Button
                     size="icon"
                     variant="secondary"
@@ -138,7 +136,7 @@ export default function FlashDeals() {
                       compare_arrows
                     </span>
                   </Button>
-                </div>
+                </div> */}
                 <Image
                   width={600}
                   height={600}
@@ -177,7 +175,7 @@ export default function FlashDeals() {
                 {product.specs.map((spec, idx) => (
                   <span
                     key={idx}
-                    className="rounded bg-muted px-1.5 py-0.5 text-[11px] text-muted-foreground"
+                    className="rounded bg-muted px-1.5 py-0.5 text-[11px] text-muted-foreground outline"
                   >
                     {spec}
                   </span>
@@ -185,48 +183,48 @@ export default function FlashDeals() {
               </div>
 
               {/* Stock Progress Indicator */}
-              <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-muted">
-                <div
-                  className="h-full rounded-full bg-tertiary"
-                  style={{ width: product.claimedPercent }}
-                ></div>
-              </div>
-              <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
-                <span>
-                  Sold:{" "}
-                  <strong className="text-foreground">
-                    {product.soldCount}
-                  </strong>
-                </span>
-                <span className="font-bold text-tertiary">
-                  {product.claimedPercent} Claimed
-                </span>
-              </div>
+              <div className="mt-auto">
+                <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full rounded-full bg-tertiary"
+                    style={{ width: product.claimedPercent }}
+                  ></div>
+                </div>
+                <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
+                  <span>
+                    Sold:{" "}
+                    <strong className="text-foreground">
+                      {product.soldCount}
+                    </strong>
+                  </span>
+                  <span className="font-bold text-tertiary">
+                    {product.claimedPercent} Claimed
+                  </span>
+                </div>
 
-              <div className="mt-4 flex items-baseline gap-2 pt-2">
-                <span className="text-lg font-extrabold text-foreground">
-                  {product.price}
-                </span>
-                <span className="text-xs text-muted-foreground line-through">
-                  {product.oldPrice}
-                </span>
-                <span className="ml-auto text-[11px] font-semibold text-emerald-600">
-                  {product.save}
-                </span>
+                <div className="mt-4 flex items-baseline gap-2 pt-2">
+                  <span className="text-lg font-extrabold text-foreground">
+                    {product.price}
+                  </span>
+                  <span className="text-xs text-muted-foreground line-through">
+                    {product.oldPrice}
+                  </span>
+                  <span className="ml-auto text-[11px] font-semibold text-emerald-600">
+                    {product.save}
+                  </span>
+                </div>
               </div>
             </div>
 
             <div className="mt-4 grid grid-cols-2 gap-2">
               <Button
-                variant="secondary"
-                className="w-full bg-muted py-2 text-xs font-bold text-primary hover:bg-muted/80"
+                // variant="secondary"
+                className="w-full cursor-pointer bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high"
               >
-                <span className="material-symbols-outlined mr-1 text-[16px]">
-                  shopping_bag
-                </span>
+                <BiShoppingBag />
                 <span>Add</span>
               </Button>
-              <Button className="w-full bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90">
+              <Button className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90">
                 Buy Now
               </Button>
             </div>

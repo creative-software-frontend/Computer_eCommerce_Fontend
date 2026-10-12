@@ -1,25 +1,25 @@
 import Link from "next/link"
 import {
-  Banknote,
-  Clock,
-  Phone,
-  Store,
-  Truck,
-  Search,
-  Menu,
-  Wrench,
-  GitCompareArrows,
-  Heart,
-  ShoppingCart,
-  UserRound,
-  Flame,
-} from "lucide-react"
+  FaBangladeshiTakaSign,
+  FaClock,
+  FaPhone,
+  FaStore,
+  FaTruck,
+  FaMagnifyingGlass,
+  FaBars,
+  FaScrewdriverWrench,
+  FaArrowRightArrowLeft,
+  FaCartShopping,
+  FaUser,
+  FaFireFlameCurved,
+} from "react-icons/fa6"
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Badge } from "../ui/badge"
 import { Separator } from "../ui/separator"
 import { Avatar, AvatarFallback } from "../ui/avatar"
+import { FaRegHeart } from "react-icons/fa"
 
 type NavigationItem = {
   label: string
@@ -55,14 +55,14 @@ export default function Header() {
               className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
               aria-label="Call hotline 16580"
             >
-              <Phone className="size-4" />
+              <FaPhone className="size-4" />
               <span>Hotline:</span>
               <strong>16580</strong>
               <span className="hidden sm:inline">/ 09678-002003</span>
             </a>
 
             <span className="hidden items-center gap-1.5 opacity-75 md:flex">
-              <Clock className="size-4" />
+              <FaClock className="size-4" />
               Sat - Thu: 9:30 AM - 8:00 PM
             </span>
           </div>
@@ -72,7 +72,7 @@ export default function Header() {
               href="/stores"
               className="flex items-center gap-1 transition-opacity hover:opacity-80"
             >
-              <Store className="size-4" />
+              <FaStore className="size-4" />
               Store Locator
             </Link>
 
@@ -85,7 +85,7 @@ export default function Header() {
               href="/track-order"
               className="flex items-center gap-1 transition-opacity hover:opacity-80"
             >
-              <Truck className="size-4" />
+              <FaTruck className="size-4" />
               Track Order
             </Link>
 
@@ -95,7 +95,7 @@ export default function Header() {
             />
 
             <span className="flex items-center gap-1">
-              <Banknote className="size-4" />
+              <FaBangladeshiTakaSign className="size-4" />
               BDT (৳) / EN
             </span>
           </div>
@@ -121,7 +121,7 @@ export default function Header() {
           </Link>
 
           {/* Search */}
-          <div className="mx-2 hidden max-w-2xl flex-1 flex-col gap-1 lg:flex">
+          <div className="mx-2 mt-3 hidden max-w-2xl flex-1 flex-col gap-1 lg:flex">
             <form
               action="/search"
               method="GET"
@@ -145,7 +145,7 @@ export default function Header() {
                 className="flex-1 rounded-l-none rounded-r-lg border-none"
                 aria-label="Search products"
               >
-                <Search className="size-4" />
+                <FaMagnifyingGlass className="size-4" />
               </Button>
             </form>
 
@@ -168,7 +168,7 @@ export default function Header() {
           </div>
 
           {/* Header Actions */}
-          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+          <div className="mt-2 flex shrink-0 items-center gap-1 self-start sm:gap-2">
             {/* Mobile Search */}
             <Button
               asChild
@@ -178,7 +178,7 @@ export default function Header() {
               aria-label="Search"
             >
               <Link href="/search">
-                <Search className="size-5" />
+                <FaMagnifyingGlass className="size-5" />
               </Link>
             </Button>
 
@@ -189,7 +189,7 @@ export default function Header() {
               className="hidden border-primary/30 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground xl:inline-flex"
             >
               <Link href="/pc-builder">
-                <Wrench className="size-4" />
+                <FaScrewdriverWrench className="size-4" />
                 PC Builder
               </Link>
             </Button>
@@ -197,7 +197,7 @@ export default function Header() {
             {/* Compare */}
             <Button asChild variant="ghost" size="icon" className="relative">
               <Link href="/compare" aria-label="Compare products">
-                <GitCompareArrows className="size-5" />
+                <FaArrowRightArrowLeft className="size-5" />
                 <Badge className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs">
                   2
                 </Badge>
@@ -207,7 +207,7 @@ export default function Header() {
             {/* Wishlist */}
             <Button asChild variant="ghost" size="icon" className="relative">
               <Link href="/wishlist" aria-label="Wishlist">
-                <Heart className="size-5" />
+                <FaRegHeart className="size-5" />
                 <Badge
                   variant="destructive"
                   className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs"
@@ -228,7 +228,7 @@ export default function Header() {
                 className="flex items-center p-6"
               >
                 <span className="relative">
-                  <ShoppingCart className="size-5 text-primary" />
+                  <FaCartShopping className="size-5 text-primary" />
 
                   <Badge className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full p-0 text-xs">
                     3
@@ -252,7 +252,7 @@ export default function Header() {
               <Link href="/profile">
                 <Avatar className="size-8">
                   <AvatarFallback className="bg-primary text-primary-foreground">
-                    <UserRound className="size-4" />
+                    <FaUser className="size-4" />
                   </AvatarFallback>
                 </Avatar>
               </Link>
@@ -270,7 +270,7 @@ export default function Header() {
               type="button"
               className="shrink-0 rounded-t-lg rounded-b-none"
             >
-              <Menu className="size-5" />
+              <FaBars className="size-5" />
               <span className="hidden sm:inline">All Categories</span>
             </Button>
 
@@ -305,7 +305,7 @@ export default function Header() {
             className="shrink-0 border-amber-500/30 bg-amber-500/10 font-bold text-amber-700 hover:bg-amber-500/20 dark:text-amber-400"
           >
             <Link href="/flash-deals">
-              <Flame className="size-4" />
+              <FaFireFlameCurved className="size-4" />
               <span className="hidden sm:inline">OFFERS & DEALS</span>
               <span className="sm:hidden">OFFERS</span>
             </Link>

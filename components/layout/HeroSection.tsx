@@ -3,16 +3,13 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import heroImage from "@/public/images/heroImage.jpg"
 import {
-  ArrowRight,
-  CreditCard,
-  Flame,
-  ShieldCheck,
-  SlidersHorizontal,
-  Van,
-  Verified,
-  Wrench,
-  Zap,
-} from "lucide-react"
+  FaArrowRight,
+  FaFireFlameCurved,
+  FaSliders,
+  FaCircleCheck,
+  FaScrewdriverWrench,
+  FaBolt,
+} from "react-icons/fa6"
 
 export default function HeroSection() {
   return (
@@ -38,7 +35,7 @@ export default function HeroSection() {
               {/* <span className="material-symbols-outlined text-sm text-tertiary">
                 bolt
               </span> */}
-              <Zap size={14} />
+              <FaBolt size={14} />
               Flagship Series 2025
             </span>
             <span className="hidden items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-white backdrop-blur-md sm:inline-flex">
@@ -79,7 +76,7 @@ export default function HeroSection() {
               >
                 <Link href="#">
                   <span>Explore Builds</span>
-                  <ArrowRight />
+                  <FaArrowRight />
                 </Link>
               </Button>
               <Button
@@ -88,7 +85,7 @@ export default function HeroSection() {
                 className="border-white/20 bg-white/10 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/20 hover:text-white"
               >
                 <Link href="#">
-                  <SlidersHorizontal />
+                  <FaSliders />
                   <span>Configure Now</span>
                 </Link>
               </Button>
@@ -127,7 +124,7 @@ export default function HeroSection() {
             <div>
               <div className="mb-2 flex items-center justify-between">
                 <span className="inline-flex items-center gap-1 rounded bg-error-container px-2 py-0.5 text-[11px] font-semibold text-on-error-container uppercase">
-                  <Flame size={12} />
+                  <FaFireFlameCurved size={12} />
                   Only 4 Left in Stock
                 </span>
                 <span className="text-xs font-bold text-primary">
@@ -157,7 +154,7 @@ export default function HeroSection() {
               >
                 <Link href="#">
                   <span>Grab Deal</span>
-                  <ArrowRight />
+                  <FaArrowRight />
                 </Link>
               </Button>
             </div>
@@ -168,7 +165,7 @@ export default function HeroSection() {
             <div className="pointer-events-none absolute top-0 right-0 h-32 w-32 rounded-bl-full bg-white/10"></div>
             <div>
               <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold text-white uppercase">
-                <Wrench size={12} />
+                <FaScrewdriverWrench size={12} />
                 Signature Service
               </div>
               <h3 className="font-heading text-lg leading-snug font-bold text-white">
@@ -181,7 +178,7 @@ export default function HeroSection() {
             </div>
             <div className="mt-4 flex items-center justify-between border-t border-white/20 pt-3">
               <div className="flex items-center gap-2">
-                <Verified />
+                <FaCircleCheck />
                 <span className="text-xs font-semibold text-white">
                   100% Tested Rig Delivery
                 </span>
