@@ -1,17 +1,83 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { FaFilter, FaTimes } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
-import { products } from "@/lib/data/products.data"
+import { products as productData } from "@/lib/data/products.data"
 import ProductCard from "@/components/ui/ProductCard"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+
+const itemsPerPage = 12
 
 export default function ProductListingPage() {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const { replace } = useRouter()
+  const [visibleCount, setVisibleCount] = useState(3)
+  const observerTarget = useRef<HTMLDivElement | null>(null)
+  const params = new URLSearchParams(searchParams)
+
+  const totalPages = Math.max(1, Math.ceil(productData.length / itemsPerPage))
+  const rawPage = Number(searchParams.get("page") ?? "1")
+  const currentPage =
+    Number.isNaN(rawPage) || rawPage < 1 ? 1 : Math.min(rawPage, totalPages)
+
+  const products = productData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+
+  const visibleProducts = products.slice(0, visibleCount)
+  useEffect(() => {
+    const target = observerTarget.current
+
+    if (!target || visibleCount >= products.length) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount((count) => Math.min(count + 3, products.length))
+        }
+      },
+      {
+        root: null,
+        rootMargin: "100px",
+        threshold: 0,
+      }
+    )
+
+    observer.observe(target)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [visibleCount, products.length])
+
+  const handleProductPage = (pageNumber: number) => {
+    const nextPage = Math.min(Math.max(pageNumber, 1), totalPages)
+    params.set("page", nextPage.toString())
+    const query = params.toString()
+    replace(query ? `${pathname}?${query}` : pathname)
+  }
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) handleProductPage(currentPage - 1)
+  }
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) handleProductPage(currentPage + 1)
+  }
 
   return (
-    <div className="min-h-screen bg-background px-4 sm:px-6 lg:px-8">
+    <div
+      ref={observerTarget}
+      aria-hidden="true"
+      className="min-h-screen bg-background px-4 sm:px-6 lg:px-8"
+    >
       <div className="mx-auto max-w-7xl">
         {/* Breadcrumb & Page Title */}
         <div className="mb-6">
@@ -144,8 +210,14 @@ export default function ProductListingPage() {
                   <span>Filters</span>
                 </Button>
                 <p className="text-xs text-muted-foreground">
-                  Showing <span className="font-bold text-foreground">6 </span>
-                  of <span className="font-bold text-foreground">42 </span>
+                  Showing{" "}
+                  <span className="font-bold text-foreground">
+                    {products.length}{" "}
+                  </span>
+                  of{" "}
+                  <span className="font-bold text-foreground">
+                    {productData.length}{" "}
+                  </span>
                   products
                 </p>
               </div>
@@ -172,29 +244,40 @@ export default function ProductListingPage() {
             <div
               className={"grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3"}
             >
-              {products.map((product) => (
+              {visibleProducts.map((product) => (
                 <ProductCard product={product} key={product.id} />
               ))}
             </div>
 
             {/* Pagination */}
             <div className="flex items-center justify-center gap-2 pt-6">
-              <Button variant="outline" size="sm" className="text-xs" disabled>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs hover:bg-primary/80 hover:text-white"
+                disabled={currentPage === 1}
+                onClick={handlePreviousPage}
+              >
                 Previous
               </Button>
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleProductPage(i + 1)}
+                  className={`text-xs hover:bg-primary/80 hover:text-white ${currentPage === i + 1 ? "bg-primary text-primary-foreground" : ""}`}
+                  key={i}
+                >
+                  {i + 1}
+                </Button>
+              ))}
               <Button
-                size="icon"
-                className="bg-primary text-xs text-primary-foreground"
+                variant="outline"
+                size="sm"
+                className="text-xs hover:bg-primary/80 hover:text-white"
+                disabled={currentPage === totalPages}
+                onClick={handleNextPage}
               >
-                1
-              </Button>
-              <Button variant="outline" size="sm" className="text-xs">
-                2
-              </Button>
-              <Button variant="outline" size="sm" className="text-xs">
-                3
-              </Button>
-              <Button variant="outline" size="sm" className="text-xs">
                 Next
               </Button>
             </div>
