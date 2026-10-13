@@ -1,10 +1,11 @@
-export type ProductSection = "bestSellers" | "newArrivals" | "topDeals" | "featured"
+export type ProductSection =
+  "bestSellers" | "newArrivals" | "topDeals" | "featured"
 
 export type StockStatus = "inStock" | "outOfStock" | "upComing" | "preOrder"
 
 export interface Product {
   id: number
-  slug: string
+  slug?: string
   brand: string
   title: string
   category: string
@@ -18,6 +19,10 @@ export interface Product {
   badge?: string
   sections: ProductSection[]
   image: string
+  claimedPercent: number
+  sold?: number
+  total?: number
+  save?: number
 }
 
 export interface Brand {

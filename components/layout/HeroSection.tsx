@@ -13,7 +13,7 @@ import {
 
 export default function HeroSection() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 pt-44 sm:px-6 lg:px-8">
+    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-12">
         {/* Left Main Hero Banner (Col-span 8) */}
         <div className="group relative flex min-h-115 flex-col justify-between overflow-hidden rounded-xl bg-inverse-surface p-6 text-inverse-on-surface shadow-md sm:p-8 lg:col-span-8">

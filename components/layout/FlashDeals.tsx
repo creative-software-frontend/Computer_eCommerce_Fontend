@@ -5,8 +5,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
-import { flashProducts } from "@/lib/data/flashProducts"
-import { FaArrowRight, FaFire } from "react-icons/fa"
+import { flashProducts } from "@/lib/data/flashProducts.data"
+import { FaArrowRight, FaFire, FaStar } from "react-icons/fa"
 import { BiShoppingBag } from "react-icons/bi"
 
 export default function FlashDeals() {
@@ -152,12 +152,7 @@ export default function FlashDeals() {
                 </span>
                 <span className="text-muted-foreground">·</span>
                 <div className="flex items-center text-xs text-amber-500">
-                  <span
-                    className="material-symbols-outlined text-[14px]"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    star
-                  </span>
+                  <FaStar />
                   <span className="ml-0.5 font-bold text-foreground">
                     {product.rating}
                   </span>

@@ -23,6 +23,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Flagship",
     sections: ["bestSellers", "featured", "newArrivals"],
+    claimedPercent: 62,
+    sold: 1240,
+    total: 2000,
     image: "/products/macbook-air-m5.webp",
   },
   {
@@ -44,6 +47,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "RTX 5090",
     sections: ["newArrivals", "featured", "bestSellers"],
+    claimedPercent: 41,
+    sold: 370,
+    total: 902,
     image: "/products/msi-raider-18-hx.webp",
   },
   {
@@ -63,6 +69,9 @@ const rawProducts: RawProduct[] = [
     reviews: 64,
     stock: "inStock",
     sections: ["bestSellers", "topDeals"],
+    claimedPercent: 55,
+    sold: 640,
+    total: 1164,
     image: "/products/acer-aspire-3-a325.webp",
   },
   {
@@ -82,6 +91,9 @@ const rawProducts: RawProduct[] = [
     reviews: 91,
     stock: "inStock",
     sections: ["bestSellers", "featured"],
+    claimedPercent: 58,
+    sold: 910,
+    total: 1569,
     image: "/products/lenovo-ideapad-1.webp",
   },
   {
@@ -103,6 +115,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Deal",
     sections: ["topDeals", "featured"],
+    claimedPercent: 49,
+    sold: 520,
+    total: 1061,
     image: "/products/dell-pro-15.webp",
   },
   {
@@ -122,6 +137,9 @@ const rawProducts: RawProduct[] = [
     reviews: 73,
     stock: "inStock",
     sections: ["newArrivals", "featured"],
+    claimedPercent: 57,
+    sold: 730,
+    total: 1281,
     image: "/products/hp-15-fc0623au.webp",
   },
   {
@@ -143,6 +161,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Best Value",
     sections: ["topDeals", "bestSellers"],
+    claimedPercent: 63,
+    sold: 480,
+    total: 762,
     image: "/products/walton-passion-bx710u.webp",
   },
   {
@@ -162,6 +183,9 @@ const rawProducts: RawProduct[] = [
     reviews: 59,
     stock: "inStock",
     sections: ["featured", "newArrivals"],
+    claimedPercent: 52,
+    sold: 590,
+    total: 1135,
     image: "/products/acer-aspire-lite-al15.webp",
   },
 
@@ -185,6 +209,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Popular",
     sections: ["bestSellers", "topDeals", "featured"],
+    claimedPercent: 86,
+    sold: 2140,
+    total: 2488,
     image: "/products/intel-i5-14400f.webp",
   },
   {
@@ -205,6 +232,9 @@ const rawProducts: RawProduct[] = [
     reviews: 143,
     stock: "inStock",
     sections: ["bestSellers", "featured"],
+    claimedPercent: 84,
+    sold: 1430,
+    total: 1702,
     image: "/products/intel-i5-14600k.webp",
   },
   {
@@ -226,6 +256,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Enthusiast",
     sections: ["bestSellers", "topDeals", "featured"],
+    claimedPercent: 76,
+    sold: 1180,
+    total: 1553,
     image: "/products/intel-i7-14700k.webp",
   },
   {
@@ -247,6 +280,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Flagship",
     sections: ["newArrivals", "featured"],
+    claimedPercent: 68,
+    sold: 890,
+    total: 1309,
     image: "/products/intel-i9-14900k.webp",
   },
   {
@@ -267,6 +303,9 @@ const rawProducts: RawProduct[] = [
     reviews: 176,
     stock: "inStock",
     sections: ["topDeals", "bestSellers"],
+    claimedPercent: 80,
+    sold: 1760,
+    total: 2200,
     image: "/products/intel-i3-14100.webp",
   },
 
@@ -290,6 +329,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "RTX 50 Series",
     sections: ["topDeals", "newArrivals", "featured", "bestSellers"],
+    claimedPercent: 68,
+    sold: 660,
+    total: 971,
     image: "/products/zotac-rtx-5060-amp.webp",
   },
   {
@@ -310,6 +352,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "New",
     sections: ["newArrivals", "featured"],
+    claimedPercent: 44,
+    sold: 410,
+    total: 932,
     image: "/products/zotac-rtx-5070-twin-edge.webp",
   },
   {
@@ -330,6 +375,9 @@ const rawProducts: RawProduct[] = [
     reviews: 154,
     stock: "inStock",
     sections: ["topDeals", "bestSellers"],
+    claimedPercent: 79,
+    sold: 1540,
+    total: 1949,
     image: "/products/zotac-rtx-3050-twin-edge.webp",
   },
 
@@ -352,6 +400,9 @@ const rawProducts: RawProduct[] = [
     reviews: 82,
     stock: "inStock",
     sections: ["bestSellers", "topDeals"],
+    claimedPercent: 61,
+    sold: 820,
+    total: 1344,
     image: "/products/gigabyte-gs27qa.webp",
   },
   {
@@ -372,6 +423,9 @@ const rawProducts: RawProduct[] = [
     reviews: 57,
     stock: "inStock",
     sections: ["newArrivals", "featured"],
+    claimedPercent: 53,
+    sold: 570,
+    total: 1075,
     image: "/products/gigabyte-m27q2-qd-ice.webp",
   },
   {
@@ -393,6 +447,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "OLED",
     sections: ["newArrivals", "topDeals", "featured"],
+    claimedPercent: 60,
+    sold: 330,
+    total: 550,
     image: "/products/gigabyte-mo27q28g-oled.webp",
   },
   {
@@ -413,6 +470,9 @@ const rawProducts: RawProduct[] = [
     reviews: 121,
     stock: "inStock",
     sections: ["topDeals", "bestSellers"],
+    claimedPercent: 74,
+    sold: 1210,
+    total: 1635,
     image: "/products/value-top-x22ifr100.webp",
   },
 
@@ -434,6 +494,9 @@ const rawProducts: RawProduct[] = [
     reviews: 96,
     stock: "inStock",
     sections: ["bestSellers"],
+    claimedPercent: 64,
+    sold: 960,
+    total: 1500,
     image: "/products/msi-forge-gk100.webp",
   },
   {
@@ -454,6 +517,9 @@ const rawProducts: RawProduct[] = [
     reviews: 203,
     stock: "inStock",
     sections: ["bestSellers", "topDeals"],
+    claimedPercent: 82,
+    sold: 2030,
+    total: 2476,
     image: "/products/redragon-k522-rgb.webp",
   },
   {
@@ -474,6 +540,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Mechanical",
     sections: ["newArrivals", "featured"],
+    claimedPercent: 78,
+    sold: 740,
+    total: 949,
     image: "/products/thunderobot-kg3089r.webp",
   },
   {
@@ -493,6 +562,9 @@ const rawProducts: RawProduct[] = [
     reviews: 68,
     stock: "inStock",
     sections: ["newArrivals", "featured"],
+    claimedPercent: 57,
+    sold: 680,
+    total: 1193,
     image: "/products/aula-s500.webp",
   },
 
@@ -514,6 +586,9 @@ const rawProducts: RawProduct[] = [
     reviews: 62,
     stock: "inStock",
     sections: ["newArrivals", "featured"],
+    claimedPercent: 51,
+    sold: 620,
+    total: 1216,
     image: "/products/silicon-power-xs70-1tb.webp",
   },
   {
@@ -534,6 +609,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Popular",
     sections: ["bestSellers", "featured"],
+    claimedPercent: 70,
+    sold: 1080,
+    total: 1543,
     image: "/products/silicon-power-us75-1tb.webp",
   },
   {
@@ -553,6 +631,9 @@ const rawProducts: RawProduct[] = [
     reviews: 87,
     stock: "inStock",
     sections: ["bestSellers", "topDeals"],
+    claimedPercent: 66,
+    sold: 870,
+    total: 1318,
     image: "/products/silicon-power-ud90-500gb.webp",
   },
   {
@@ -573,6 +654,9 @@ const rawProducts: RawProduct[] = [
     reviews: 241,
     stock: "inStock",
     sections: ["topDeals", "bestSellers"],
+    claimedPercent: 88,
+    sold: 2410,
+    total: 2739,
     image: "/products/netac-n600s-128gb.webp",
   },
 
@@ -596,6 +680,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Best Seller",
     sections: ["bestSellers", "topDeals", "featured"],
+    claimedPercent: 90,
+    sold: 3120,
+    total: 3467,
     image: "/products/tp-link-archer-c6.webp",
   },
   {
@@ -617,6 +704,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Wi-Fi 6",
     sections: ["newArrivals", "topDeals", "featured"],
+    claimedPercent: 72,
+    sold: 1280,
+    total: 1778,
     image: "/products/tp-link-archer-ax53.webp",
   },
   {
@@ -637,6 +727,9 @@ const rawProducts: RawProduct[] = [
     reviews: 94,
     stock: "inStock",
     sections: ["newArrivals", "topDeals"],
+    claimedPercent: 69,
+    sold: 940,
+    total: 1362,
     image: "/products/tp-link-deco-x50.webp",
   },
   {
@@ -657,6 +750,9 @@ const rawProducts: RawProduct[] = [
     reviews: 76,
     stock: "inStock",
     sections: ["topDeals", "bestSellers"],
+    claimedPercent: 63,
+    sold: 760,
+    total: 1206,
     image: "/products/asus-rt-ax52.webp",
   },
 
@@ -679,6 +775,9 @@ const rawProducts: RawProduct[] = [
     reviews: 143,
     stock: "inStock",
     sections: ["topDeals", "bestSellers"],
+    claimedPercent: 71,
+    sold: 1430,
+    total: 2014,
     image: "/products/corsair-cx550.webp",
   },
   {
@@ -700,6 +799,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "Best Seller",
     sections: ["bestSellers", "topDeals", "featured"],
+    claimedPercent: 83,
+    sold: 1870,
+    total: 2253,
     image: "/products/corsair-cx650.webp",
   },
   {
@@ -720,6 +822,9 @@ const rawProducts: RawProduct[] = [
     stock: "inStock",
     badge: "80+ Gold",
     sections: ["newArrivals", "featured"],
+    claimedPercent: 47,
+    sold: 710,
+    total: 1511,
     image: "/products/corsair-rm750x-shift.webp",
   },
 ]

@@ -1,6 +1,8 @@
 import { Geist_Mono, Inter, DM_Sans } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
+import Header from "@/components/layout/Header"
+import Footer from "@/components/layout/Footer"
 
 const dmSansHeading = DM_Sans({
   subsets: ["latin"],
@@ -31,7 +33,11 @@ export default function RootLayout({
         dmSansHeading.variable
       )}
     >
-      <body>{children}</body>
+      <body>
+        <Header />
+        <main className="pt-44">{children}</main>
+        <Footer />
+      </body>
     </html>
   )
 }

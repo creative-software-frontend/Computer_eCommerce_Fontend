@@ -290,11 +290,8 @@ export default function Header() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-2">
             {/* Categories */}
-            <div className="group relative -mb-1.5 rounded-t-lg bg-primary">
-              <Button
-                type="button"
-                className="flex w-68 justify-start rounded-b-none"
-              >
+            <div className="group relative rounded-lg bg-primary transition-all hover:rounded-b-none">
+              <Button type="button" className="flex w-68 justify-start">
                 <FaBars className="size-5" />
                 <span className="hidden sm:inline">All Categories</span>
               </Button>

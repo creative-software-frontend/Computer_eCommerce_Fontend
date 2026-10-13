@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { pillars } from "@/lib/data/pillars"
+import { pillars } from "@/lib/data/pillars.data"
 
 export default function ValuePillars() {
   return (
