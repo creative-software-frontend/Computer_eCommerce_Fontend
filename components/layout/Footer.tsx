@@ -10,6 +10,8 @@ import {
   FaMapMarkerAlt,
   FaAndroid,
 } from "react-icons/fa"
+import Image from "next/image"
+import LogoImage from "@/public/images/logo.png"
 
 export default function Footer() {
   return (
@@ -43,12 +45,7 @@ export default function Footer() {
           {/* Col 1: About & Hotline */}
           <div className="flex flex-col gap-4 lg:col-span-1">
             <Link href="/" className="flex flex-col">
-              <span className="font-heading text-2xl leading-none font-bold tracking-tight text-primary">
-                NexusTech
-              </span>
-              <span className="mt-1 text-[11px] font-bold tracking-wider text-muted-foreground uppercase">
-                Retail &amp; Systems
-              </span>
+              <Image src={LogoImage} alt="Logo" width={200} height={200} />
             </Link>
             <p className="text-xs leading-relaxed text-muted-foreground">
               Bangladesh&apos;s premier retail destination for high-end gaming
@@ -64,7 +61,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <FaEnvelope className="shrink-0 text-primary" />
-                <span>Support: support@nexustech.com.bd</span>
+                <span>Support: support@technocoresolution.com.bd</span>
               </div>
               <div className="flex items-start gap-2">
                 <FaMapMarkerAlt className="mt-0.5 shrink-0 text-primary" />
@@ -277,7 +274,7 @@ export default function Footer() {
             </div>
 
             <h4 className="mt-2 font-heading text-sm font-bold tracking-wider text-foreground uppercase">
-              Experience NexusTech App
+              Experience TechnoCore Solution App
             </h4>
             <div className="flex flex-col gap-2">
               <div className="flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-surface-container p-2 transition-colors hover:bg-surface-container/80">
@@ -298,8 +295,8 @@ export default function Footer() {
         {/* Bottom Bar: Copyright & Payment Partners */}
         <div className="flex flex-col items-center justify-between gap-4 pt-8 text-xs text-muted-foreground md:flex-row">
           <p>
-            &copy; {new Date().getFullYear()} NexusTech Retail &amp; Systems
-            Ltd. All rights reserved.
+            &copy; {new Date().getFullYear()} TechnoCore Solution Ltd. All
+            rights reserved.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3">

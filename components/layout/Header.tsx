@@ -21,6 +21,8 @@ import { Separator } from "../ui/separator"
 import { Avatar, AvatarFallback } from "../ui/avatar"
 import { FaRegHeart } from "react-icons/fa"
 import CategoriesSidebar from "./CategoriesSidebar"
+import Image from "next/image"
+import LogoImage from "@/public/images/logo.png"
 
 type NavigationItem = {
   label: string
@@ -110,154 +112,175 @@ export default function Header() {
           <Link
             href="/"
             className="flex shrink-0 flex-col"
-            aria-label="NexusTech home"
+            aria-label="TechnoCore Solution home"
           >
-            <span className="text-2xl leading-none font-bold tracking-tight text-primary">
-              NexusTech
-            </span>
-
-            <span className="mt-1 text-[11px] font-bold tracking-wider text-muted-foreground uppercase">
-              Retail & Systems
-            </span>
+            {/* logo */}
+            <Image src={LogoImage} alt="Logo" width={200} height={200} />
           </Link>
-
-          {/* Search */}
-          <div className="mx-2 mt-3 hidden max-w-2xl flex-1 flex-col gap-1 lg:flex">
-            <form
-              action="/search"
-              method="GET"
-              role="search"
-              className="flex items-center gap-2 rounded-lg border bg-muted/50 transition-colors focus-within:border-primary"
-            >
-              <label htmlFor="desktop-search" className="sr-only">
-                Search products
-              </label>
-
-              <Input
-                id="desktop-search"
-                name="q"
-                type="search"
-                placeholder="Search components, laptops, displays..."
-                className="h-9 border-0 bg-transparent shadow-none focus-visible:ring-0"
-              />
-
-              <Button
-                type="submit"
-                className="flex-1 rounded-l-none rounded-r-lg border-none"
-                aria-label="Search products"
+          <div className="flex flex-1 items-center justify-between pt-3">
+            {/* Search */}
+            <div className="mx-2 hidden max-w-2xl flex-1 flex-col gap-1 lg:flex">
+              <form
+                action="/search"
+                method="GET"
+                role="search"
+                className="flex items-center gap-2 rounded-lg border bg-muted/50 transition-colors focus-within:border-primary"
               >
-                <FaMagnifyingGlass className="size-4" />
-              </Button>
-            </form>
+                <label htmlFor="desktop-search" className="sr-only">
+                  Search products
+                </label>
 
-            {/* Trending Keywords */}
-            <div className="flex items-center gap-2 overflow-hidden text-xs whitespace-nowrap">
-              <span className="shrink-0 text-sm font-bold text-muted-foreground uppercase">
-                Trending:
-              </span>
+                <Input
+                  id="desktop-search"
+                  name="q"
+                  type="search"
+                  placeholder="Search components, laptops, displays..."
+                  className="h-9 border-0 bg-transparent shadow-none focus-visible:ring-0"
+                />
 
-              {trendingKeywords.map((keyword) => (
-                <Link
-                  key={keyword}
-                  href={`/search?q=${encodeURIComponent(keyword)}`}
-                  className="rounded bg-surface-container px-1.5 py-0.5 font-semibold text-muted-foreground transition-colors hover:text-primary"
+                <Button
+                  type="submit"
+                  className="flex-1 rounded-l-none rounded-r-lg border-none"
+                  aria-label="Search products"
                 >
-                  {keyword}
-                </Link>
-              ))}
+                  <FaMagnifyingGlass className="size-4" />
+                </Button>
+              </form>
+
+              {/* Trending Keywords */}
+              <div className="flex items-center gap-2 overflow-hidden text-xs whitespace-nowrap">
+                <span className="shrink-0 text-sm font-bold text-muted-foreground uppercase">
+                  Trending:
+                </span>
+
+                {trendingKeywords.map((keyword) => (
+                  <Link
+                    key={keyword}
+                    href={`/search?q=${encodeURIComponent(keyword)}`}
+                    className="rounded bg-surface-container px-1.5 py-0.5 font-semibold text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {keyword}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Header Actions */}
-          <div className="mt-2 flex shrink-0 items-center gap-1 self-start sm:gap-2">
-            {/* Mobile Search */}
-            <Button
-              asChild
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              aria-label="Search"
-            >
-              <Link href="/search">
-                <FaMagnifyingGlass className="size-5" />
-              </Link>
-            </Button>
-
-            {/* PC Builder */}
-            <Button
-              asChild
-              variant="outline"
-              className="hidden border-primary/30 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground xl:inline-flex"
-            >
-              <Link href="/pc-builder">
-                <FaScrewdriverWrench className="size-4" />
-                PC Builder
-              </Link>
-            </Button>
-
-            {/* Compare */}
-            <Button asChild variant="ghost" size="icon" className="relative">
-              <Link href="/compare" aria-label="Compare products">
-                <FaArrowRightArrowLeft className="size-5" />
-                <Badge className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs">
-                  2
-                </Badge>
-              </Link>
-            </Button>
-
-            {/* Wishlist */}
-            <Button asChild variant="ghost" size="icon" className="relative">
-              <Link href="/wishlist" aria-label="Wishlist">
-                <FaRegHeart className="size-5" />
-                <Badge
-                  variant="destructive"
-                  className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs"
-                >
-                  4
-                </Badge>
-              </Link>
-            </Button>
-
-            {/* Cart */}
-            <Button
-              asChild
-              className="gap-3 rounded-lg bg-surface-container hover:bg-surface-container-high sm:px-3"
-            >
-              <Link
-                href="/cart"
-                aria-label="Shopping cart"
-                className="flex items-center p-6"
+            {/* Header Actions */}
+            <div className="-mt-1.5 flex shrink-0 items-center gap-1 self-start sm:gap-2">
+              {/* Mobile Search */}
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                className="lg:hidden"
+                aria-label="Search"
               >
-                <span className="relative">
-                  <FaCartShopping className="size-5 text-primary" />
+                <Link href="/search">
+                  <FaMagnifyingGlass className="size-5" />
+                </Link>
+              </Button>
 
-                  <Badge className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full p-0 text-xs">
-                    3
+              {/* PC Builder */}
+              <Button
+                asChild
+                variant="outline"
+                className="hidden border-primary/30 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground xl:inline-flex"
+              >
+                <Link href="/pc-builder">
+                  <FaScrewdriverWrench className="size-4" />
+                  PC Builder
+                </Link>
+              </Button>
+
+              {/* Compare */}
+              <Button asChild variant="ghost" size="icon" className="relative">
+                <Link href="/compare" aria-label="Compare products">
+                  <FaArrowRightArrowLeft className="size-5" />
+                  <Badge className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs">
+                    2
                   </Badge>
-                </span>
+                </Link>
+              </Button>
 
-                <span className="hidden flex-col items-start sm:flex">
-                  <span className="text-xs leading-none text-muted-foreground">
-                    Cart Value
+              {/* Wishlist */}
+              <Button asChild variant="ghost" size="icon" className="relative">
+                <Link href="/wishlist" aria-label="Wishlist">
+                  <FaRegHeart className="size-5" />
+                  <Badge
+                    variant="destructive"
+                    className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs"
+                  >
+                    4
+                  </Badge>
+                </Link>
+              </Button>
+
+              {/* Cart */}
+              <Button
+                asChild
+                className="gap-3 rounded-lg bg-surface-container hover:bg-surface-container-high sm:px-3"
+              >
+                <Link
+                  href="/cart"
+                  aria-label="Shopping cart"
+                  className="flex items-center p-6"
+                >
+                  <span className="relative">
+                    <FaCartShopping className="size-5 text-primary" />
+
+                    <Badge className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full p-0 text-xs">
+                      3
+                    </Badge>
                   </span>
 
-                  <span className="text-sm font-bold text-black">
-                    $1,429.00
-                  </span>
-                </span>
-              </Link>
-            </Button>
+                  <span className="hidden flex-col items-start sm:flex">
+                    <span className="text-xs leading-none text-muted-foreground">
+                      Cart Value
+                    </span>
 
-            {/* User */}
-            <Button asChild variant="ghost" size="icon" aria-label="Account">
-              <Link href="/profile">
-                <Avatar className="size-8">
-                  <AvatarFallback className="bg-primary text-primary-foreground">
-                    <FaUser className="size-4" />
-                  </AvatarFallback>
-                </Avatar>
-              </Link>
-            </Button>
+                    <span className="text-sm font-bold text-black">
+                      $1,429.00
+                    </span>
+                  </span>
+                </Link>
+              </Button>
+
+              {/* Sign In & Sign Up Buttons (Visible on sm+ screens) */}
+              <div className="ml-1 hidden items-center gap-1.5 sm:flex">
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="text-sm font-semibold hover:text-primary"
+                >
+                  <Link href="/login">Sign In</Link>
+                </Button>
+                <Button
+                  asChild
+                  size="sm"
+                  className="bg-primary text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90"
+                >
+                  <Link href="/register">Sign Up</Link>
+                </Button>
+              </div>
+
+              {/* Mobile User Icon (Visible on small screens only) */}
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                aria-label="Account"
+                className="sm:hidden"
+              >
+                <Link href="/login">
+                  <Avatar className="size-8">
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      <FaUser className="size-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

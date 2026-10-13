@@ -51,7 +51,7 @@ export default function RegisterPage() {
               <FaCheck className="text-lg" />
             </div>
             <span className="font-heading text-sm font-bold tracking-wide text-foreground">
-              NexusTech Security
+              TechnoCore Security
             </span>
           </div>
 
@@ -93,7 +93,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="text-[11px] text-muted-foreground">
-            © 2026 NexusTech Inc. All rights reserved.
+            © 2026 TechnoCore Solution Inc. All rights reserved.
           </div>
         </div>
 
