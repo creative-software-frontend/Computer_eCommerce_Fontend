@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import {
+  FaUser,
   FaMobileAlt,
   FaEnvelope,
   FaKey,
@@ -15,32 +16,51 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
-interface LoginModalProps {
+interface AuthModalProps {
   isOpen?: boolean
   onClose?: (open: boolean) => void
   trigger?: React.ReactNode
+  defaultMode?: "login" | "register"
 }
 
-export default function LoginModal({
+export default function AuthModal({
   isOpen,
   onClose,
   trigger,
-}: LoginModalProps) {
-  const [loginMethod, setLoginMethod] = useState<"mobile" | "email">("mobile")
+  defaultMode = "login",
+}: AuthModalProps) {
+  const [mode, setMode] = useState<"login" | "register">(defaultMode)
+  const [authMethod, setAuthMethod] = useState<"mobile" | "email">("mobile")
   const [step, setStep] = useState<"request" | "verify">("request")
-  const [identifier, setIdentifier] = useState("")
-  const [otp, setOtp] = useState("")
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    identifier: "",
+    otp: "",
+  })
+
+  // Switch mode helper (resets steps & fields if needed)
+  const switchMode = (newMode: "login" | "register") => {
+    setMode(newMode)
+    setStep("request")
+    setFormData({ fullName: "", identifier: "", otp: "" })
+  }
 
   const handleSendOtp = (e: React.FormEvent) => {
     e.preventDefault()
-    if (identifier) {
+    if (mode === "register" && !formData.fullName) return
+    if (formData.identifier) {
       setStep("verify")
     }
   }
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSubmitAuth = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Logging in with OTP:", otp)
+    if (mode === "login") {
+      console.log("Logging in with OTP:", formData)
+    } else {
+      console.log("Registering with OTP:", formData)
+    }
   }
 
   return (
@@ -101,14 +121,16 @@ export default function LoginModal({
             </div>
           </div>
 
-          {/* Right Side: Login Form with OTP flow */}
+          {/* Right Side: Dynamic Form (Login / Register) */}
           <div className="relative flex flex-col justify-between bg-background p-6 sm:p-8 lg:p-10">
             <div className="mb-6 pt-4 md:pt-0">
               <h3 className="font-heading text-2xl font-extrabold tracking-tight text-foreground">
-                Welcome Back
+                {mode === "login" ? "Welcome Back" : "Create Account"}
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                Login to your account to continue securely via OTP.
+                {mode === "login"
+                  ? "Login to your account to continue securely via OTP."
+                  : "Join our community today with secure OTP verification."}
               </p>
             </div>
 
@@ -117,11 +139,11 @@ export default function LoginModal({
               <button
                 type="button"
                 onClick={() => {
-                  setLoginMethod("mobile")
+                  setAuthMethod("mobile")
                   setStep("request")
                 }}
-                className={`flex items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold transition-all ${
-                  loginMethod === "mobile"
+                className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold transition-all ${
+                  authMethod === "mobile"
                     ? "bg-background text-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
@@ -132,11 +154,11 @@ export default function LoginModal({
               <button
                 type="button"
                 onClick={() => {
-                  setLoginMethod("email")
+                  setAuthMethod("email")
                   setStep("request")
                 }}
-                className={`flex items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold transition-all ${
-                  loginMethod === "email"
+                className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold transition-all ${
+                  authMethod === "email"
                     ? "bg-background text-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
@@ -149,29 +171,55 @@ export default function LoginModal({
             {/* Step 1: Request OTP Form */}
             {step === "request" ? (
               <form onSubmit={handleSendOtp} className="space-y-4">
+                {/* Full Name field (Only shown in Register mode) */}
+                {mode === "register" && (
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold text-foreground">
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                        <FaUser className="text-xs" />
+                      </span>
+                      <Input
+                        type="text"
+                        placeholder="Enter your name"
+                        value={formData.fullName}
+                        onChange={(e) =>
+                          setFormData({ ...formData, fullName: e.target.value })
+                        }
+                        className="pl-9 text-xs"
+                        required
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <label className="mb-1.5 block text-xs font-bold text-foreground">
-                    {loginMethod === "mobile"
+                    {authMethod === "mobile"
                       ? "Mobile Number"
                       : "Email Address"}
                   </label>
                   <div className="relative">
                     <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                      {loginMethod === "mobile" ? (
+                      {authMethod === "mobile" ? (
                         <FaMobileAlt className="text-xs" />
                       ) : (
                         <FaEnvelope className="text-xs" />
                       )}
                     </span>
                     <Input
-                      type={loginMethod === "mobile" ? "tel" : "email"}
+                      type={authMethod === "mobile" ? "tel" : "email"}
                       placeholder={
-                        loginMethod === "mobile"
+                        authMethod === "mobile"
                           ? "01XXXXXXXXX"
                           : "name@example.com"
                       }
-                      value={identifier}
-                      onChange={(e) => setIdentifier(e.target.value)}
+                      value={formData.identifier}
+                      onChange={(e) =>
+                        setFormData({ ...formData, identifier: e.target.value })
+                      }
                       className="pl-9 text-xs"
                       required
                     />
@@ -190,7 +238,7 @@ export default function LoginModal({
               </form>
             ) : (
               /* Step 2: Verify OTP Form */
-              <form onSubmit={handleLogin} className="space-y-4">
+              <form onSubmit={handleSubmitAuth} className="space-y-4">
                 <div>
                   <div className="mb-1.5 flex items-center justify-between">
                     <label className="block text-xs font-bold text-foreground">
@@ -201,7 +249,7 @@ export default function LoginModal({
                       onClick={() => setStep("request")}
                       className="text-[11px] font-semibold text-emerald-600 hover:underline"
                     >
-                      Change {loginMethod}
+                      Change {authMethod}
                     </button>
                   </div>
                   <div className="relative">
@@ -212,8 +260,10 @@ export default function LoginModal({
                       type="text"
                       maxLength={4}
                       placeholder="••••"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
+                      value={formData.otp}
+                      onChange={(e) =>
+                        setFormData({ ...formData, otp: e.target.value })
+                      }
                       className="pl-9 text-xs font-bold tracking-widest"
                       required
                     />
@@ -221,7 +271,7 @@ export default function LoginModal({
                   <p className="mt-1.5 text-[11px] text-muted-foreground">
                     OTP sent to{" "}
                     <span className="font-semibold text-foreground">
-                      {identifier}
+                      {formData.identifier}
                     </span>
                   </p>
                 </div>
@@ -231,24 +281,42 @@ export default function LoginModal({
                     type="submit"
                     className="w-full bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-lg transition-all hover:bg-emerald-700"
                   >
-                    <span>Verify & Login Now</span>
+                    <span>
+                      {mode === "login"
+                        ? "Verify & Login Now"
+                        : "Verify & Create Account"}
+                    </span>
                     <FaCheck className="ml-2 text-[10px]" />
                   </Button>
                 </div>
               </form>
             )}
 
-            {/* Footer Links */}
+            {/* Footer Links (Switch between Login & Register) */}
             <div className="mt-8 space-y-4 text-center">
-              <p className="text-xs text-muted-foreground">
-                Don&apos;t have an account?{" "}
-                <Link
-                  href="/register"
-                  className="font-bold text-emerald-600 hover:underline"
-                >
-                  Sign Up Free
-                </Link>
-              </p>
+              {mode === "login" ? (
+                <p className="text-xs text-muted-foreground">
+                  Don&apos;t have an account?{" "}
+                  <button
+                    type="button"
+                    onClick={() => switchMode("register")}
+                    className="cursor-pointer font-bold text-emerald-600 hover:underline"
+                  >
+                    Sign Up Free
+                  </button>
+                </p>
+              ) : (
+                <p className="text-xs text-muted-foreground">
+                  Already have an account?{" "}
+                  <button
+                    type="button"
+                    onClick={() => switchMode("login")}
+                    className="cursor-pointer font-bold text-emerald-600 hover:underline"
+                  >
+                    Login Here
+                  </button>
+                </p>
+              )}
 
               <p className="text-[10px] leading-relaxed text-muted-foreground">
                 By continuing, you agree to our{" "}

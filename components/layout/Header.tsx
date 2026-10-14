@@ -23,7 +23,7 @@ import { FaRegHeart } from "react-icons/fa"
 import CategoriesSidebar from "./CategoriesSidebar"
 import Image from "next/image"
 import LogoImage from "@/public/images/logo.png"
-import LoginModal from "../modal/LoginModal"
+import AuthModal from "../modal/AuthModal"
 
 type NavigationItem = {
   label: string
@@ -265,7 +265,7 @@ export default function Header() {
                 </Button>
               </div> */}
               {/* User */}
-              <LoginModal
+              <AuthModal
                 trigger={
                   <Button
                     asChild

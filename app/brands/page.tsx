@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { brands } from "@/lib/data/brands.data"
+import Image from "next/image"
 
 const ALPHABET = [
   "All",
@@ -117,25 +118,29 @@ export default function BrandDirectoryPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {featuredBrands.map((brand) => (
-                <Link key={brand.id} href={`/brands/${brand.slug}`}>
-                  <Card className="group relative flex h-36 flex-col items-center justify-center overflow-hidden rounded-xl border border-border bg-card p-5 text-center shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
-                    <div className="relative mb-3 flex h-14 w-24 items-center justify-center">
-                      <img
-                        src={brand.logo}
-                        alt={brand.name}
-                        className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
-                      />
-                    </div>
-                    <span className="line-clamp-1 font-heading text-xs font-bold text-foreground transition-colors group-hover:text-primary">
-                      {brand.name}
-                    </span>
-                    <span className="mt-0.5 text-[10px] text-muted-foreground">
-                      {brand.productCount} Products
-                    </span>
-                  </Card>
-                </Link>
-              ))}
+              {featuredBrands
+                .filter((brand) => brand.logo)
+                .map((brand) => (
+                  <Link key={brand.id} href={`/brands/${brand.slug}`}>
+                    <Card className="group relative flex h-36 flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-border bg-card p-5 text-center shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
+                      <div className="relative mb-3 flex h-22 w-32 items-center justify-center">
+                        <Image
+                          width={300}
+                          height={300}
+                          src={brand.logo || ""}
+                          alt={brand.name}
+                          className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                        />
+                      </div>
+                      {/* <span className="line-clamp-1 font-heading text-xs font-bold text-foreground transition-colors group-hover:text-primary">
+                        {brand.name}
+                      </span> */}
+                      <span className="mt-0.5 text-[10px] text-muted-foreground">
+                        {brand.productCount} Products
+                      </span>
+                    </Card>
+                  </Link>
+                ))}
             </div>
           </div>
         )}
@@ -172,33 +177,54 @@ export default function BrandDirectoryPage() {
 
           {filteredBrands.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {filteredBrands.map((brand) => (
-                <Link key={brand.id} href={`/brands/${brand.slug}`}>
-                  <Card className="group flex items-center gap-4 overflow-hidden rounded-xl border border-border bg-card p-5 shadow-sm transition-all hover:border-primary hover:shadow-md">
-                    <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-muted/40 p-2">
-                      <img
-                        src={brand.logo}
-                        alt={brand.name}
-                        className="max-h-full max-w-full object-contain transition-transform group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="min-w-0 flex-grow">
-                      <span className="inline-block text-[10px] font-semibold tracking-wide text-primary uppercase">
-                        {brand.category}
-                      </span>
-                      <h3 className="truncate font-heading text-sm font-bold text-foreground transition-colors group-hover:text-primary">
-                        {brand.name}
-                      </h3>
-                      <div className="mt-1 flex items-center justify-between">
-                        <span className="text-[11px] text-muted-foreground">
-                          {brand.productCount} Items available
+              {filteredBrands
+                .filter((brand) => brand.logo)
+                .map((brand) => (
+                  <Link key={brand.id} href={`/brands/${brand.slug}`}>
+                    <Card className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl">
+                      {/* Top Row: Logo & Category Badge */}
+                      <div className="flex items-center justify-between">
+                        <div className="relative flex size-1/2 items-center justify-center rounded-xl border border-border/60 bg-muted/30 p-2.5 transition-transform duration-300 group-hover:scale-105">
+                          {brand.logo ? (
+                            <Image
+                              width={300}
+                              height={300}
+                              src={brand.logo}
+                              alt={brand.name}
+                              className="h-full w-full object-contain"
+                            />
+                          ) : (
+                            <span className="text-sm font-bold text-muted-foreground">
+                              {brand.name?.slice(0, 2).toUpperCase()}
+                            </span>
+                          )}
+                        </div>
+
+                        <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold tracking-wider text-primary uppercase">
+                          {brand.category}
                         </span>
-                        <FaArrowRight className="text-[10px] text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
                       </div>
-                    </div>
-                  </Card>
-                </Link>
-              ))}
+
+                      {/* Middle Content */}
+                      <div className="mt-4">
+                        <h3 className="font-heading text-base font-bold text-foreground transition-colors group-hover:text-primary">
+                          {brand.name}
+                        </h3>
+                        <p className="mt-0.5 text-xs text-muted-foreground">
+                          {brand.productCount}{" "}
+                          {brand.productCount === 1 ? "Product" : "Products"}{" "}
+                          available
+                        </p>
+                      </div>
+
+                      {/* Bottom Action Footer */}
+                      <div className="mt-5 flex items-center justify-between border-t border-border/40 pt-3 text-xs font-semibold text-primary">
+                        <span>Explore Brand</span>
+                        <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
             </div>
           ) : (
             <div className="rounded-xl border border-border bg-card py-16 text-center shadow-sm">
