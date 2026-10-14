@@ -4,13 +4,17 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { FaFilter, FaTimes } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
-import { products as productData } from "@/lib/data/products.data"
 import ProductCard from "@/components/ui/ProductCard"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Product } from "@/lib/data/types"
 
-const itemsPerPage = 12
+const itemsPerPage = 36
 
-export default function ProductListing() {
+export default function ProductListing({
+  productData,
+}: {
+  productData: Product[]
+}) {
   const searchParams = useSearchParams()
   const totalPages = Math.max(1, Math.ceil(productData.length / itemsPerPage))
   const rawPage = Number(searchParams.get("page") ?? "1")
@@ -24,6 +28,7 @@ export default function ProductListing() {
       key={currentPage}
       currentPage={currentPage}
       totalPages={totalPages}
+      productData={productData}
     />
   )
 }
@@ -31,9 +36,11 @@ export default function ProductListing() {
 function ProductListingContent({
   currentPage,
   totalPages,
+  productData,
 }: {
   currentPage: number
   totalPages: number
+  productData: Product[]
 }) {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
   const searchParams = useSearchParams()
@@ -102,7 +109,6 @@ function ProductListingContent({
   const handleNextPage = () => {
     if (currentPage < totalPages) handleProductPage(currentPage + 1)
   }
-
   return (
     <div className="min-h-screen bg-background px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -113,16 +119,16 @@ function ProductListingContent({
               Home
             </Link>
             <span>/</span>
-            <Link href="/shop" className="hover:text-primary">
-              Computer Components
+            <Link href="/category" className="hover:text-primary">
+              Category
             </Link>
             <span>/</span>
             <span className="font-medium text-foreground">
-              Laptops & Graphics Cards
+              {visibleProducts[0]?.category ?? "Products"}
             </span>
           </div>
-          <h1 className="font-heading text-2xl font-extrabold text-foreground sm:text-3xl">
-            Gaming Laptops & Components
+          <h1 className="font-heading text-2xl font-extrabold text-foreground capitalize sm:text-3xl">
+            {visibleProducts[0]?.category ?? "Products"}
           </h1>
         </div>
 
@@ -266,51 +272,69 @@ function ProductListingContent({
             </div>
 
             {/* Product Grid List */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {visibleProducts.map((product) => (
-                <ProductCard product={product} key={product.id} />
-              ))}
-            </div>
+            {products.length > 0 ? (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {visibleProducts.map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))}
+              </div>
+            ) : (
+              <div
+                role="status"
+                className="rounded-xl border border-border bg-card px-6 py-16 text-center shadow-sm"
+              >
+                <h2 className="text-lg font-bold text-foreground">
+                  No products found
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  There are no products to display right now.
+                </p>
+              </div>
+            )}
 
             {/* Sentinel element for Intersection Observer at the bottom of the list */}
-            <div
-              ref={observerTarget}
-              className="h-10 w-full"
-              aria-hidden="true"
-            />
+            {visibleProducts.length < products.length && (
+              <div
+                ref={observerTarget}
+                className="h-10 w-full"
+                aria-hidden="true"
+              />
+            )}
 
             {/* Pagination */}
-            <div className="flex items-center justify-center gap-2 pt-6">
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-xs hover:bg-primary/80 hover:text-white"
-                disabled={currentPage === 1}
-                onClick={handlePreviousPage}
-              >
-                Previous
-              </Button>
-              {Array.from({ length: totalPages }).map((_, i) => (
+            {productData.length > 0 && (
+              <div className="flex items-center justify-center gap-2 pt-6">
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => handleProductPage(i + 1)}
-                  className={`text-xs hover:bg-primary/80 hover:text-white ${currentPage === i + 1 ? "bg-primary text-primary-foreground" : ""}`}
-                  key={i}
+                  className="text-xs hover:bg-primary/80 hover:text-white"
+                  disabled={currentPage === 1}
+                  onClick={handlePreviousPage}
                 >
-                  {i + 1}
+                  Previous
                 </Button>
-              ))}
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-xs hover:bg-primary/80 hover:text-white"
-                disabled={currentPage === totalPages}
-                onClick={handleNextPage}
-              >
-                Next
-              </Button>
-            </div>
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleProductPage(i + 1)}
+                    className={`text-xs hover:bg-primary/80 hover:text-white ${currentPage === i + 1 ? "bg-primary text-primary-foreground" : ""}`}
+                    key={i}
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-xs hover:bg-primary/80 hover:text-white"
+                  disabled={currentPage === totalPages}
+                  onClick={handleNextPage}
+                >
+                  Next
+                </Button>
+              </div>
+            )}
           </main>
         </div>
       </div>

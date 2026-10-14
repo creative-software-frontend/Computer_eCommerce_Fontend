@@ -1,11 +1,8 @@
-import { Suspense } from "react"
-import ProductListing from "./ProductListing"
-
 export default function ProductListingPage() {
   return (
-    // TODO add  Skeleton
-    <Suspense fallback={"loading...."}>
-      <ProductListing />
-    </Suspense>
+    <h1 className="text-4xl">
+      This page isn&apos;t currently Available to view products check category
+      wise
+    </h1>
   )
 }
