@@ -31,4 +31,6 @@ export interface Brand {
   slug: string
   logo?: string
   productCount: number
+  category: string
+  featured?: boolean
 }

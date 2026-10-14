@@ -36,7 +36,7 @@ export default function HeroSection() {
                 bolt
               </span> */}
               <FaBolt size={14} />
-              Flagship Series 2025
+              Flagship Series 2026
             </span>
             <span className="hidden items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs text-white backdrop-blur-md sm:inline-flex">
               <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400"></span>

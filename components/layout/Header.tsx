@@ -23,6 +23,7 @@ import { FaRegHeart } from "react-icons/fa"
 import CategoriesSidebar from "./CategoriesSidebar"
 import Image from "next/image"
 import LogoImage from "@/public/images/logo.png"
+import LoginModal from "../modal/LoginModal"
 
 type NavigationItem = {
   label: string
@@ -246,7 +247,7 @@ export default function Header() {
               </Button>
 
               {/* Sign In & Sign Up Buttons (Visible on sm+ screens) */}
-              <div className="ml-1 hidden items-center gap-1.5 sm:flex">
+              {/* <div className="ml-1 hidden items-center gap-1.5 sm:flex">
                 <Button
                   asChild
                   variant="ghost"
@@ -262,10 +263,27 @@ export default function Header() {
                 >
                   <Link href="/register">Sign Up</Link>
                 </Button>
-              </div>
+              </div> */}
+              {/* User */}
+              <LoginModal
+                trigger={
+                  <Button
+                    asChild
+                    variant="ghost"
+                    size="icon"
+                    aria-label="Account"
+                  >
+                    <Avatar className="size-8">
+                      <AvatarFallback className="bg-primary text-primary-foreground">
+                        <FaUser className="size-4" />
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                }
+              />
 
               {/* Mobile User Icon (Visible on small screens only) */}
-              <Button
+              {/* <Button
                 asChild
                 variant="ghost"
                 size="icon"
@@ -279,7 +297,7 @@ export default function Header() {
                     </AvatarFallback>
                   </Avatar>
                 </Link>
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
