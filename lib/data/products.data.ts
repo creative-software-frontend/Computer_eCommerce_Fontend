@@ -32,13 +32,14 @@ const rawProducts: RawProduct[] = [
     id: 2,
     slug: "msi-raider-18-hx-ai-a2xwjg",
     brand: "MSI",
-    title: "MSI Raider 18 HX AI A2XWJG Core Ultra 9 285HX RTX 5090 18\" MiniLED 120Hz Gaming Laptop",
+    title:
+      'MSI Raider 18 HX AI A2XWJG Core Ultra 9 285HX RTX 5090 18" MiniLED 120Hz Gaming Laptop',
     category: "Laptops",
     specs: [
       "Intel Core Ultra 9 285HX 24-Core",
       "32GB DDR5 6400MHz, 2TB Gen5x4 SSD",
       "RTX 5090 GDDR7 24GB, 1824 AI TOPS",
-      "18\" UHD+ MiniLED 120Hz, Thunderbolt 5",
+      '18" UHD+ MiniLED 120Hz, Thunderbolt 5',
     ],
     price: 630000,
     oldPrice: 650000,
@@ -56,7 +57,7 @@ const rawProducts: RawProduct[] = [
     id: 3,
     slug: "acer-aspire-3-a325-42-v2",
     brand: "Acer",
-    title: "Acer Aspire 3 A325-42-V2 Ryzen 3 5300U 8GB RAM 15.6\" FHD Laptop",
+    title: 'Acer Aspire 3 A325-42-V2 Ryzen 3 5300U 8GB RAM 15.6" FHD Laptop',
     category: "Laptops",
     specs: [
       "AMD Ryzen 3 5300U, up to 3.8GHz",
@@ -78,7 +79,8 @@ const rawProducts: RawProduct[] = [
     id: 4,
     slug: "lenovo-ideapad-1-15amn7",
     brand: "Lenovo",
-    title: "Lenovo IdeaPad 1 15AMN7 Ryzen 3 7320U 16GB 512GB 15.6\" FHD IPS Laptop",
+    title:
+      'Lenovo IdeaPad 1 15AMN7 Ryzen 3 7320U 16GB 512GB 15.6" FHD IPS Laptop',
     category: "Laptops",
     specs: [
       "AMD Ryzen 3 7320U (4C/8T)",
@@ -100,7 +102,8 @@ const rawProducts: RawProduct[] = [
     id: 5,
     slug: "dell-pro-15-essential-pv15250",
     brand: "Dell",
-    title: "Dell Pro 15 Essential PV15250 Core 3 100U 8GB 512GB 15.6\" FHD 120Hz Laptop",
+    title:
+      'Dell Pro 15 Essential PV15250 Core 3 100U 8GB 512GB 15.6" FHD 120Hz Laptop',
     category: "Laptops",
     specs: [
       "Intel Core 3 100U (6 cores, up to 4.7GHz)",
@@ -124,7 +127,7 @@ const rawProducts: RawProduct[] = [
     id: 6,
     slug: "hp-15-fc0623au-ryzen-3-7320u",
     brand: "HP",
-    title: "HP 15-fc0623AU Ryzen 3 7320U 8GB 512GB 15.6\" FHD Laptop",
+    title: 'HP 15-fc0623AU Ryzen 3 7320U 8GB 512GB 15.6" FHD Laptop',
     category: "Laptops",
     specs: [
       "AMD Ryzen 3 7320U (up to 4.1GHz)",
@@ -146,7 +149,7 @@ const rawProducts: RawProduct[] = [
     id: 7,
     slug: "walton-passion-bx710u-core-i7-10th-gen",
     brand: "Walton",
-    title: "Walton Passion BX710U Core i7 10th Gen 8GB 512GB 15.6\" FHD Laptop",
+    title: 'Walton Passion BX710U Core i7 10th Gen 8GB 512GB 15.6" FHD Laptop',
     category: "Laptops",
     specs: [
       "Intel Core i7-10510U, up to 4.9GHz",
@@ -170,7 +173,7 @@ const rawProducts: RawProduct[] = [
     id: 8,
     slug: "acer-aspire-lite-al15-41-ryzen-5-5625u",
     brand: "Acer",
-    title: "Acer Aspire Lite AL15-41 Ryzen 5 5625U 16GB 512GB 15.6\" FHD Laptop",
+    title: 'Acer Aspire Lite AL15-41 Ryzen 5 5625U 16GB 512GB 15.6" FHD Laptop',
     category: "Laptops",
     specs: [
       "AMD Ryzen 5 5625U, up to 4.3GHz",
@@ -338,7 +341,8 @@ const rawProducts: RawProduct[] = [
     id: 15,
     slug: "zotac-gaming-geforce-rtx-5070-twin-edge-oc-white",
     brand: "ZOTAC",
-    title: "ZOTAC GAMING GeForce RTX 5070 Twin Edge OC 12GB GDDR7 White Graphics Card",
+    title:
+      "ZOTAC GAMING GeForce RTX 5070 Twin Edge OC 12GB GDDR7 White Graphics Card",
     category: "Graphics Cards",
     specs: [
       "12GB GDDR7, PCIe 5.0 x16",
@@ -386,7 +390,7 @@ const rawProducts: RawProduct[] = [
     id: 17,
     slug: "gigabyte-gs27qa-gaming-monitor",
     brand: "Gigabyte",
-    title: "Gigabyte GS27QA 27\" 2K QHD 180Hz IPS Gaming Monitor",
+    title: 'Gigabyte GS27QA 27" 2K QHD 180Hz IPS Gaming Monitor',
     category: "Monitors",
     specs: [
       "2K QHD 2560 x 1440",
@@ -409,7 +413,7 @@ const rawProducts: RawProduct[] = [
     id: 18,
     slug: "gigabyte-m27q2-qd-ice-monitor",
     brand: "Gigabyte",
-    title: "Gigabyte M27Q2 QD ICE 27\" QHD 200Hz IPS Quantum Dot Monitor",
+    title: 'Gigabyte M27Q2 QD ICE 27" QHD 200Hz IPS Quantum Dot Monitor',
     category: "Monitors",
     specs: [
       "QHD (2560 x 1440)",
@@ -432,7 +436,7 @@ const rawProducts: RawProduct[] = [
     id: 19,
     slug: "gigabyte-mo27q28g-oled-gaming-monitor",
     brand: "Gigabyte",
-    title: "Gigabyte MO27Q28G 27\" QHD 280Hz OLED Gaming Monitor",
+    title: 'Gigabyte MO27Q28G 27" QHD 280Hz OLED Gaming Monitor',
     category: "Monitors",
     specs: [
       "QHD (2560 x 1440)",
@@ -456,7 +460,7 @@ const rawProducts: RawProduct[] = [
     id: 20,
     slug: "value-top-x22ifr100-monitor",
     brand: "Value-Top",
-    title: "Value-Top X22IFR100 21.5\" 100Hz FHD IPS Monitor",
+    title: 'Value-Top X22IFR100 21.5" 100Hz FHD IPS Monitor',
     category: "Monitors",
     specs: [
       "FHD (1920 x 1080)",
@@ -573,7 +577,8 @@ const rawProducts: RawProduct[] = [
     id: 25,
     slug: "silicon-power-xpower-xs70-1tb-gen4-ssd",
     brand: "Silicon Power",
-    title: "Silicon Power XPOWER XS70 1TB M.2 PCIe Gen4 NVMe SSD with DRAM & Heatsink",
+    title:
+      "Silicon Power XPOWER XS70 1TB M.2 PCIe Gen4 NVMe SSD with DRAM & Heatsink",
     category: "SSD",
     specs: [
       "Capacity 1TB, M.2 2280",
@@ -837,17 +842,17 @@ export const products: Product[] = rawProducts.map((product) => ({
 }))
 
 export const bestSellers = products.filter((p) =>
-  p.sections.includes("bestSellers"),
+  p.sections.includes("bestSellers")
 )
 
 export const newArrivals = products.filter((p) =>
-  p.sections.includes("newArrivals"),
+  p.sections.includes("newArrivals")
 )
 
 export const topDeals = products.filter((p) => p.sections.includes("topDeals"))
 
 export const featuredProducts = products.filter((p) =>
-  p.sections.includes("featured"),
+  p.sections.includes("featured")
 )
 
 const bdtFormatter = new Intl.NumberFormat("en-IN")

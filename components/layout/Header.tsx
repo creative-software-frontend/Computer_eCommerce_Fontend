@@ -24,6 +24,7 @@ import CategoriesSidebar from "./CategoriesSidebar"
 import Image from "next/image"
 import LogoImage from "@/public/images/logo.png"
 import AuthModal from "../modal/AuthModal"
+import HeaderCartButton from "../ui/HeaderCartButton"
 
 type NavigationItem = {
   label: string
@@ -217,34 +218,7 @@ export default function Header() {
               </Button>
 
               {/* Cart */}
-              <Button
-                asChild
-                className="gap-3 rounded-lg bg-surface-container hover:bg-surface-container-high sm:px-3"
-              >
-                <Link
-                  href="/cart"
-                  aria-label="Shopping cart"
-                  className="flex items-center p-6"
-                >
-                  <span className="relative">
-                    <FaCartShopping className="size-5 text-primary" />
-
-                    <Badge className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full p-0 text-xs">
-                      3
-                    </Badge>
-                  </span>
-
-                  <span className="hidden flex-col items-start sm:flex">
-                    <span className="text-xs leading-none text-muted-foreground">
-                      Cart Value
-                    </span>
-
-                    <span className="text-sm font-bold text-black">
-                      $1,429.00
-                    </span>
-                  </span>
-                </Link>
-              </Button>
+              <HeaderCartButton />
 
               {/* Sign In & Sign Up Buttons (Visible on sm+ screens) */}
               {/* <div className="ml-1 hidden items-center gap-1.5 sm:flex">
