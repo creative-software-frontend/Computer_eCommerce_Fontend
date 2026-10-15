@@ -12,37 +12,25 @@ import {
   FaShieldAlt,
   FaTag,
   FaHeadset,
-  FaAngleDown,
   FaChevronDown,
 } from "react-icons/fa"
-import { useCart } from "@/context/CartContext"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
+import { useShop } from "@/context/ShopContext"
 
 export default function CartSidebar() {
   const {
-    isOpen,
+    isCartOpen,
     closeCart,
     itemCount,
     totalAmount,
     updateQuantity,
     cartItems,
     removeFromCart,
-  } = useCart()
+  } = useShop()
   const [promoCode, setPromoCode] = useState("")
   const [showPromo, setShowPromo] = useState(false)
-  // const updateQuantity = (id: number | string, delta: number) => {
-  //   setCartItems((prev) =>
-  //     prev.map((item) => {
-  //       if (item.id === id) {
-  //         const newQty = item.quantity + delta
-  //         return newQty > 0 ? { ...item, quantity: newQty } : item
-  //       }
-  //       return item
-  //     })
-  //   )
-  // }
 
   const freeShippingThreshold = 2000
   const progress = Math.min((itemCount / freeShippingThreshold) * 100, 100)
@@ -51,7 +39,7 @@ export default function CartSidebar() {
     0
   )
 
-  if (!isOpen) return null
+  if (!isCartOpen) return null
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
@@ -95,7 +83,7 @@ export default function CartSidebar() {
               <span className="text-foreground">
                 {remainingForFreeShipping === 0
                   ? "You got Free Shipping!"
-                  : `Add $${remainingForFreeShipping.toFixed(2)} more for Free Shipping`}
+                  : `Add ${remainingForFreeShipping.toFixed(2)}৳ more for Free Shipping`}
               </span>
               <span className="text-primary">{Math.round(progress)}%</span>
             </div>
@@ -161,7 +149,7 @@ export default function CartSidebar() {
 
                     <div className="mt-2 flex items-center justify-between">
                       <span className="text-xs font-extrabold text-primary">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        {(item.price * item.quantity).toFixed(2)}৳
                       </span>
 
                       {/* Quantity Controls */}
@@ -244,7 +232,7 @@ export default function CartSidebar() {
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span className="font-semibold text-foreground">
-                    ${itemCount.toFixed(2)}
+                    ${totalAmount.toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -253,7 +241,9 @@ export default function CartSidebar() {
                 </div>
                 <div className="flex justify-between border-t border-border pt-1 text-sm font-extrabold text-foreground">
                   <span>Total</span>
-                  <span className="text-primary">${itemCount.toFixed(2)}</span>
+                  <span className="text-primary">
+                    ${totalAmount.toFixed(2)}
+                  </span>
                 </div>
               </div>
 

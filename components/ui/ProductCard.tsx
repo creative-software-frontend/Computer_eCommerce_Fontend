@@ -1,15 +1,14 @@
-import { BiShoppingBag } from "react-icons/bi"
 import { Button } from "./button"
 import { Card } from "./card"
 import { Product } from "@/lib/data/types"
 import { formatBdt } from "@/lib/data/products.data"
 import Image from "next/image"
 import { FaCheck, FaShoppingCart, FaStar } from "react-icons/fa"
-import { useCart } from "@/context/CartContext"
 import { useState } from "react"
+import { useShop } from "@/context/ShopContext"
 
 const ProductCard = ({ product }: { product: Product }) => {
-  const { addToCart } = useCart()
+  const { addToCart, openBuyNow } = useShop()
   const [isAdded, setIsAdded] = useState(false)
 
   const handleAddToCart = () => {
@@ -156,7 +155,17 @@ const ProductCard = ({ product }: { product: Product }) => {
             </>
           )}
         </Button>
-        <Button className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90">
+        <Button
+          onClick={() =>
+            openBuyNow({
+              id: product.id,
+              name: product.title,
+              price: product.price,
+              image: product.image,
+            })
+          }
+          className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
+        >
           Buy Now
         </Button>
       </div>

@@ -3,10 +3,11 @@ import "./globals.css"
 import { cn } from "@/lib/utils"
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
-import { CartProvider } from "@/context/CartContext"
 import CartSidebar from "@/components/CartSidebar"
 import FloatingCartButton from "@/components/FloatingCartButton"
 import { Toaster } from "sonner"
+import { ShopProvider } from "@/context/ShopContext"
+import BuyNowModal from "@/components/modal/BuyNowModal"
 
 const dmSansHeading = DM_Sans({
   subsets: ["latin"],
@@ -38,13 +39,14 @@ export default function RootLayout({
       )}
     >
       <body>
-        <CartProvider>
+        <ShopProvider>
           <Header />
           <main className="pt-44">{children}</main>
+          <Footer />
           <CartSidebar />
           <FloatingCartButton />
-          <Footer />
-        </CartProvider>
+          <BuyNowModal />
+        </ShopProvider>
         <Toaster />
       </body>
     </html>
