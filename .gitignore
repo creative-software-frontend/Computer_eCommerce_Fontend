@@ -37,3 +37,14 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+text.txt
+.playwright-mcp/console-2026-10-13T11-12-38-699Z.log
+.playwright-mcp/console-2026-10-13T11-17-17-858Z.log
+.playwright-mcp/console-2026-10-13T11-17-20-693Z.log
+.playwright-mcp/console-2026-10-13T11-17-27-967Z.log
+.playwright-mcp/console-2026-10-13T11-17-31-425Z.log
+.playwright-mcp/page-2026-10-13T11-17-18-521Z.yml
+.playwright-mcp/page-2026-10-13T11-17-22-514Z.yml
+.playwright-mcp/page-2026-10-13T11-17-29-203Z.yml
+.playwright-mcp/page-2026-10-13T11-17-32-254Z.yml
+note.md
