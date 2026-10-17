@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import ProductCard from "@/components/ui/ProductCard"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Product } from "@/lib/data/types"
+import BreadcrumbComponent from "./BreadCrumb"
 
 const itemsPerPage = 36
 
@@ -114,19 +115,16 @@ function ProductListingContent({
       <div className="mx-auto max-w-7xl">
         {/* Breadcrumb & Page Title */}
         <div className="mb-6">
-          <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
-            <Link href="/" className="hover:text-primary">
-              Home
-            </Link>
-            <span>/</span>
-            <Link href="/category" className="hover:text-primary">
-              Category
-            </Link>
-            <span>/</span>
-            <span className="font-medium text-foreground">
-              {visibleProducts[0]?.category ?? "Products"}
-            </span>
-          </div>
+          <BreadcrumbComponent
+            urlList={[
+              { url: "/category", name: "Category" },
+              {
+                url: "",
+                name: visibleProducts[0]?.category ?? "Products",
+                active: true,
+              },
+            ]}
+          />
           <h1 className="font-heading text-2xl font-extrabold text-foreground capitalize sm:text-3xl">
             {visibleProducts[0]?.category ?? "Products"}
           </h1>
