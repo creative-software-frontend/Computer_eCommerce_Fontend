@@ -20,12 +20,22 @@ type ProductListingProps = {
   productData: Product[]
   title: string
   breadcrumbs: ListingBreadcrumb[]
+  isBuilderMode?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSelect?: (product: any) => void
+}
+
+type FullProductListingProps = ProductListingProps & {
+  currentPage: number
+  totalPages: number
 }
 
 export default function ProductListing({
   productData,
   title,
   breadcrumbs,
+  isBuilderMode,
+  onSelect,
 }: ProductListingProps) {
   const searchParams = useSearchParams()
   const totalPages = Math.max(1, Math.ceil(productData.length / itemsPerPage))
@@ -33,8 +43,6 @@ export default function ProductListing({
   const currentPage =
     Number.isNaN(rawPage) || rawPage < 1 ? 1 : Math.min(rawPage, totalPages)
 
-  // Using key={currentPage} automatically resets all internal state (like visibleCount)
-  // whenever the page changes, via pagination buttons or browser back/forward navigation.
   return (
     <ProductListingContent
       key={currentPage}
@@ -43,6 +51,8 @@ export default function ProductListing({
       productData={productData}
       title={title}
       breadcrumbs={breadcrumbs}
+      isBuilderMode={isBuilderMode}
+      onSelect={onSelect}
     />
   )
 }
@@ -53,13 +63,9 @@ function ProductListingContent({
   productData,
   title,
   breadcrumbs,
-}: {
-  currentPage: number
-  totalPages: number
-  productData: Product[]
-  title: string
-  breadcrumbs: ListingBreadcrumb[]
-}) {
+  isBuilderMode = false,
+  onSelect,
+}: FullProductListingProps) {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -77,7 +83,6 @@ function ProductListingContent({
 
   const visibleProducts = products.slice(0, visibleCount)
 
-  // Reset loading ref whenever visibleCount updates
   useEffect(() => {
     isLoadingRef.current = false
   }, [visibleCount])
@@ -127,6 +132,7 @@ function ProductListingContent({
   const handleNextPage = () => {
     if (currentPage < totalPages) handleProductPage(currentPage + 1)
   }
+
   return (
     <div className="min-h-screen bg-background px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -236,7 +242,7 @@ function ProductListingContent({
 
           {/* Right Main Content Area */}
           <main className="space-y-4 lg:col-span-3">
-            {/* Toolbar (Sorting & View Toggle) */}
+            {/* Toolbar */}
             <div className="flex flex-col items-center justify-between gap-3 rounded-xl border border-border bg-card p-3 shadow-sm sm:flex-row sm:p-4">
               <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start">
                 <Button
@@ -262,7 +268,6 @@ function ProductListingContent({
               </div>
 
               <div className="flex w-full items-center justify-end gap-3 sm:w-auto">
-                {/* Sort Dropdown */}
                 <div className="flex items-center gap-2 text-xs">
                   <span className="hidden text-muted-foreground sm:inline">
                     Sort by:
@@ -281,7 +286,12 @@ function ProductListingContent({
             {products.length > 0 ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {visibleProducts.map((product) => (
-                  <ProductCard product={product} key={product.id} />
+                  <ProductCard
+                    product={product}
+                    isBuilderMode={isBuilderMode}
+                    onSelect={() => onSelect && onSelect(product)}
+                    key={product.id}
+                  />
                 ))}
               </div>
             ) : (
@@ -298,7 +308,7 @@ function ProductListingContent({
               </div>
             )}
 
-            {/* Sentinel element for Intersection Observer at the bottom of the list */}
+            {/* Sentinel element for Intersection Observer */}
             {visibleProducts.length < products.length && (
               <div
                 ref={observerTarget}

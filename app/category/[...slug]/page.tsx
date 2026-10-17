@@ -23,7 +23,6 @@ const page = async ({ params }: { params: Promise<{ slug: string[] }> }) => {
         { name: "Category", url: "/category" },
         { name: title, active: true },
       ]
-
   return (
     // TODO add  Skeleton
     <Suspense fallback={"loading...."}>

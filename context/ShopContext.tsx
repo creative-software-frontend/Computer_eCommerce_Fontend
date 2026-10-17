@@ -8,6 +8,15 @@ import {
   useMemo,
 } from "react"
 
+export interface PcProduct {
+  id: string | number
+  title: string
+  price: number
+  image: string
+  spec: string
+  wattage: number
+}
+
 export interface CartItem {
   id: string | number
   name: string
@@ -44,6 +53,14 @@ interface ShopContextType {
   buyNowProduct: BuyNowProduct | null
   openBuyNow: (product: Omit<BuyNowProduct, "quantity">) => void
   closeBuyNow: () => void
+
+  // PC Builder States & Actions
+  pcBuild: Record<string, PcProduct>
+  setPcBuildItem: (category: string, product: PcProduct) => void
+  removePcBuildItem: (category: string) => void
+  clearPcBuild: () => void
+  pcTotalAmount: number
+  pcTotalWattage: number
 }
 
 const CART_STORAGE_KEY = "technocore_cart"
@@ -65,6 +82,24 @@ function getSnapshot() {
 
 function getServerSnapshot() {
   return "[]"
+}
+
+// pc build
+const PC_STORAGE_KEY = "technocore_pc_build"
+
+function subscribePc(callback: () => void) {
+  if (typeof window === "undefined") return () => {}
+  window.addEventListener("storage", callback)
+  window.addEventListener("pc-build-updated", callback)
+  return () => {
+    window.removeEventListener("storage", callback)
+    window.removeEventListener("pc-build-updated", callback)
+  }
+}
+
+function getPcSnapshot() {
+  if (typeof window === "undefined") return "{}"
+  return localStorage.getItem(PC_STORAGE_KEY) || "{}"
 }
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined)
@@ -151,6 +186,56 @@ export function ShopProvider({ children }: { children: React.ReactNode }) {
     setBuyNowProduct(null)
   }
 
+  // --- PC Builder State Logic ---
+  const pcBuildJson = useSyncExternalStore(
+    subscribePc,
+    getPcSnapshot,
+    () => "{}"
+  )
+
+  const pcBuild: Record<string, PcProduct> = useMemo(() => {
+    try {
+      return JSON.parse(pcBuildJson)
+    } catch {
+      return {}
+    }
+  }, [pcBuildJson])
+
+  const savePcToLocalStorage = (build: Record<string, PcProduct>) => {
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(PC_STORAGE_KEY, JSON.stringify(build))
+        window.dispatchEvent(new Event("pc-build-updated"))
+      } catch (error) {
+        console.error("Failed to save PC build", error)
+      }
+    }
+  }
+
+  const setPcBuildItem = (category: string, product: PcProduct) => {
+    const updatedBuild = { ...pcBuild, [category]: product }
+    savePcToLocalStorage(updatedBuild)
+  }
+
+  const removePcBuildItem = (category: string) => {
+    const updatedBuild = { ...pcBuild }
+    delete updatedBuild[category]
+    savePcToLocalStorage(updatedBuild)
+  }
+
+  const clearPcBuild = () => {
+    savePcToLocalStorage({})
+  }
+
+  const pcTotalAmount = Object.values(pcBuild).reduce(
+    (sum, item) => sum + item.price,
+    0
+  )
+  const pcTotalWattage = Object.values(pcBuild).reduce(
+    (sum, item) => sum + item.wattage,
+    75
+  ) // Base system wattage
+
   return (
     <ShopContext.Provider
       value={{
@@ -168,6 +253,12 @@ export function ShopProvider({ children }: { children: React.ReactNode }) {
         buyNowProduct,
         openBuyNow,
         closeBuyNow,
+        pcBuild,
+        setPcBuildItem,
+        removePcBuildItem,
+        clearPcBuild,
+        pcTotalAmount,
+        pcTotalWattage,
       }}
     >
       {children}

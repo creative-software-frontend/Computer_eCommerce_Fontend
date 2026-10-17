@@ -7,7 +7,16 @@ import { FaCheck, FaShoppingCart, FaStar } from "react-icons/fa"
 import { useState } from "react"
 import { useShop } from "@/context/ShopContext"
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({
+  product,
+  isBuilderMode = false,
+  onSelect,
+}: {
+  product: Product
+  isBuilderMode?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSelect?: (product: any) => void
+}) => {
   const { addToCart, openBuyNow } = useShop()
   const [isAdded, setIsAdded] = useState(false)
 
@@ -21,6 +30,69 @@ const ProductCard = ({ product }: { product: Product }) => {
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 1500)
   }
+
+  // action buttons
+  const actionButtons = isBuilderMode ? (
+    <div className="mt-4">
+      <Button
+        onClick={() => onSelect?.(product)}
+        className="mx-auto w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
+      >
+        Select for Build
+      </Button>
+    </div>
+  ) : (
+    <div className="mt-4 grid grid-cols-2 gap-2">
+      <Button
+        onClick={handleAddToCart}
+        disabled={product.stock !== "inStock"}
+        // variant="secondary"
+        className={`w-full cursor-pointer bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high ${
+          isAdded
+            ? "bg-emerald-600 text-white hover:bg-emerald-700"
+            : "bg-surface-container text-primary hover:bg-surface-container-high"
+        }`}
+      >
+        {isAdded ? (
+          <>
+            <FaCheck className="text-xs" />
+            <span>Added</span>
+          </>
+        ) : (
+          <>
+            <FaShoppingCart className="text-xs" />
+            <span>Add</span>
+          </>
+        )}
+      </Button>
+      <Button
+        onClick={() =>
+          openBuyNow({
+            id: product.id,
+            name: product.title,
+            price: product.price,
+            image: product.image,
+          })
+        }
+        className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
+      >
+        Buy Now
+      </Button>
+    </div>
+  )
+
+  // add to pc builder
+  //  const handleSelect = (product: PcProduct) => {
+  //     setPcBuildItem(category, {
+  //       id: product.id,
+  //       name: product.name,
+  //       price: product.price,
+  //       image: product.image,
+  //       spec: product.spec || "Standard Spec",
+  //       wattage: product.wattage || 65, // ডিফল্ট ওয়াটেজ বা প্রোডাক্টের ওয়াটেজ
+  //     })
+  //     router.push("/pc-builder")
+  //   }
 
   return (
     <Card
@@ -131,44 +203,8 @@ const ProductCard = ({ product }: { product: Product }) => {
           </div>
         </div>
       </div>
-
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        <Button
-          onClick={handleAddToCart}
-          disabled={product.stock !== "inStock"}
-          // variant="secondary"
-          className={`w-full cursor-pointer bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high ${
-            isAdded
-              ? "bg-emerald-600 text-white hover:bg-emerald-700"
-              : "bg-surface-container text-primary hover:bg-surface-container-high"
-          }`}
-        >
-          {isAdded ? (
-            <>
-              <FaCheck className="text-xs" />
-              <span>Added</span>
-            </>
-          ) : (
-            <>
-              <FaShoppingCart className="text-xs" />
-              <span>Add</span>
-            </>
-          )}
-        </Button>
-        <Button
-          onClick={() =>
-            openBuyNow({
-              id: product.id,
-              name: product.title,
-              price: product.price,
-              image: product.image,
-            })
-          }
-          className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
-        >
-          Buy Now
-        </Button>
-      </div>
+      {/* action buttons */}
+      {actionButtons}
     </Card>
   )
 }
