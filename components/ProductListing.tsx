@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
 import { FaFilter, FaTimes } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import ProductCard from "@/components/ui/ProductCard"
@@ -11,11 +10,23 @@ import BreadcrumbComponent from "./BreadCrumb"
 
 const itemsPerPage = 36
 
+export type ListingBreadcrumb = {
+  name: string
+  url?: string
+  active?: boolean
+}
+
+type ProductListingProps = {
+  productData: Product[]
+  title: string
+  breadcrumbs: ListingBreadcrumb[]
+}
+
 export default function ProductListing({
   productData,
-}: {
-  productData: Product[]
-}) {
+  title,
+  breadcrumbs,
+}: ProductListingProps) {
   const searchParams = useSearchParams()
   const totalPages = Math.max(1, Math.ceil(productData.length / itemsPerPage))
   const rawPage = Number(searchParams.get("page") ?? "1")
@@ -30,6 +41,8 @@ export default function ProductListing({
       currentPage={currentPage}
       totalPages={totalPages}
       productData={productData}
+      title={title}
+      breadcrumbs={breadcrumbs}
     />
   )
 }
@@ -38,10 +51,14 @@ function ProductListingContent({
   currentPage,
   totalPages,
   productData,
+  title,
+  breadcrumbs,
 }: {
   currentPage: number
   totalPages: number
   productData: Product[]
+  title: string
+  breadcrumbs: ListingBreadcrumb[]
 }) {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
   const searchParams = useSearchParams()
@@ -115,18 +132,9 @@ function ProductListingContent({
       <div className="mx-auto max-w-7xl">
         {/* Breadcrumb & Page Title */}
         <div className="mb-6">
-          <BreadcrumbComponent
-            urlList={[
-              { url: "/category", name: "Category" },
-              {
-                url: "",
-                name: visibleProducts[0]?.category ?? "Products",
-                active: true,
-              },
-            ]}
-          />
+          <BreadcrumbComponent urlList={breadcrumbs} />
           <h1 className="font-heading text-2xl font-extrabold text-foreground capitalize sm:text-3xl">
-            {visibleProducts[0]?.category ?? "Products"}
+            {title}
           </h1>
         </div>
 
@@ -300,7 +308,7 @@ function ProductListingContent({
             )}
 
             {/* Pagination */}
-            {productData.length > 0 && (
+            {productData.length > itemsPerPage && (
               <div className="flex items-center justify-center gap-2 pt-6">
                 <Button
                   variant="outline"

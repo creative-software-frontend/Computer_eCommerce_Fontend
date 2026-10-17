@@ -31,22 +31,26 @@ export default function BreadcrumbComponent({
           </BreadcrumbLink>
         </BreadcrumbItem>
         {urlList.map((urlObj, i) => (
-          <React.Fragment key={i}>
+          <React.Fragment key={`${urlObj.url ?? urlObj.name}-${i}`}>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink
-                className={`${urlObj?.active ? "font-medium text-foreground" : "transition-colors hover:text-primary"}`}
-                href={urlObj?.url || ""}
-              >
-                {urlObj?.name}
-              </BreadcrumbLink>
+              {urlObj.active ? (
+                <BreadcrumbPage className="font-medium text-foreground">
+                  {urlObj.name}
+                </BreadcrumbPage>
+              ) : urlObj.url ? (
+                <BreadcrumbLink
+                  className="transition-colors hover:text-primary"
+                  href={urlObj.url}
+                >
+                  {urlObj.name}
+                </BreadcrumbLink>
+              ) : (
+                <span>{urlObj.name}</span>
+              )}
             </BreadcrumbItem>
           </React.Fragment>
         ))}
-        {/* <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-        </BreadcrumbItem> */}
       </BreadcrumbList>
     </Breadcrumb>
   )
