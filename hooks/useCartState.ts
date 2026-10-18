@@ -19,6 +19,8 @@ export interface BuyNowProduct {
   spec?: string
 }
 
+const storageKey = STORAGE_KEYS.CART
+
 function subscribe(callback: () => void) {
   if (typeof window === "undefined") return () => {}
   window.addEventListener("storage", callback)
@@ -33,7 +35,7 @@ export default function useCartState() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const cartJson = useSyncExternalStore(
     subscribe,
-    () => localStorage.getItem(STORAGE_KEYS.CART) || "[]",
+    () => localStorage.getItem(storageKey) || "[]",
     () => "[]"
   )
 
@@ -48,7 +50,7 @@ export default function useCartState() {
   const saveToLocalStorage = (items: CartItem[]) => {
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(items))
+        localStorage.setItem(storageKey, JSON.stringify(items))
         window.dispatchEvent(new Event("cart-updated"))
       } catch (error) {
         console.error("Failed to save cart to localStorage", error)
@@ -61,7 +63,7 @@ export default function useCartState() {
     if (typeof window === "undefined") return
     try {
       const currentItems: CartItem[] = JSON.parse(
-        localStorage.getItem(STORAGE_KEYS.CART) || "[]"
+        localStorage.getItem(storageKey) || "[]"
       )
       const updatedCart = [...currentItems]
 

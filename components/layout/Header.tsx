@@ -49,7 +49,7 @@ const trendingKeywords: string[] = [
 ]
 
 export default function Header() {
-  const { favoriteItemCount } = useShop()
+  const { favoriteItemCount, compareItemsCount } = useShop()
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/95 shadow-xs backdrop-blur-md">
       {/* 1. Utility Bar */}
@@ -199,9 +199,11 @@ export default function Header() {
               <Button asChild variant="ghost" size="icon" className="relative">
                 <Link href="/compare" aria-label="Compare products">
                   <FaArrowRightArrowLeft className="size-5" />
-                  <Badge className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs">
-                    2
-                  </Badge>
+                  {compareItemsCount > 0 && (
+                    <Badge className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs">
+                      {compareItemsCount}
+                    </Badge>
+                  )}
                 </Link>
               </Button>
 
@@ -209,12 +211,14 @@ export default function Header() {
               <Button asChild variant="ghost" size="icon" className="relative">
                 <Link href="/favorites" aria-label="favorites">
                   <FaRegHeart className="size-5" />
-                  <Badge
-                    variant="destructive"
-                    className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs"
-                  >
-                    {favoriteItemCount}
-                  </Badge>
+                  {favoriteItemCount > 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs"
+                    >
+                      {favoriteItemCount}
+                    </Badge>
+                  )}
                 </Link>
               </Button>
 

@@ -8,16 +8,16 @@ import {
 } from "@/components/ui/breadcrumb"
 import React from "react"
 
-interface UrlList {
-  url?: string
+export type ListingBreadcrumb = {
   name: string
+  url: string | null
   active?: boolean
 }
 
 export default function BreadcrumbComponent({
   urlList,
 }: {
-  urlList: UrlList[]
+  urlList: ListingBreadcrumb[]
 }) {
   return (
     <Breadcrumb>

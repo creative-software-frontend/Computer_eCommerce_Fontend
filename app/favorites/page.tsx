@@ -1,17 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import {
-  FaTrash,
-  FaShoppingCart,
-  FaArrowLeft,
-  FaHeart,
-  FaTrashAlt,
-} from "react-icons/fa"
+import { FaTrash, FaShoppingCart, FaHeart, FaTrashAlt } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useShop } from "@/context/ShopContext"
 import Image from "next/image"
+import BreadcrumbComponent from "@/components/BreadCrumb"
 
 export default function FavoritesPage() {
   const {
@@ -44,19 +39,15 @@ export default function FavoritesPage() {
         <div className="flex flex-col items-start justify-between gap-4 border-b border-border pb-6 sm:flex-row sm:items-center">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <Link href="/">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-1 p-0 text-xs text-muted-foreground hover:bg-transparent hover:text-foreground"
-                >
-                  <FaArrowLeft className="text-[10px]" /> Home
-                </Button>
-              </Link>
-              <span className="text-muted-foreground">/</span>
-              <span className="text-xs font-bold text-foreground">
-                Favorites
-              </span>
+              <BreadcrumbComponent
+                urlList={[
+                  {
+                    name: "Favorites",
+                    url: null,
+                    active: true,
+                  },
+                ]}
+              />
             </div>
             <h1 className="flex items-center gap-3 font-heading text-2xl font-black tracking-tight sm:text-3xl">
               <span>My Favorite List</span>

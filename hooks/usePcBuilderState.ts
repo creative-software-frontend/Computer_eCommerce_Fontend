@@ -10,6 +10,8 @@ export interface PcProduct {
   wattage: number
 }
 
+const storageKey = STORAGE_KEYS.PC_BUILD
+
 function subscribePc(callback: () => void) {
   if (typeof window === "undefined") return () => {}
   window.addEventListener("storage", callback)
@@ -23,7 +25,7 @@ function subscribePc(callback: () => void) {
 export default function usePcBuilderState() {
   const pcBuildJson = useSyncExternalStore(
     subscribePc,
-    () => localStorage.getItem(STORAGE_KEYS.FAVORITES) || "[]",
+    () => localStorage.getItem(storageKey) || "[]",
     () => "{}"
   )
 
@@ -38,7 +40,7 @@ export default function usePcBuilderState() {
   const savePcToLocalStorage = (build: Record<string, PcProduct>) => {
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem(STORAGE_KEYS.PC_BUILD, JSON.stringify(build))
+        localStorage.setItem(storageKey, JSON.stringify(build))
         window.dispatchEvent(new Event("pc-build-updated"))
       } catch (error) {
         console.error("Failed to save PC build", error)

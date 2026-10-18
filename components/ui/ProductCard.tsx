@@ -5,6 +5,7 @@ import { formatBdt } from "@/lib/data/products.data"
 import Image from "next/image"
 import {
   FaCheck,
+  FaExchangeAlt,
   FaHeart,
   FaRegHeart,
   FaShoppingCart,
@@ -26,10 +27,17 @@ const ProductCard = ({
   isBuilderMode = false,
   onSelect,
 }: ProductCardProps) => {
-  const { addToCart, openBuyNow } = useShop()
   const [isAdded, setIsAdded] = useState(false)
-  const { toggleFavorite, isFavorite } = useShop()
+  const {
+    toggleFavorite,
+    isFavorite,
+    addToCart,
+    openBuyNow,
+    toggleCompare,
+    isInCompare,
+  } = useShop()
   const liked = isFavorite(product.id)
+  const compared = isInCompare(product.id)
 
   // add to cart
   const handleAddToCart = () => {
@@ -41,6 +49,19 @@ const ProductCard = ({
     })
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 1500)
+  }
+
+  // toggle to compare list
+  const handleToggleCompare = () => {
+    toggleCompare({
+      id: product.id,
+      name: product.title,
+      price: product.price,
+      image: product.image,
+      // spec: product.spec || product.description,
+      // wattage: product.,
+      category: product.category,
+    })
   }
 
   // toggle to favorite list
@@ -129,12 +150,17 @@ const ProductCard = ({
               )}
             </Button>
             <Button
+              onClick={handleToggleCompare}
               size="icon"
               variant="secondary"
               className="h-8 w-8 rounded-full bg-card text-foreground shadow-sm hover:bg-surface"
               title="Compare Product"
             >
-              <FaArrowRightArrowLeft />
+              {compared ? (
+                <FaArrowRightArrowLeft className="animate-scale-up text-xs text-rose-500 sm:text-sm" />
+              ) : (
+                <FaArrowRightArrowLeft className="text-xs text-muted-foreground hover:text-foreground sm:text-sm" />
+              )}
             </Button>
           </div>
           <Image

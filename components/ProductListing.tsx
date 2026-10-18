@@ -6,17 +6,11 @@ import { Button } from "@/components/ui/button"
 import ProductCard from "@/components/ui/ProductCard"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Product } from "@/lib/data/types"
-import BreadcrumbComponent from "./BreadCrumb"
+import BreadcrumbComponent, { ListingBreadcrumb } from "./BreadCrumb"
 
 const ITEMS_PER_PAGE = 36
 const INITIAL_VISIBLE_COUNT = 6
 const LOAD_MORE_STEP = 4
-
-export type ListingBreadcrumb = {
-  name: string
-  url?: string
-  active?: boolean
-}
 
 type ProductListingProps = {
   productData: Product[]

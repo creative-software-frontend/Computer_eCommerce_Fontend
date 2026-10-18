@@ -9,6 +9,8 @@ export interface FavoriteItem {
   spec?: string
 }
 
+const storageKey = STORAGE_KEYS.FAVORITES
+
 function subscribe(callback: () => void) {
   if (typeof window === "undefined") return () => {}
   window.addEventListener("storage", callback)
@@ -22,7 +24,7 @@ function subscribe(callback: () => void) {
 export default function useFavoritesState() {
   const favoritesJson = useSyncExternalStore(
     subscribe,
-    () => localStorage.getItem(STORAGE_KEYS.FAVORITES) || "[]",
+    () => localStorage.getItem(storageKey) || "[]",
     () => "[]"
   )
 
@@ -36,7 +38,7 @@ export default function useFavoritesState() {
 
   const saveToStorage = (items: FavoriteItem[]) => {
     if (typeof window === "undefined") return
-    localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(items))
+    localStorage.setItem(storageKey, JSON.stringify(items))
     window.dispatchEvent(new Event("favorites-updated"))
   }
 

@@ -14,9 +14,11 @@ export default function FloatingCartButton() {
     >
       <div className="relative mb-1">
         <FaShoppingCart className="text-xl transition-transform group-hover:scale-110" />
-        <span className="text-destructive-foreground absolute -top-2 -right-3 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold">
-          {itemCount}
-        </span>
+        {itemCount > 0 && (
+          <span className="text-destructive-foreground absolute -top-2 -right-3 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold">
+            {itemCount}
+          </span>
+        )}
       </div>
       {/* <span className="mt-1 text-[11px] font-extrabold tracking-tight whitespace-nowrap">
         {itemCount} {itemCount === 1 ? "Item" : "Items"}
