@@ -51,22 +51,21 @@ export default function PcBuilderPage() {
     clearPcBuild,
     pcTotalAmount,
     pcTotalWattage,
-    addToCart,
+    addMultipleToCart,
     openCart,
   } = useShop()
 
   const selectedCount = Object.keys(pcBuild).length
 
   const handleAddAllToCart = () => {
-    Object.values(pcBuild).forEach((item) => {
-      addToCart({
-        id: item.id,
-        name: item.title,
-        price: item.price,
-        image: item.image,
-        spec: item.spec,
-      })
-    })
+    const itemsToAdd = Object.values(pcBuild).map((item) => ({
+      id: item.id,
+      name: item.title,
+      price: item.price,
+      image: item.image,
+      spec: item.spec,
+    }))
+    addMultipleToCart(itemsToAdd)
     openCart()
   }
   return (

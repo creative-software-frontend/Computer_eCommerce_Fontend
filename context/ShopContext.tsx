@@ -43,6 +43,7 @@ interface ShopContextType {
   toggleCart: () => void
   cartItems: CartItem[]
   addToCart: (product: Omit<CartItem, "quantity">) => void
+  addMultipleToCart: (products: Omit<CartItem, "quantity">[]) => void
   removeFromCart: (id: string | number) => void
   updateQuantity: (id: string | number, delta: number) => void
   itemCount: number
@@ -136,14 +137,42 @@ export function ShopProvider({ children }: { children: React.ReactNode }) {
   const closeCart = () => setIsCartOpen(false)
   const toggleCart = () => setIsCartOpen(!isCartOpen)
 
+  // (Bulk Add)
+  const addMultipleToCart = (products: Omit<CartItem, "quantity">[]) => {
+    if (typeof window === "undefined") return
+    try {
+      const currentItems: CartItem[] = JSON.parse(
+        localStorage.getItem(CART_STORAGE_KEY) || "[]"
+      )
+      const updatedCart = [...currentItems]
+
+      products.forEach((product) => {
+        const existingIndex = updatedCart.findIndex(
+          (item) => item.id === product.id
+        )
+        if (existingIndex > -1) {
+          updatedCart[existingIndex].quantity += 1
+        } else {
+          updatedCart.push({ ...product, quantity: 1 })
+        }
+      })
+
+      saveToLocalStorage(updatedCart)
+    } catch (error) {
+      console.error("Failed to add multiple items to cart", error)
+    }
+  }
+
   const addToCart = (product: Omit<CartItem, "quantity">) => {
     const existingIndex = cartItems.findIndex((item) => item.id === product.id)
 
     let updatedCart
+    // increase quantity
     if (existingIndex > -1) {
       updatedCart = [...cartItems]
       updatedCart[existingIndex].quantity += 1
     } else {
+      // add new product to cart
       updatedCart = [...cartItems, { ...product, quantity: 1 }]
     }
 
@@ -245,6 +274,7 @@ export function ShopProvider({ children }: { children: React.ReactNode }) {
         toggleCart,
         cartItems,
         addToCart,
+        addMultipleToCart,
         removeFromCart,
         updateQuantity,
         itemCount,

@@ -8,7 +8,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Product } from "@/lib/data/types"
 import BreadcrumbComponent from "./BreadCrumb"
 
-const itemsPerPage = 36
+const ITEMS_PER_PAGE = 36
+const INITIAL_VISIBLE_COUNT = 6
+const LOAD_MORE_STEP = 4
 
 export type ListingBreadcrumb = {
   name: string
@@ -30,6 +32,8 @@ type FullProductListingProps = ProductListingProps & {
   totalPages: number
 }
 
+const BRANDS = ["ASUS", "MSI", "Gigabyte", "Corsair", "Samsung", "Lian Li"]
+
 export default function ProductListing({
   productData,
   title,
@@ -38,7 +42,7 @@ export default function ProductListing({
   onSelect,
 }: ProductListingProps) {
   const searchParams = useSearchParams()
-  const totalPages = Math.max(1, Math.ceil(productData.length / itemsPerPage))
+  const totalPages = Math.max(1, Math.ceil(productData.length / ITEMS_PER_PAGE))
   const rawPage = Number(searchParams.get("page") ?? "1")
   const currentPage =
     Number.isNaN(rawPage) || rawPage < 1 ? 1 : Math.min(rawPage, totalPages)
@@ -67,18 +71,19 @@ function ProductListingContent({
   onSelect,
 }: FullProductListingProps) {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT)
+
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
 
-  const [visibleCount, setVisibleCount] = useState(6)
   const observerTarget = useRef<HTMLDivElement | null>(null)
   const isLoadingRef = useRef(false)
-  const params = new URLSearchParams(searchParams)
 
+  // Current page items slice
   const products = productData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
   )
 
   const visibleProducts = products.slice(0, visibleCount)
@@ -90,17 +95,16 @@ function ProductListingContent({
   // Intersection Observer for Infinite Scroll
   useEffect(() => {
     const target = observerTarget.current
-
-    if (!target || visibleCount >= products.length) {
-      return
-    }
+    if (!target || visibleCount >= products.length) return
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0]
         if (entry.isIntersecting && !isLoadingRef.current) {
           isLoadingRef.current = true
-          setVisibleCount((count) => Math.min(count + 4, products.length))
+          setVisibleCount((count) =>
+            Math.min(count + LOAD_MORE_STEP, products.length)
+          )
         }
       },
       {
@@ -120,17 +124,10 @@ function ProductListingContent({
 
   const handleProductPage = (pageNumber: number) => {
     const nextPage = Math.min(Math.max(pageNumber, 1), totalPages)
+    const params = new URLSearchParams(searchParams.toString())
     params.set("page", nextPage.toString())
     const query = params.toString()
     replace(query ? `${pathname}?${query}` : pathname)
-  }
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) handleProductPage(currentPage - 1)
-  }
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) handleProductPage(currentPage + 1)
   }
 
   return (
@@ -147,7 +144,11 @@ function ProductListingContent({
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
           {/* Left Sidebar Filters */}
           <aside
-            className={`lg:block ${mobileFilterOpen ? "fixed inset-0 z-50 block overflow-y-auto bg-background/80 p-4 backdrop-blur-sm" : "hidden"}`}
+            className={`lg:block ${
+              mobileFilterOpen
+                ? "fixed inset-0 z-50 block overflow-y-auto bg-background/80 p-4 backdrop-blur-sm"
+                : "hidden"
+            }`}
           >
             <div className="space-y-6 rounded-xl border border-border bg-card p-5 shadow-sm">
               {/* Mobile Filter Header */}
@@ -188,16 +189,9 @@ function ProductListingContent({
                   Brands
                 </h4>
                 <div className="space-y-2 text-xs">
-                  {[
-                    "ASUS",
-                    "MSI",
-                    "Gigabyte",
-                    "Corsair",
-                    "Samsung",
-                    "Lian Li",
-                  ].map((brand, idx) => (
+                  {BRANDS.map((brand) => (
                     <label
-                      key={idx}
+                      key={brand}
                       className="flex cursor-pointer items-center gap-2 text-muted-foreground hover:text-foreground"
                     >
                       <input
@@ -287,10 +281,10 @@ function ProductListingContent({
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {visibleProducts.map((product) => (
                   <ProductCard
+                    key={product.id}
                     product={product}
                     isBuilderMode={isBuilderMode}
-                    onSelect={() => onSelect && onSelect(product)}
-                    key={product.id}
+                    onSelect={() => onSelect?.(product)}
                   />
                 ))}
               </div>
@@ -318,34 +312,41 @@ function ProductListingContent({
             )}
 
             {/* Pagination */}
-            {productData.length > itemsPerPage && (
+            {productData.length > ITEMS_PER_PAGE && (
               <div className="flex items-center justify-center gap-2 pt-6">
                 <Button
                   variant="outline"
                   size="sm"
                   className="text-xs hover:bg-primary/80 hover:text-white"
                   disabled={currentPage === 1}
-                  onClick={handlePreviousPage}
+                  onClick={() => handleProductPage(currentPage - 1)}
                 >
                   Previous
                 </Button>
-                {Array.from({ length: totalPages }).map((_, i) => (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleProductPage(i + 1)}
-                    className={`text-xs hover:bg-primary/80 hover:text-white ${currentPage === i + 1 ? "bg-primary text-primary-foreground" : ""}`}
-                    key={i}
-                  >
-                    {i + 1}
-                  </Button>
-                ))}
+                {Array.from({ length: totalPages }).map((_, i) => {
+                  const pageNum = i + 1
+                  return (
+                    <Button
+                      key={pageNum}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleProductPage(pageNum)}
+                      className={`text-xs hover:bg-primary/80 hover:text-white ${
+                        currentPage === pageNum
+                          ? "bg-primary text-primary-foreground"
+                          : ""
+                      }`}
+                    >
+                      {pageNum}
+                    </Button>
+                  )
+                })}
                 <Button
                   variant="outline"
                   size="sm"
                   className="text-xs hover:bg-primary/80 hover:text-white"
                   disabled={currentPage === totalPages}
-                  onClick={handleNextPage}
+                  onClick={() => handleProductPage(currentPage + 1)}
                 >
                   Next
                 </Button>

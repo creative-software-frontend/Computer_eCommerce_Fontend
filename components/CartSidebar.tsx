@@ -138,7 +138,7 @@ export default function CartSidebar() {
                       </h4>
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="p-1 text-muted-foreground transition-colors hover:text-destructive"
+                        className="cursor-pointer p-1 text-muted-foreground transition-colors hover:text-destructive"
                       >
                         <FaTrash className="text-[10px]" />
                       </button>
@@ -156,7 +156,7 @@ export default function CartSidebar() {
                       <div className="flex items-center overflow-hidden rounded-lg border border-border bg-muted/40">
                         <button
                           onClick={() => updateQuantity(item.id, -1)}
-                          className="px-2 py-1 text-[10px] text-muted-foreground transition-colors hover:text-foreground"
+                          className="cursor-pointer px-2 py-1 text-[10px] text-muted-foreground transition-colors hover:text-foreground"
                         >
                           <FaMinus />
                         </button>
@@ -165,7 +165,7 @@ export default function CartSidebar() {
                         </span>
                         <button
                           onClick={() => updateQuantity(item.id, 1)}
-                          className="px-2 py-1 text-[10px] text-muted-foreground transition-colors hover:text-foreground"
+                          className="cursor-pointer px-2 py-1 text-[10px] text-muted-foreground transition-colors hover:text-foreground"
                         >
                           <FaPlus />
                         </button>
@@ -188,8 +188,8 @@ export default function CartSidebar() {
                   onClick={() => setShowPromo(true)}
                   className="flex w-full items-center justify-between py-1 text-xs font-semibold text-primary transition-all hover:underline"
                 >
-                  <span>Have a coupon code?</span>
-                  <FaChevronDown className="text-md" />
+                  <span className="cursor-pointer">Have a coupon code?</span>
+                  <FaChevronDown className="text-md cursor-pointer" />
                 </button>
               ) : (
                 <div className="animate-in space-y-2 duration-200 fade-in">
