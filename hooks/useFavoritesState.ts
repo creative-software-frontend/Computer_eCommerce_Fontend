@@ -61,8 +61,11 @@ export default function useFavoritesState() {
     return favoriteItems.some((item) => item.id === id)
   }
 
+  const favoriteItemCount = favoriteItems.length
+
   return {
     favoriteItems,
+    favoriteItemCount,
     addToFavorites,
     removeFromFavorites,
     toggleFavorite,

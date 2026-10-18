@@ -24,6 +24,7 @@ import Image from "next/image"
 import LogoImage from "@/public/images/logo.png"
 import AuthModal from "../modal/AuthModal"
 import HeaderCartButton from "../ui/HeaderCartButton"
+import { useShop } from "@/context/ShopContext"
 
 type NavigationItem = {
   label: string
@@ -48,6 +49,7 @@ const trendingKeywords: string[] = [
 ]
 
 export default function Header() {
+  const { favoriteItemCount } = useShop()
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/95 shadow-xs backdrop-blur-md">
       {/* 1. Utility Bar */}
@@ -203,15 +205,15 @@ export default function Header() {
                 </Link>
               </Button>
 
-              {/* Wishlist */}
+              {/* favorite list */}
               <Button asChild variant="ghost" size="icon" className="relative">
-                <Link href="/wishlist" aria-label="Wishlist">
+                <Link href="/favorites" aria-label="favorites">
                   <FaRegHeart className="size-5" />
                   <Badge
                     variant="destructive"
                     className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full p-0 text-xs"
                   >
-                    4
+                    {favoriteItemCount}
                   </Badge>
                 </Link>
               </Button>

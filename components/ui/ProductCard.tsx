@@ -3,24 +3,35 @@ import { Card } from "./card"
 import { Product } from "@/lib/data/types"
 import { formatBdt } from "@/lib/data/products.data"
 import Image from "next/image"
-import { FaCheck, FaRegHeart, FaShoppingCart, FaStar } from "react-icons/fa"
+import {
+  FaCheck,
+  FaHeart,
+  FaRegHeart,
+  FaShoppingCart,
+  FaStar,
+} from "react-icons/fa"
 import { useState } from "react"
 import { useShop } from "@/context/ShopContext"
 import { FaArrowRightArrowLeft } from "react-icons/fa6"
+
+interface ProductCardProps {
+  product: Product
+  isBuilderMode?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSelect?: (product: any) => void
+}
 
 const ProductCard = ({
   product,
   isBuilderMode = false,
   onSelect,
-}: {
-  product: Product
-  isBuilderMode?: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSelect?: (product: any) => void
-}) => {
+}: ProductCardProps) => {
   const { addToCart, openBuyNow } = useShop()
   const [isAdded, setIsAdded] = useState(false)
+  const { toggleFavorite, isFavorite } = useShop()
+  const liked = isFavorite(product.id)
 
+  // add to cart
   const handleAddToCart = () => {
     addToCart({
       id: product.id,
@@ -30,6 +41,17 @@ const ProductCard = ({
     })
     setIsAdded(true)
     setTimeout(() => setIsAdded(false), 1500)
+  }
+
+  // toggle to favorite list
+  const handleToggleFavorite = () => {
+    toggleFavorite({
+      id: product.id,
+      name: product.title,
+      price: product.price,
+      image: product.image,
+      // spec: product.specs || product.description,
+    })
   }
 
   // action buttons
@@ -95,11 +117,16 @@ const ProductCard = ({
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
             <Button
               size="icon"
+              onClick={handleToggleFavorite}
               variant="secondary"
               className="h-8 w-8 rounded-full bg-card text-foreground shadow-sm hover:bg-surface"
               title="Add to Wishlist"
             >
-              <FaRegHeart />
+              {liked ? (
+                <FaHeart className="animate-scale-up text-xs text-rose-500 sm:text-sm" />
+              ) : (
+                <FaRegHeart className="text-xs text-muted-foreground hover:text-foreground sm:text-sm" />
+              )}
             </Button>
             <Button
               size="icon"
