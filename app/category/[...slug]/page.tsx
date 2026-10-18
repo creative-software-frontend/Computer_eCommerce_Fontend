@@ -1,5 +1,5 @@
+import { ListingBreadcrumb } from "@/components/BreadCrumb"
 import ProductListing from "@/components/ProductListing"
-import type { ListingBreadcrumb } from "@/components/ProductListing"
 import { getProductsByCategory } from "@/lib/api/product.api"
 import { categories } from "@/lib/data/Categories.data"
 import { findCategoryPath, formatSlug } from "@/lib/utils"
@@ -21,7 +21,7 @@ const page = async ({ params }: { params: Promise<{ slug: string[] }> }) => {
       }))
     : [
         { name: "Category", url: "/category" },
-        { name: title, active: true },
+        { name: title, url: null, active: true },
       ]
   return (
     // TODO add  Skeleton
