@@ -1,8 +1,6 @@
 import { Geist_Mono, Inter, DM_Sans } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
-import Header from "@/components/layout/Header"
-import Footer from "@/components/layout/Footer"
 import CartSidebar from "@/components/CartSidebar"
 import FloatingCartButton from "@/components/FloatingCartButton"
 import { Toaster } from "sonner"

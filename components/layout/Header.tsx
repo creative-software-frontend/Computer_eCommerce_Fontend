@@ -9,7 +9,6 @@ import {
   FaBars,
   FaScrewdriverWrench,
   FaArrowRightArrowLeft,
-  FaCartShopping,
   FaUser,
   FaFireFlameCurved,
 } from "react-icons/fa6"

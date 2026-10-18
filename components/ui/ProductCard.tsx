@@ -3,9 +3,10 @@ import { Card } from "./card"
 import { Product } from "@/lib/data/types"
 import { formatBdt } from "@/lib/data/products.data"
 import Image from "next/image"
-import { FaCheck, FaShoppingCart, FaStar } from "react-icons/fa"
+import { FaCheck, FaRegHeart, FaShoppingCart, FaStar } from "react-icons/fa"
 import { useState } from "react"
 import { useShop } from "@/context/ShopContext"
+import { FaArrowRightArrowLeft } from "react-icons/fa6"
 
 const ProductCard = ({
   product,
@@ -81,19 +82,6 @@ const ProductCard = ({
     </div>
   )
 
-  // add to pc builder
-  //  const handleSelect = (product: PcProduct) => {
-  //     setPcBuildItem(category, {
-  //       id: product.id,
-  //       name: product.name,
-  //       price: product.price,
-  //       image: product.image,
-  //       spec: product.spec || "Standard Spec",
-  //       wattage: product.wattage || 65, // ডিফল্ট ওয়াটেজ বা প্রোডাক্টের ওয়াটেজ
-  //     })
-  //     router.push("/pc-builder")
-  //   }
-
   return (
     <Card
       key={product.id}
@@ -104,28 +92,24 @@ const ProductCard = ({
           <span className="absolute top-2 left-2 z-10 rounded bg-tertiary-fixed px-2 py-0.5 text-[11px] font-extrabold text-on-tertiary-fixed uppercase">
             {product.discount}% OFF
           </span>
-          {/* <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-8 w-8 rounded-full bg-card shadow-sm hover:text-primary"
-                    title="Add to Wishlist"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">
-                      favorite
-                    </span>
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-8 w-8 rounded-full bg-card shadow-sm hover:text-primary"
-                    title="Compare Product"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">
-                      compare_arrows
-                    </span>
-                  </Button>
-                </div> */}
+          <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+            <Button
+              size="icon"
+              variant="secondary"
+              className="h-8 w-8 rounded-full bg-card text-foreground shadow-sm hover:bg-surface"
+              title="Add to Wishlist"
+            >
+              <FaRegHeart />
+            </Button>
+            <Button
+              size="icon"
+              variant="secondary"
+              className="h-8 w-8 rounded-full bg-card text-foreground shadow-sm hover:bg-surface"
+              title="Compare Product"
+            >
+              <FaArrowRightArrowLeft />
+            </Button>
+          </div>
           <Image
             width={400}
             height={400}

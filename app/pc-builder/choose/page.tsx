@@ -2,10 +2,11 @@
 
 import { useState, Suspense, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
-import { useShop, PcProduct } from "@/context/ShopContext"
+import { useShop } from "@/context/ShopContext"
 import { getProductsByCategory } from "@/lib/api/product.api"
 import { Product } from "@/lib/data/types"
 import ProductListing from "@/components/ProductListing"
+import { PcProduct } from "@/hooks/usePcBuilderState"
 
 function ChooseComponentContent() {
   const searchParams = useSearchParams()
