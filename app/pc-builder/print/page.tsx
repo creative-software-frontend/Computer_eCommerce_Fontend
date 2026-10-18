@@ -1,25 +1,16 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { FaPrint, FaArrowLeft } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { useShop } from "@/context/ShopContext"
-
-const PC_CATEGORIES_ORDER = [
-  { id: "cpu", name: "Processor (CPU)" },
-  { id: "cooler", name: "CPU Cooler" },
-  { id: "motherboard", name: "Motherboard" },
-  { id: "ram", name: "RAM (Memory)" },
-  { id: "storage", name: "Storage (SSD/HDD)" },
-  { id: "gpu", name: "Graphics Card (GPU)" },
-  { id: "psu", name: "Power Supply (PSU)" },
-  { id: "casing", name: "Casing" },
-]
+import { PC_CATEGORIES } from "@/lib/data/Categories.data"
 
 export default function PcPrintPage() {
   const router = useRouter()
   const { pcBuild, pcTotalAmount, pcTotalWattage } = useShop()
+  const hasPrinted = useRef(false)
 
   const currentDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
@@ -31,9 +22,11 @@ export default function PcPrintPage() {
 
   const selectedItems = Object.entries(pcBuild)
 
-  // পেজ লোড হওয়ার সাথে সাথে ব্রাউজারের প্রিন্ট ডায়ালগ ওপেন করার অপশন (ইচ্ছে করলে ইউজার ম্যানুয়াল প্রিন্টও করতে পারবে)
   useEffect(() => {
-    // চাইলে অটো প্রিন্ট ট্রিগার করতে পারেন: window.print();
+    if (!hasPrinted.current) {
+      window.print()
+      hasPrinted.current = true
+    }
   }, [])
 
   return (
@@ -94,7 +87,7 @@ export default function PcPrintPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border text-xs">
-                {PC_CATEGORIES_ORDER.map((cat, index) => {
+                {PC_CATEGORIES.map((cat, index) => {
                   const item = pcBuild[cat.id]
                   if (!item) return null
 

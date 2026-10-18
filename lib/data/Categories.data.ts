@@ -12,6 +12,8 @@ import {
   FaVideo,
   FaFileAlt,
   FaBatteryFull,
+  FaBolt,
+  FaMemory,
 } from "react-icons/fa"
 import type { IconType } from "react-icons"
 
@@ -1537,4 +1539,28 @@ export const categories: Category[] = [
       },
     ],
   },
+]
+
+interface PcCategory {
+  id: string
+  name: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  icon: any
+  required: boolean
+}
+
+export const PC_CATEGORIES: PcCategory[] = [
+  {
+    id: "processors",
+    name: "Processor (CPU)",
+    icon: FaMicrochip,
+    required: true,
+  },
+  { id: "CPU-Cooler", name: "CPU Cooler", icon: FaBolt, required: false },
+  { id: "motherboard", name: "Motherboard", icon: FaDesktop, required: true },
+  { id: "ram", name: "RAM (Memory)", icon: FaMemory, required: true },
+  { id: "ssd", name: "Storage (SSD/HDD)", icon: FaHdd, required: true },
+  { id: "gpus", name: "Graphics Card (GPU)", icon: FaDesktop, required: false },
+  { id: "psus", name: "Power Supply (PSU)", icon: FaBolt, required: true },
+  { id: "casings", name: "Casing", icon: FaDesktop, required: true },
 ]
