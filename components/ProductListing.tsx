@@ -235,7 +235,7 @@ function ProductListingContent({
           </aside>
 
           {/* Right Main Content Area */}
-          <main className="space-y-4 lg:col-span-3">
+          <div className="space-y-4 lg:col-span-3">
             {/* Toolbar */}
             <div className="flex flex-col items-center justify-between gap-3 rounded-xl border border-border bg-card p-3 shadow-sm sm:flex-row sm:p-4">
               <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start">
@@ -352,7 +352,7 @@ function ProductListingContent({
                 </Button>
               </div>
             )}
-          </main>
+          </div>
         </div>
       </div>
     </div>

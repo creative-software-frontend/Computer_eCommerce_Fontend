@@ -104,7 +104,7 @@ export default function PcBuilderPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => window.print()}
+                onClick={() => router.push("/pc-builder/print")}
                 className="gap-1.5 text-xs font-bold"
               >
                 <FaPrint className="text-xs" /> Print

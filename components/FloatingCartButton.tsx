@@ -10,7 +10,7 @@ export default function FloatingCartButton() {
     <button
       onClick={toggleCart}
       aria-label="Open Cart"
-      className="group fixed right-4 bottom-1 z-40 flex -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-2xl border-y border-l border-primary-foreground/20 bg-primary px-3.5 py-4 text-primary-foreground shadow-2xl transition-all duration-300 hover:scale-105"
+      className="group fixed right-4 bottom-1 z-40 flex -translate-y-1/2 cursor-pointer flex-col items-center justify-center rounded-2xl border-y border-l border-primary-foreground/20 bg-primary px-3.5 py-4 text-primary-foreground shadow-2xl transition-all duration-300 hover:scale-105 print:hidden"
     >
       <div className="relative mb-1">
         <FaShoppingCart className="text-xl transition-transform group-hover:scale-110" />
