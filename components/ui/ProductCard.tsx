@@ -3,23 +3,63 @@ import { Card } from "./card"
 import { Product } from "@/lib/data/types"
 import { formatBdt } from "@/lib/data/products.data"
 import Image from "next/image"
-import { FaCheck, FaShoppingCart, FaStar } from "react-icons/fa"
-import { useState } from "react"
+import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa"
 import { useShop } from "@/context/ShopContext"
+import { FaArrowRightArrowLeft } from "react-icons/fa6"
+import { BuilderActions } from "../product-card/actions/BuilderActions"
+import { GrabDealAction } from "../product-card/actions/GrabDealAction"
+import { DefaultActions } from "../product-card/actions/DefaultActions"
 
-const ProductCard = ({ product }: { product: Product }) => {
-  const { addToCart, openBuyNow } = useShop()
-  const [isAdded, setIsAdded] = useState(false)
+type ProductCardProps =
+  | { mode?: "default"; product: Product }
+  | { mode: "builder"; product: Product; onSelect: (p: Product) => void }
+  | {
+      mode: "grab"
+      product: Product
+    }
 
-  const handleAddToCart = () => {
-    addToCart({
+// export type ProductCardMode = "default" | "builder" | "graph"
+const ProductCard = (props: ProductCardProps) => {
+  const { toggleFavorite, isFavorite, toggleCompare, isInCompare } = useShop()
+  const product = props.product
+  const liked = isFavorite(product.id)
+  const compared = isInCompare(product.id)
+
+  // toggle to compare list
+  const handleToggleCompare = () => {
+    toggleCompare({
       id: product.id,
       name: product.title,
       price: product.price,
       image: product.image,
+      // spec: product.spec || product.description,
+      // wattage: product.,
+      category: product.category,
     })
-    setIsAdded(true)
-    setTimeout(() => setIsAdded(false), 1500)
+  }
+
+  // toggle to favorite list
+  const handleToggleFavorite = () => {
+    toggleFavorite({
+      id: product.id,
+      name: product.title,
+      price: product.price,
+      image: product.image,
+      // spec: product.specs || product.description,
+    })
+  }
+
+  // action buttons
+
+  const renderActionButton = () => {
+    switch (props.mode) {
+      case "builder":
+        return <BuilderActions onSelect={props.onSelect} product={product} />
+      case "grab":
+        return <GrabDealAction product={product} />
+      default:
+        return <DefaultActions product={product} />
+    }
   }
 
   return (
@@ -29,31 +69,37 @@ const ProductCard = ({ product }: { product: Product }) => {
     >
       <div className="flex grow flex-col">
         <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-muted p-2">
-          <span className="absolute top-2 left-2 z-10 rounded bg-tertiary-fixed px-2 py-0.5 text-[11px] font-extrabold text-on-tertiary-fixed uppercase">
+          <span className="absolute top-2 left-2 z-10 rounded bg-tertiary-fixed px-2 py-0.5 text-xs font-extrabold text-on-tertiary-fixed uppercase">
             {product.discount}% OFF
           </span>
-          {/* <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-8 w-8 rounded-full bg-card shadow-sm hover:text-primary"
-                    title="Add to Wishlist"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">
-                      favorite
-                    </span>
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-8 w-8 rounded-full bg-card shadow-sm hover:text-primary"
-                    title="Compare Product"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">
-                      compare_arrows
-                    </span>
-                  </Button>
-                </div> */}
+          <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+            <Button
+              size="icon"
+              onClick={handleToggleFavorite}
+              variant="secondary"
+              className="h-8 w-8 rounded-full bg-card text-foreground shadow-sm hover:bg-surface"
+              title="Add to Wishlist"
+            >
+              {liked ? (
+                <FaHeart className="animate-scale-up text-xs text-rose-500 sm:text-sm" />
+              ) : (
+                <FaRegHeart className="text-xs text-muted-foreground hover:text-foreground sm:text-sm" />
+              )}
+            </Button>
+            <Button
+              onClick={handleToggleCompare}
+              size="icon"
+              variant="secondary"
+              className="h-8 w-8 rounded-full bg-card text-foreground shadow-sm hover:bg-surface"
+              title="Compare Product"
+            >
+              {compared ? (
+                <FaArrowRightArrowLeft className="animate-scale-up text-xs text-rose-500 sm:text-sm" />
+              ) : (
+                <FaArrowRightArrowLeft className="text-xs text-muted-foreground hover:text-foreground sm:text-sm" />
+              )}
+            </Button>
+          </div>
           <Image
             width={400}
             height={400}
@@ -64,7 +110,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
 
         <div className="mb-1 flex items-center gap-2">
-          <span className="text-[11px] font-bold text-muted-foreground uppercase">
+          <span className="text-xs font-bold text-muted-foreground uppercase">
             {product.brand}
           </span>
           <span className="text-muted-foreground">·</span>
@@ -73,13 +119,13 @@ const ProductCard = ({ product }: { product: Product }) => {
             <span className="ml-0.5 font-bold text-foreground">
               {product.rating}
             </span>
-            <span className="ml-0.5 text-muted-foreground">
+            <span title="Reviews" className="ml-0.5 text-muted-foreground">
               ({product.reviews})
             </span>
           </div>
         </div>
 
-        <h3 className="line-clamp-2 font-heading text-sm leading-snug font-bold text-foreground transition-colors group-hover:text-primary">
+        <h3 className="line-clamp-2 font-heading text-sm leading-snug font-bold text-foreground transition-colors group-hover:text-primary sm:text-base">
           {product.title}
         </h3>
 
@@ -87,7 +133,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           {product.specs.map((spec, idx) => (
             <span
               key={idx}
-              className="rounded bg-muted px-1.5 py-0.5 text-[11px] text-muted-foreground outline"
+              className="rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground outline"
             >
               {spec}
             </span>
@@ -102,7 +148,7 @@ const ProductCard = ({ product }: { product: Product }) => {
               style={{ width: `${product.claimedPercent ?? 0}%` }}
             ></div>
           </div>
-          <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
+          <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
             <span>
               Sold:
               <strong className="text-foreground">
@@ -124,51 +170,15 @@ const ProductCard = ({ product }: { product: Product }) => {
               </span>
             )}
             {product.save && (
-              <span className="ml-auto text-[11px] font-semibold text-emerald-600">
+              <span className="ml-auto text-xs font-semibold text-emerald-600">
                 Save {formatBdt(product.save)}
               </span>
             )}
           </div>
         </div>
       </div>
-
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        <Button
-          onClick={handleAddToCart}
-          disabled={product.stock !== "inStock"}
-          // variant="secondary"
-          className={`w-full cursor-pointer bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high ${
-            isAdded
-              ? "bg-emerald-600 text-white hover:bg-emerald-700"
-              : "bg-surface-container text-primary hover:bg-surface-container-high"
-          }`}
-        >
-          {isAdded ? (
-            <>
-              <FaCheck className="text-xs" />
-              <span>Added</span>
-            </>
-          ) : (
-            <>
-              <FaShoppingCart className="text-xs" />
-              <span>Add</span>
-            </>
-          )}
-        </Button>
-        <Button
-          onClick={() =>
-            openBuyNow({
-              id: product.id,
-              name: product.title,
-              price: product.price,
-              image: product.image,
-            })
-          }
-          className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
-        >
-          Buy Now
-        </Button>
-      </div>
+      {/* action buttons */}
+      {renderActionButton()}
     </Card>
   )
 }

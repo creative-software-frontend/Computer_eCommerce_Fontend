@@ -20,7 +20,7 @@ export default function Footer() {
         {/* Newsletter & Experience Banner */}
         <div className="mb-12 flex flex-col items-center justify-between gap-6 rounded-2xl border border-border bg-surface-container p-6 sm:p-8 lg:flex-row">
           <div className="max-w-lg">
-            <h3 className="font-heading text-xl font-bold tracking-tight">
+            <h3 className="font-heading text-sm font-bold tracking-tight sm:text-base">
               Stay Updated with Latest Tech Drops &amp; Deals
             </h3>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -303,19 +303,19 @@ export default function Footer() {
             <span className="font-semibold text-foreground">
               Accepted Payments:
             </span>
-            <span className="rounded bg-surface-container px-2.5 py-1 text-[11px] font-semibold text-foreground">
+            <span className="rounded bg-surface-container px-2.5 py-1 text-xs font-semibold text-foreground">
               bKash
             </span>
-            <span className="rounded bg-surface-container px-2.5 py-1 text-[11px] font-semibold text-foreground">
+            <span className="rounded bg-surface-container px-2.5 py-1 text-xs font-semibold text-foreground">
               Nagad
             </span>
-            <span className="rounded bg-surface-container px-2.5 py-1 text-[11px] font-semibold text-foreground">
+            <span className="rounded bg-surface-container px-2.5 py-1 text-xs font-semibold text-foreground">
               Visa
             </span>
-            <span className="rounded bg-surface-container px-2.5 py-1 text-[11px] font-semibold text-foreground">
+            <span className="rounded bg-surface-container px-2.5 py-1 text-xs font-semibold text-foreground">
               Mastercard
             </span>
-            <span className="rounded bg-surface-container px-2.5 py-1 text-[11px] font-semibold text-foreground">
+            <span className="rounded bg-surface-container px-2.5 py-1 text-xs font-semibold text-foreground">
               SSLCommerz
             </span>
           </div>

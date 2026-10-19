@@ -14,9 +14,11 @@ const HeaderCartButton = () => {
       <span className="relative">
         <FaCartShopping className="size-5 text-primary" />
 
-        <Badge className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full p-0 text-xs">
-          {itemCount}
-        </Badge>
+        {itemCount > 0 && (
+          <Badge className="absolute -top-2 -right-2 flex size-4 items-center justify-center rounded-full p-0 text-xs">
+            {itemCount}
+          </Badge>
+        )}
       </span>
 
       <span className="hidden flex-col items-start sm:flex">

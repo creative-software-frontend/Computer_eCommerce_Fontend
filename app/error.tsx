@@ -13,7 +13,6 @@ interface ErrorProps {
 
 export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
-    // লগ বা এরর ট্র্যাকিং সার্ভিসে পাঠাতে পারেন
     console.error("Application Error:", error)
   }, [error])
 
@@ -30,12 +29,13 @@ export default function Error({ error, reset }: ErrorProps) {
           <span className="inline-block rounded-full bg-destructive/10 px-3 py-1 text-xs font-bold tracking-wider text-destructive uppercase">
             Application Error
           </span>
-          <h1 className="font-heading text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+          <h1 className="font-heading text-2xl font-black tracking-tight text-foreground sm:text-3xl">
             Something Went Wrong!
           </h1>
           <p className="mx-auto max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">
-            {error.message ||
-              "An unexpected error occurred on our servers. Please try again or return to the homepage."}
+            {process.env.NODE_ENV === "development" && error.message
+              ? error.message
+              : "An unexpected error occurred on our servers. Please try again or return to the homepage."}
           </p>
         </div>
 
@@ -68,7 +68,7 @@ export default function Error({ error, reset }: ErrorProps) {
             href="/contact"
             className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
           >
-            <FaHeadset className="text-[10px]" />
+            <FaHeadset className="text-xs" />
             <span>Contact Support</span>
           </Link>
         </div>

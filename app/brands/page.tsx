@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { brands } from "@/lib/data/brands.data"
 import Image from "next/image"
+import BreadcrumbComponent from "@/components/BreadCrumb"
 
 const ALPHABET = [
   "All",
@@ -65,13 +66,9 @@ export default function BrandDirectoryPage() {
       <div className="mx-auto max-w-7xl space-y-10">
         {/* Breadcrumb & Hero Header */}
         <div className="space-y-3">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Link href="/" className="transition-colors hover:text-primary">
-              Home
-            </Link>
-            <span>/</span>
-            <span className="font-medium text-foreground">Brands</span>
-          </div>
+          <BreadcrumbComponent
+            urlList={[{ name: "Brands", active: true, url: null }]}
+          />
 
           <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-border bg-linear-to-r from-primary/10 via-emerald-500/5 to-background p-6 shadow-sm sm:p-10 md:flex-row">
             <div className="space-y-2 text-center md:text-left">
@@ -79,7 +76,7 @@ export default function BrandDirectoryPage() {
                 <FaShieldAlt className="text-xs" /> Official Authorized
                 Distributors
               </span>
-              <h1 className="font-heading text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+              <h1 className="font-heading text-2xl font-black tracking-tight text-foreground sm:text-3xl">
                 Explore World-Class Brands
               </h1>
               <p className="max-w-xl text-xs leading-relaxed text-muted-foreground sm:text-sm">
@@ -106,44 +103,43 @@ export default function BrandDirectoryPage() {
         </div>
 
         {/* Featured Top Brands Carousel/Grid Section */}
-        {searchTerm === "" && selectedLetter === "All" && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="font-heading text-xl font-extrabold text-foreground">
-                Featured Partner Brands
-              </h2>
-              <span className="text-xs font-medium text-muted-foreground">
-                Top Industry Leaders
-              </span>
-            </div>
 
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {featuredBrands
-                .filter((brand) => brand.logo)
-                .map((brand) => (
-                  <Link key={brand.id} href={`/brands/${brand.slug}`}>
-                    <Card className="group relative flex h-36 flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-border bg-card p-5 text-center shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
-                      <div className="relative mb-3 flex h-22 w-32 items-center justify-center">
-                        <Image
-                          width={300}
-                          height={300}
-                          src={brand.logo || ""}
-                          alt={brand.name}
-                          className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
-                        />
-                      </div>
-                      {/* <span className="line-clamp-1 font-heading text-xs font-bold text-foreground transition-colors group-hover:text-primary">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="font-heading text-xl font-extrabold text-foreground">
+              Featured Partner Brands
+            </h2>
+            <span className="text-xs font-medium text-muted-foreground">
+              Top Industry Leaders
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            {featuredBrands
+              .filter((brand) => brand.logo)
+              .map((brand) => (
+                <Link key={brand.id} href={`/brands/${brand.slug}`}>
+                  <Card className="group relative flex h-36 flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-border bg-card p-5 text-center shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
+                    <div className="relative mb-3 flex h-22 w-32 items-center justify-center">
+                      <Image
+                        width={300}
+                        height={300}
+                        src={brand.logo || ""}
+                        alt={brand.name}
+                        className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
+                    {/* <span className="line-clamp-1 font-heading text-xs font-bold text-foreground transition-colors group-hover:text-primary">
                         {brand.name}
                       </span> */}
-                      <span className="mt-0.5 text-[10px] text-muted-foreground">
-                        {brand.productCount} Products
-                      </span>
-                    </Card>
-                  </Link>
-                ))}
-            </div>
+                    <span className="mt-0.5 text-[10px] text-muted-foreground">
+                      {brand.productCount} Products
+                    </span>
+                  </Card>
+                </Link>
+              ))}
           </div>
-        )}
+        </div>
 
         {/* Alphabetical Filter Bar (A-Z) */}
         <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
@@ -207,7 +203,7 @@ export default function BrandDirectoryPage() {
 
                       {/* Middle Content */}
                       <div className="mt-4">
-                        <h3 className="font-heading text-base font-bold text-foreground transition-colors group-hover:text-primary">
+                        <h3 className="font-heading text-sm font-bold text-foreground transition-colors group-hover:text-primary sm:text-base">
                           {brand.name}
                         </h3>
                         <p className="mt-0.5 text-xs text-muted-foreground">
@@ -231,7 +227,7 @@ export default function BrandDirectoryPage() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted text-muted-foreground">
                 <FaSearch className="text-xl" />
               </div>
-              <h3 className="font-heading text-lg font-bold text-foreground">
+              <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                 No Brands Found
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">

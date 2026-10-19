@@ -80,7 +80,7 @@ export default function TermsPage() {
             <FaScaleBalanced size={14} />
             The Fine Print
           </span>
-          <h1 className="mt-4 font-heading text-3xl leading-tight font-extrabold tracking-tight text-white sm:text-4xl">
+          <h1 className="mt-4 font-heading text-2xl leading-tight font-black tracking-tight text-white sm:text-3xl">
             Terms &amp; Conditions
           </h1>
           <p className="mt-3 max-w-2xl text-base text-inverse-on-surface/85">

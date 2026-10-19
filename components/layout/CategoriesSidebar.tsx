@@ -35,7 +35,7 @@ export default function CategoriesSidebar({
               onMouseEnter={() => setActiveId(catId)}
             >
               <Link
-                href={category.href || "#"}
+                href={`/category/${category.slug}`}
                 className={`flex items-center justify-between px-4 py-2.5 text-xs font-medium transition-colors sm:text-sm ${
                   isActive
                     ? "bg-muted text-primary"

@@ -1,34 +1,56 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
 import { FaFilter, FaTimes } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import ProductCard from "@/components/ui/ProductCard"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Product } from "@/lib/data/types"
+import BreadcrumbComponent, { ListingBreadcrumb } from "./BreadCrumb"
 
-const itemsPerPage = 36
+const ITEMS_PER_PAGE = 36
+const INITIAL_VISIBLE_COUNT = 6
+const LOAD_MORE_STEP = 4
+
+type ProductListingProps = {
+  productData: Product[]
+  title: string
+  breadcrumbs: ListingBreadcrumb[]
+  isBuilderMode?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSelect?: (product: any) => void
+}
+
+type FullProductListingProps = ProductListingProps & {
+  currentPage: number
+  totalPages: number
+}
+
+const BRANDS = ["ASUS", "MSI", "Gigabyte", "Corsair", "Samsung", "Lian Li"]
 
 export default function ProductListing({
   productData,
-}: {
-  productData: Product[]
-}) {
+  title,
+  breadcrumbs,
+  isBuilderMode,
+  onSelect,
+}: ProductListingProps) {
   const searchParams = useSearchParams()
-  const totalPages = Math.max(1, Math.ceil(productData.length / itemsPerPage))
+  const totalPages = Math.max(1, Math.ceil(productData.length / ITEMS_PER_PAGE))
   const rawPage = Number(searchParams.get("page") ?? "1")
   const currentPage =
     Number.isNaN(rawPage) || rawPage < 1 ? 1 : Math.min(rawPage, totalPages)
 
-  // Using key={currentPage} automatically resets all internal state (like visibleCount)
-  // whenever the page changes, via pagination buttons or browser back/forward navigation.
   return (
     <ProductListingContent
       key={currentPage}
       currentPage={currentPage}
       totalPages={totalPages}
       productData={productData}
+      title={title}
+      breadcrumbs={breadcrumbs}
+      isBuilderMode={isBuilderMode}
+      onSelect={onSelect}
     />
   )
 }
@@ -37,29 +59,29 @@ function ProductListingContent({
   currentPage,
   totalPages,
   productData,
-}: {
-  currentPage: number
-  totalPages: number
-  productData: Product[]
-}) {
+  title,
+  breadcrumbs,
+  isBuilderMode = false,
+  onSelect,
+}: FullProductListingProps) {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT)
+
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
 
-  const [visibleCount, setVisibleCount] = useState(6)
   const observerTarget = useRef<HTMLDivElement | null>(null)
   const isLoadingRef = useRef(false)
-  const params = new URLSearchParams(searchParams)
 
+  // Current page items slice
   const products = productData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
   )
 
   const visibleProducts = products.slice(0, visibleCount)
 
-  // Reset loading ref whenever visibleCount updates
   useEffect(() => {
     isLoadingRef.current = false
   }, [visibleCount])
@@ -67,17 +89,16 @@ function ProductListingContent({
   // Intersection Observer for Infinite Scroll
   useEffect(() => {
     const target = observerTarget.current
-
-    if (!target || visibleCount >= products.length) {
-      return
-    }
+    if (!target || visibleCount >= products.length) return
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0]
         if (entry.isIntersecting && !isLoadingRef.current) {
           isLoadingRef.current = true
-          setVisibleCount((count) => Math.min(count + 4, products.length))
+          setVisibleCount((count) =>
+            Math.min(count + LOAD_MORE_STEP, products.length)
+          )
         }
       },
       {
@@ -97,50 +118,36 @@ function ProductListingContent({
 
   const handleProductPage = (pageNumber: number) => {
     const nextPage = Math.min(Math.max(pageNumber, 1), totalPages)
+    const params = new URLSearchParams(searchParams.toString())
     params.set("page", nextPage.toString())
     const query = params.toString()
     replace(query ? `${pathname}?${query}` : pathname)
   }
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) handleProductPage(currentPage - 1)
-  }
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) handleProductPage(currentPage + 1)
-  }
   return (
     <div className="min-h-screen bg-background px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Breadcrumb & Page Title */}
         <div className="mb-6">
-          <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
-            <Link href="/" className="hover:text-primary">
-              Home
-            </Link>
-            <span>/</span>
-            <Link href="/category" className="hover:text-primary">
-              Category
-            </Link>
-            <span>/</span>
-            <span className="font-medium text-foreground">
-              {visibleProducts[0]?.category ?? "Products"}
-            </span>
-          </div>
-          <h1 className="font-heading text-2xl font-extrabold text-foreground capitalize sm:text-3xl">
-            {visibleProducts[0]?.category ?? "Products"}
+          <BreadcrumbComponent urlList={breadcrumbs} />
+          <h1 className="font-heading text-2xl font-black tracking-tight text-foreground capitalize sm:text-3xl">
+            {title}
           </h1>
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
           {/* Left Sidebar Filters */}
           <aside
-            className={`lg:block ${mobileFilterOpen ? "fixed inset-0 z-50 block overflow-y-auto bg-background/80 p-4 backdrop-blur-sm" : "hidden"}`}
+            className={`lg:block ${
+              mobileFilterOpen
+                ? "fixed inset-0 z-50 block overflow-y-auto bg-background/80 p-4 backdrop-blur-sm"
+                : "hidden"
+            }`}
           >
             <div className="space-y-6 rounded-xl border border-border bg-card p-5 shadow-sm">
               {/* Mobile Filter Header */}
               <div className="flex items-center justify-between border-b border-border pb-3 lg:hidden">
-                <h3 className="text-base font-bold">Filters</h3>
+                <h3 className="text-sm font-bold sm:text-base">Filters</h3>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -176,16 +183,9 @@ function ProductListingContent({
                   Brands
                 </h4>
                 <div className="space-y-2 text-xs">
-                  {[
-                    "ASUS",
-                    "MSI",
-                    "Gigabyte",
-                    "Corsair",
-                    "Samsung",
-                    "Lian Li",
-                  ].map((brand, idx) => (
+                  {BRANDS.map((brand) => (
                     <label
-                      key={idx}
+                      key={brand}
                       className="flex cursor-pointer items-center gap-2 text-muted-foreground hover:text-foreground"
                     >
                       <input
@@ -229,8 +229,8 @@ function ProductListingContent({
           </aside>
 
           {/* Right Main Content Area */}
-          <main className="space-y-4 lg:col-span-3">
-            {/* Toolbar (Sorting & View Toggle) */}
+          <div className="space-y-4 lg:col-span-3">
+            {/* Toolbar */}
             <div className="flex flex-col items-center justify-between gap-3 rounded-xl border border-border bg-card p-3 shadow-sm sm:flex-row sm:p-4">
               <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start">
                 <Button
@@ -256,7 +256,6 @@ function ProductListingContent({
               </div>
 
               <div className="flex w-full items-center justify-end gap-3 sm:w-auto">
-                {/* Sort Dropdown */}
                 <div className="flex items-center gap-2 text-xs">
                   <span className="hidden text-muted-foreground sm:inline">
                     Sort by:
@@ -275,7 +274,12 @@ function ProductListingContent({
             {products.length > 0 ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 {visibleProducts.map((product) => (
-                  <ProductCard product={product} key={product.id} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    mode="builder"
+                    onSelect={() => onSelect?.(product)}
+                  />
                 ))}
               </div>
             ) : (
@@ -292,7 +296,7 @@ function ProductListingContent({
               </div>
             )}
 
-            {/* Sentinel element for Intersection Observer at the bottom of the list */}
+            {/* Sentinel element for Intersection Observer */}
             {visibleProducts.length < products.length && (
               <div
                 ref={observerTarget}
@@ -302,40 +306,47 @@ function ProductListingContent({
             )}
 
             {/* Pagination */}
-            {productData.length > 0 && (
+            {productData.length > ITEMS_PER_PAGE && (
               <div className="flex items-center justify-center gap-2 pt-6">
                 <Button
                   variant="outline"
                   size="sm"
                   className="text-xs hover:bg-primary/80 hover:text-white"
                   disabled={currentPage === 1}
-                  onClick={handlePreviousPage}
+                  onClick={() => handleProductPage(currentPage - 1)}
                 >
                   Previous
                 </Button>
-                {Array.from({ length: totalPages }).map((_, i) => (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleProductPage(i + 1)}
-                    className={`text-xs hover:bg-primary/80 hover:text-white ${currentPage === i + 1 ? "bg-primary text-primary-foreground" : ""}`}
-                    key={i}
-                  >
-                    {i + 1}
-                  </Button>
-                ))}
+                {Array.from({ length: totalPages }).map((_, i) => {
+                  const pageNum = i + 1
+                  return (
+                    <Button
+                      key={pageNum}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleProductPage(pageNum)}
+                      className={`text-xs hover:bg-primary/80 hover:text-white ${
+                        currentPage === pageNum
+                          ? "bg-primary text-primary-foreground"
+                          : ""
+                      }`}
+                    >
+                      {pageNum}
+                    </Button>
+                  )
+                })}
                 <Button
                   variant="outline"
                   size="sm"
                   className="text-xs hover:bg-primary/80 hover:text-white"
                   disabled={currentPage === totalPages}
-                  onClick={handleNextPage}
+                  onClick={() => handleProductPage(currentPage + 1)}
                 >
                   Next
                 </Button>
               </div>
             )}
-          </main>
+          </div>
         </div>
       </div>
     </div>

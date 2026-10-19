@@ -1,13 +1,13 @@
 import { Geist_Mono, Inter, DM_Sans } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
-import Header from "@/components/layout/Header"
-import Footer from "@/components/layout/Footer"
 import CartSidebar from "@/components/CartSidebar"
 import FloatingCartButton from "@/components/FloatingCartButton"
 import { Toaster } from "sonner"
 import { ShopProvider } from "@/context/ShopContext"
 import BuyNowModal from "@/components/modal/BuyNowModal"
+import { Metadata } from "next"
+import LayoutWrapper from "@/components/LayoutWrapper"
 
 const dmSansHeading = DM_Sans({
   subsets: ["latin"],
@@ -20,6 +20,11 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+export const metadata: Metadata = {
+  title: "Technocore - PC Builder & E-Commerce",
+  description: "Build your dream PC with high-performance components",
+}
 
 export default function RootLayout({
   children,
@@ -40,9 +45,7 @@ export default function RootLayout({
     >
       <body>
         <ShopProvider>
-          <Header />
-          <main className="pt-44">{children}</main>
-          <Footer />
+          <LayoutWrapper>{children}</LayoutWrapper>
           <CartSidebar />
           <FloatingCartButton />
           <BuyNowModal />

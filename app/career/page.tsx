@@ -133,7 +133,7 @@ export default function CareerPage() {
               <FaBriefcase size={14} />
               Careers
             </span>
-            <h1 className="mt-4 font-heading text-3xl leading-tight font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <h1 className="mt-4 font-heading text-2xl leading-tight font-black tracking-tight text-white sm:text-3xl">
               Build Your Career With TechnoCore
             </h1>
             <p className="mt-4 max-w-xl text-base text-inverse-on-surface/85">
@@ -176,7 +176,7 @@ export default function CareerPage() {
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-muted text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                     <Icon className="size-6" />
                   </div>
-                  <h3 className="font-heading text-base font-bold text-foreground">
+                  <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                     {benefit.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -199,8 +199,7 @@ export default function CareerPage() {
             Open Positions
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Find your next role. We update these regularly — keep checking
-            back.
+            Find your next role. We update these regularly — keep checking back.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -211,17 +210,17 @@ export default function CareerPage() {
             >
               <CardContent className="p-6">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-surface-container px-3 py-1 text-[11px] font-bold text-foreground uppercase">
+                  <span className="rounded-full bg-surface-container px-3 py-1 text-sm font-bold text-foreground uppercase">
                     {opening.department}
                   </span>
-                  <span className="rounded-full bg-muted px-3 py-1 text-[11px] font-semibold text-muted-foreground">
+                  <span className="rounded-full bg-muted px-3 py-1 text-sm font-semibold text-muted-foreground">
                     {opening.type}
                   </span>
-                  <span className="rounded-full bg-muted px-3 py-1 text-[11px] font-semibold text-muted-foreground">
+                  <span className="rounded-full bg-muted px-3 py-1 text-sm font-semibold text-muted-foreground">
                     {opening.experience}
                   </span>
                 </div>
-                <h3 className="mt-4 font-heading text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+                <h3 className="mt-4 font-heading text-sm font-bold text-foreground transition-colors group-hover:text-primary sm:text-base">
                   {opening.title}
                 </h3>
                 <p className="mt-1 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
@@ -260,7 +259,7 @@ export default function CareerPage() {
                 <span className="font-heading text-3xl font-extrabold text-primary/40">
                   {step.step}
                 </span>
-                <h3 className="mt-2 font-heading text-base font-bold text-foreground">
+                <h3 className="mt-2 font-heading text-sm font-bold text-foreground sm:text-base">
                   {step.title}
                 </h3>
                 <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
@@ -284,11 +283,7 @@ export default function CareerPage() {
                 </p>
               </div>
             </div>
-            <Button
-              asChild
-              variant="outline"
-              className="text-xs font-semibold"
-            >
+            <Button asChild variant="outline" className="text-xs font-semibold">
               <Link href="mailto:careers@technocoresolution.com.bd?subject=Speculative Application">
                 <FaHeadset />
                 <span>Drop Us A CV</span>
