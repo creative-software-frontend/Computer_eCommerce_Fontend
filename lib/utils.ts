@@ -8,7 +8,7 @@ export function findCategoryPath(
 ): Category[] | null {
   for (const category of nodes) {
     const path = [...parentPath, category]
-    if (category.href === targetHref) return path
+    if (category.slug === targetHref) return path
 
     const nestedPath = findCategoryPath(
       category.children ?? [],

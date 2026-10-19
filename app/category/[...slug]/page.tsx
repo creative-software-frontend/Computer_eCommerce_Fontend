@@ -16,7 +16,7 @@ const page = async ({ params }: { params: Promise<{ slug: string[] }> }) => {
   const breadcrumbs: ListingBreadcrumb[] = categoryPath
     ? categoryPath.map((category, index) => ({
         name: category.name,
-        url: category.href,
+        url: category.slug,
         active: index === categoryPath.length - 1,
       }))
     : [

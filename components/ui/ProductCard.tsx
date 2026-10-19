@@ -3,53 +3,27 @@ import { Card } from "./card"
 import { Product } from "@/lib/data/types"
 import { formatBdt } from "@/lib/data/products.data"
 import Image from "next/image"
-import {
-  FaCheck,
-  FaExchangeAlt,
-  FaHeart,
-  FaRegHeart,
-  FaShoppingCart,
-  FaStar,
-} from "react-icons/fa"
-import { useState } from "react"
+import { FaHeart, FaRegHeart, FaStar } from "react-icons/fa"
 import { useShop } from "@/context/ShopContext"
 import { FaArrowRightArrowLeft } from "react-icons/fa6"
+import { BuilderActions } from "../product-card/actions/BuilderActions"
+import { GrabDealAction } from "../product-card/actions/GrabDealAction"
+import { DefaultActions } from "../product-card/actions/DefaultActions"
 
-interface ProductCardProps {
-  product: Product
-  isBuilderMode?: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSelect?: (product: any) => void
-}
+type ProductCardProps =
+  | { mode?: "default"; product: Product }
+  | { mode: "builder"; product: Product; onSelect: (p: Product) => void }
+  | {
+      mode: "grab"
+      product: Product
+    }
 
-const ProductCard = ({
-  product,
-  isBuilderMode = false,
-  onSelect,
-}: ProductCardProps) => {
-  const [isAdded, setIsAdded] = useState(false)
-  const {
-    toggleFavorite,
-    isFavorite,
-    addToCart,
-    openBuyNow,
-    toggleCompare,
-    isInCompare,
-  } = useShop()
+// export type ProductCardMode = "default" | "builder" | "graph"
+const ProductCard = (props: ProductCardProps) => {
+  const { toggleFavorite, isFavorite, toggleCompare, isInCompare } = useShop()
+  const product = props.product
   const liked = isFavorite(product.id)
   const compared = isInCompare(product.id)
-
-  // add to cart
-  const handleAddToCart = () => {
-    addToCart({
-      id: product.id,
-      name: product.title,
-      price: product.price,
-      image: product.image,
-    })
-    setIsAdded(true)
-    setTimeout(() => setIsAdded(false), 1500)
-  }
 
   // toggle to compare list
   const handleToggleCompare = () => {
@@ -76,54 +50,17 @@ const ProductCard = ({
   }
 
   // action buttons
-  const actionButtons = isBuilderMode ? (
-    <div className="mt-4">
-      <Button
-        onClick={() => onSelect?.(product)}
-        className="mx-auto w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
-      >
-        Select for Build
-      </Button>
-    </div>
-  ) : (
-    <div className="mt-4 grid grid-cols-2 gap-2">
-      <Button
-        onClick={handleAddToCart}
-        disabled={product.stock !== "inStock"}
-        // variant="secondary"
-        className={`w-full cursor-pointer bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high ${
-          isAdded
-            ? "bg-emerald-600 text-white hover:bg-emerald-700"
-            : "bg-surface-container text-primary hover:bg-surface-container-high"
-        }`}
-      >
-        {isAdded ? (
-          <>
-            <FaCheck className="text-xs" />
-            <span>Added</span>
-          </>
-        ) : (
-          <>
-            <FaShoppingCart className="text-xs" />
-            <span>Add</span>
-          </>
-        )}
-      </Button>
-      <Button
-        onClick={() =>
-          openBuyNow({
-            id: product.id,
-            name: product.title,
-            price: product.price,
-            image: product.image,
-          })
-        }
-        className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
-      >
-        Buy Now
-      </Button>
-    </div>
-  )
+
+  const renderActionButton = () => {
+    switch (props.mode) {
+      case "builder":
+        return <BuilderActions onSelect={props.onSelect} product={product} />
+      case "grab":
+        return <GrabDealAction product={product} />
+      default:
+        return <DefaultActions product={product} />
+    }
+  }
 
   return (
     <Card
@@ -241,7 +178,7 @@ const ProductCard = ({
         </div>
       </div>
       {/* action buttons */}
-      {actionButtons}
+      {renderActionButton()}
     </Card>
   )
 }

@@ -38,7 +38,7 @@ const navigationItems: NavigationItem[] = [
   { label: "Monitors", href: "/monitors" },
   { label: "Peripherals", href: "/peripherals" },
   { label: "Networking", href: "/networking" },
-  { label: "Flash Deals", href: "/flash-deals" },
+  // { label: "Flash Deals", href: "/flash-deals" },
 ]
 
 const trendingKeywords: string[] = [

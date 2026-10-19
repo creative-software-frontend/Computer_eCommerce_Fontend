@@ -277,7 +277,7 @@ function ProductListingContent({
                   <ProductCard
                     key={product.id}
                     product={product}
-                    isBuilderMode={isBuilderMode}
+                    mode="builder"
                     onSelect={() => onSelect?.(product)}
                   />
                 ))}

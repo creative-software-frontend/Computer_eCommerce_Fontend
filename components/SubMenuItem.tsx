@@ -1,4 +1,5 @@
 "use client"
+
 import { Category } from "@/lib/data/Categories.data"
 import Link from "next/link"
 import { useState } from "react"
@@ -27,8 +28,9 @@ export default function SubMenuList({ items }: SubMenuListProps) {
             onMouseEnter={() => setActiveSubId(subId)}
             onMouseLeave={() => setActiveSubId(null)}
           >
+            {/* subItem.href এর বদলে ডাইনামিক স্লাগ ব্যবহার করা হলো */}
             <Link
-              href={subItem.href || "#"}
+              href={`/category/${subItem.slug}`}
               className={`flex items-center justify-between px-4 py-2.5 text-xs transition-colors ${
                 isActive
                   ? "bg-muted font-medium text-primary"

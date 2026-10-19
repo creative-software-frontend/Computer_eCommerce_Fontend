@@ -3,11 +3,6 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
-  FaMicrochip,
-  FaMemory,
-  FaHdd,
-  FaDesktop,
-  FaBolt,
   FaPlus,
   FaTrash,
   FaShoppingCart,

@@ -23,7 +23,7 @@ export default function HurryUpDeals() {
 
           {/* Text Content */}
           <div className="relative z-10 max-w-60 sm:max-w-xs">
-            <h3 className="font-heading text-sm leading-tight font-bold tracking-tight sm:text-base">
+            <h3 className="font-heading text-sm leading-tight font-bold tracking-tight text-white sm:text-base">
               Earbuds Experience
             </h3>
             <p className="mt-3 text-xs leading-relaxed text-zinc-300 sm:text-sm">
