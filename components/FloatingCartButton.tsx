@@ -24,7 +24,7 @@ export default function FloatingCartButton() {
         {itemCount} {itemCount === 1 ? "Item" : "Items"}
       </span> */}
       <span className="mt-1 border-t border-primary-foreground/20 pt-1 text-xs font-black whitespace-nowrap">
-        {totalAmount.toFixed(2)}৳
+        {totalAmount.toFixed()}৳
       </span>
     </button>
   )

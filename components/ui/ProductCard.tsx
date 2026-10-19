@@ -182,7 +182,7 @@ const ProductCard = ({
             <span className="ml-0.5 font-bold text-foreground">
               {product.rating}
             </span>
-            <span className="ml-0.5 text-muted-foreground">
+            <span title="Reviews" className="ml-0.5 text-muted-foreground">
               ({product.reviews})
             </span>
           </div>
