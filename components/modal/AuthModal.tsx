@@ -116,7 +116,7 @@ export default function AuthModal({
               </div>
             </div>
 
-            <div className="text-[11px] text-muted-foreground">
+            <div className="text-xs text-muted-foreground">
               © 2026 TechnoCore Solution Inc. All rights reserved.
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function AuthModal({
           {/* Right Side: Dynamic Form (Login / Register) */}
           <div className="relative flex flex-col justify-between bg-background p-6 sm:p-8 lg:p-10">
             <div className="mb-6 pt-4 md:pt-0">
-              <h3 className="font-heading text-2xl font-extrabold tracking-tight text-foreground">
+              <h3 className="font-heading text-sm font-bold tracking-tight text-foreground sm:text-base">
                 {mode === "login" ? "Welcome Back" : "Create Account"}
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">
@@ -247,7 +247,7 @@ export default function AuthModal({
                     <button
                       type="button"
                       onClick={() => setStep("request")}
-                      className="text-[11px] font-semibold text-emerald-600 hover:underline"
+                      className="text-xs font-semibold text-emerald-600 hover:underline"
                     >
                       Change {authMethod}
                     </button>
@@ -268,7 +268,7 @@ export default function AuthModal({
                       required
                     />
                   </div>
-                  <p className="mt-1.5 text-[11px] text-muted-foreground">
+                  <p className="mt-1.5 text-xs text-muted-foreground">
                     OTP sent to{" "}
                     <span className="font-semibold text-foreground">
                       {formData.identifier}

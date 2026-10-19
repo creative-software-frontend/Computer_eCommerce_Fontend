@@ -46,7 +46,7 @@ export default function HeroSection() {
 
           {/* Main Copy & Pricing Highlight */}
           <div className="relative z-10 my-6 max-w-xl">
-            <h1 className="font-heading text-3xl leading-tight font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <h1 className="font-heading text-2xl leading-tight font-black tracking-tight text-white sm:text-3xl">
               NEXT-GEN AI GAMING RIGS &amp; RTX 4090 SERIES
             </h1>
             <p className="mt-3 max-w-lg text-base text-inverse-on-surface/85">
@@ -123,7 +123,7 @@ export default function HeroSection() {
             <div className="pointer-events-none absolute -right-8 -bottom-8 h-36 w-36 rounded-full bg-primary/10 blur-xl"></div>
             <div>
               <div className="mb-2 flex items-center justify-between">
-                <span className="inline-flex items-center gap-1 rounded bg-error-container px-2 py-0.5 text-[11px] font-semibold text-on-error-container uppercase">
+                <span className="inline-flex items-center gap-1 rounded bg-error-container px-2 py-0.5 text-xs font-semibold text-on-error-container uppercase">
                   <FaFireFlameCurved size={12} />
                   Only 4 Left in Stock
                 </span>
@@ -131,7 +131,7 @@ export default function HeroSection() {
                   Save $200
                 </span>
               </div>
-              <h3 className="font-heading text-lg leading-snug font-bold text-foreground transition-colors group-hover:text-primary">
+              <h3 className="font-heading text-sm leading-snug font-bold text-foreground transition-colors group-hover:text-primary sm:text-base">
                 ASUS ROG Swift 32&quot; 4K QD-OLED 240Hz
               </h3>
               <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
@@ -168,7 +168,7 @@ export default function HeroSection() {
                 <FaScrewdriverWrench size={12} />
                 Signature Service
               </div>
-              <h3 className="font-heading text-lg leading-snug font-bold text-white">
+              <h3 className="font-heading text-sm leading-snug font-bold text-white sm:text-base">
                 CUSTOM PC BUILDER BONUS
               </h3>
               <p className="mt-1 text-sm text-white/80">

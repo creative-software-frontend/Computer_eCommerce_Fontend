@@ -132,7 +132,7 @@ const ProductCard = ({
     >
       <div className="flex grow flex-col">
         <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-muted p-2">
-          <span className="absolute top-2 left-2 z-10 rounded bg-tertiary-fixed px-2 py-0.5 text-[11px] font-extrabold text-on-tertiary-fixed uppercase">
+          <span className="absolute top-2 left-2 z-10 rounded bg-tertiary-fixed px-2 py-0.5 text-xs font-extrabold text-on-tertiary-fixed uppercase">
             {product.discount}% OFF
           </span>
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
@@ -173,7 +173,7 @@ const ProductCard = ({
         </div>
 
         <div className="mb-1 flex items-center gap-2">
-          <span className="text-[11px] font-bold text-muted-foreground uppercase">
+          <span className="text-xs font-bold text-muted-foreground uppercase">
             {product.brand}
           </span>
           <span className="text-muted-foreground">·</span>
@@ -188,7 +188,7 @@ const ProductCard = ({
           </div>
         </div>
 
-        <h3 className="line-clamp-2 font-heading text-sm leading-snug font-bold text-foreground transition-colors group-hover:text-primary">
+        <h3 className="line-clamp-2 font-heading text-sm leading-snug font-bold text-foreground transition-colors group-hover:text-primary sm:text-base">
           {product.title}
         </h3>
 
@@ -196,7 +196,7 @@ const ProductCard = ({
           {product.specs.map((spec, idx) => (
             <span
               key={idx}
-              className="rounded bg-muted px-1.5 py-0.5 text-[11px] text-muted-foreground outline"
+              className="rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground outline"
             >
               {spec}
             </span>
@@ -211,7 +211,7 @@ const ProductCard = ({
               style={{ width: `${product.claimedPercent ?? 0}%` }}
             ></div>
           </div>
-          <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
+          <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
             <span>
               Sold:
               <strong className="text-foreground">
@@ -233,7 +233,7 @@ const ProductCard = ({
               </span>
             )}
             {product.save && (
-              <span className="ml-auto text-[11px] font-semibold text-emerald-600">
+              <span className="ml-auto text-xs font-semibold text-emerald-600">
                 Save {formatBdt(product.save)}
               </span>
             )}

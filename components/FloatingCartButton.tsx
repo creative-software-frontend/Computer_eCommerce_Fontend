@@ -20,7 +20,7 @@ export default function FloatingCartButton() {
           </span>
         )}
       </div>
-      {/* <span className="mt-1 text-[11px] font-extrabold tracking-tight whitespace-nowrap">
+      {/* <span className="mt-1 text-xs font-extrabold tracking-tight whitespace-nowrap">
         {itemCount} {itemCount === 1 ? "Item" : "Items"}
       </span> */}
       <span className="mt-1 border-t border-primary-foreground/20 pt-1 text-xs font-black whitespace-nowrap">

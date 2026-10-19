@@ -24,7 +24,7 @@ export default function notFound() {
           <span className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-bold tracking-wider text-primary uppercase">
             Error 404
           </span>
-          <h1 className="font-heading text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+          <h1 className="font-heading text-2xl font-black tracking-tight text-foreground sm:text-3xl">
             Page Not Found
           </h1>
           <p className="mx-auto max-w-md text-xs leading-relaxed text-muted-foreground sm:text-sm">

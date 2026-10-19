@@ -98,7 +98,7 @@ export default function ComparePage() {
                         className="h-full object-contain"
                       />
                     </div>
-                    <h3 className="line-clamp-2 text-xs font-bold text-foreground">
+                    <h3 className="line-clamp-2 text-sm font-bold text-foreground sm:text-base">
                       {item.name}
                     </h3>
                   </div>

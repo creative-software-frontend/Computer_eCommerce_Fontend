@@ -15,6 +15,7 @@ import {
   FaWater,
   FaClock,
   FaVideo,
+  FaArrowRight,
 } from "react-icons/fa"
 
 export default function FeaturedCategories() {
@@ -48,13 +49,22 @@ export default function FeaturedCategories() {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
       {/* Section Header */}
-      <div className="mb-6">
-        <h2 className="font-heading text-2xl font-extrabold tracking-tight text-foreground">
-          Featured Categories
-        </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Explore our wide range of tech products
-        </p>
+      <div className="mb-6 flex justify-between">
+        <div className="">
+          <h2 className="font-heading text-2xl font-extrabold tracking-tight text-foreground">
+            Featured Categories
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Explore our wide range of tech products
+          </p>
+        </div>
+        <Link
+          href="/category"
+          className="inline-flex items-end gap-1 text-xs font-bold text-primary transition-all hover:underline"
+        >
+          <span>View All Category</span>
+          <FaArrowRight />
+        </Link>
       </div>
 
       {/* Categories Grid */}

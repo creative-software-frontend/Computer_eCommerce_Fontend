@@ -62,7 +62,7 @@ export default function CartSidebar() {
                 <h2 className="font-heading text-sm font-extrabold text-foreground">
                   Shopping Cart
                 </h2>
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                   {cartItems.length} items in your bag
                 </p>
               </div>
@@ -102,7 +102,7 @@ export default function CartSidebar() {
                 <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
                   <FaShoppingCart className="text-3xl" />
                 </div>
-                <h3 className="font-heading text-base font-bold text-foreground">
+                <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                   Your cart is empty
                 </h3>
                 <p className="max-w-xs text-xs text-muted-foreground">
@@ -198,7 +198,7 @@ export default function CartSidebar() {
                     <button
                       type="button"
                       onClick={() => setShowPromo(false)}
-                      className="text-[11px] text-rose-500 hover:underline"
+                      className="text-xs text-rose-500 hover:underline"
                     >
                       Cancel
                     </button>

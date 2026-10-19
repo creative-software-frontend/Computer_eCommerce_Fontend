@@ -35,9 +35,9 @@ export default function BrandsMarquee() {
         </div>
         <Link
           href="/brands"
-          className="inline-flex items-center gap-1 text-sm font-bold text-primary transition-all hover:underline"
+          className="inline-flex items-center gap-1 text-xs font-bold text-primary transition-all hover:underline"
         >
-          <span>View all brands</span>
+          <span>View All Brands</span>
           <FaArrowRight />
         </Link>
       </div>

@@ -17,7 +17,7 @@ export default function CategoryIndexPage() {
             <BreadcrumbComponent
               urlList={[{ name: "Categories", url: null, active: true }]}
             />
-            <h1 className="flex items-center gap-3 font-heading text-2xl font-black tracking-tight sm:text-3xl lg:text-4xl">
+            <h1 className="flex items-center gap-3 font-heading text-2xl font-black tracking-tight sm:text-3xl">
               <span>Explore All Categories</span>
               <Badge
                 variant="outline"
@@ -63,7 +63,7 @@ export default function CategoryIndexPage() {
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <h3 className="line-clamp-1 text-sm font-extrabold text-foreground transition-colors group-hover:text-primary sm:text-base">
+                    <h3 className="line-clamp-1 text-sm font-bold text-foreground transition-colors group-hover:text-primary sm:text-base">
                       {category.name}
                     </h3>
                   </div>
@@ -76,7 +76,7 @@ export default function CategoryIndexPage() {
 
               {/* Card Footer / Action */}
               <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
-                <span className="text-[11px] font-bold text-muted-foreground">
+                <span className="text-sm font-bold text-muted-foreground">
                   {category.productCount
                     ? `${category.productCount} Products`
                     : "View Collection"}

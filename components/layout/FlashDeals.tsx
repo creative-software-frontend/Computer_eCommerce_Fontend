@@ -72,28 +72,28 @@ export default function FlashDeals({
                 <span className="text-lg leading-none font-bold">
                   {timeLeft.days}
                 </span>
-                <span className="text-[9px] uppercase opacity-75">Days</span>
+                <span className="text-[10px] uppercase opacity-75">Days</span>
               </div>
               <span className="text-lg font-bold text-tertiary">:</span>
               <div className="flex flex-col items-center rounded bg-inverse-surface px-2.5 py-1 text-inverse-on-surface">
                 <span className="text-lg leading-none font-bold">
                   {timeLeft.hours}
                 </span>
-                <span className="text-[9px] uppercase opacity-75">Hrs</span>
+                <span className="text-[10px] uppercase opacity-75">Hrs</span>
               </div>
               <span className="text-lg font-bold text-tertiary">:</span>
               <div className="flex flex-col items-center rounded bg-inverse-surface px-2.5 py-1 text-inverse-on-surface">
                 <span className="text-lg leading-none font-bold">
                   {timeLeft.mins}
                 </span>
-                <span className="text-[9px] uppercase opacity-75">Mins</span>
+                <span className="text-[10px] uppercase opacity-75">Mins</span>
               </div>
               <span className="text-lg font-bold text-tertiary">:</span>
               <div className="flex flex-col items-center rounded bg-tertiary px-2.5 py-1 text-on-tertiary">
                 <span className="text-lg leading-none font-bold">
                   {timeLeft.secs}
                 </span>
-                <span className="text-[9px] uppercase opacity-75">Secs</span>
+                <span className="text-[10px] uppercase opacity-75">Secs</span>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@ export default function FlashDeals({
             className="group inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline"
           >
             <span>View All 28 Flash Deals</span>
-            <FaArrowRight size={16} />
+            <FaArrowRight />
           </Link>
         </div>
       </Card>

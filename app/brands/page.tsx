@@ -76,7 +76,7 @@ export default function BrandDirectoryPage() {
                 <FaShieldAlt className="text-xs" /> Official Authorized
                 Distributors
               </span>
-              <h1 className="font-heading text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+              <h1 className="font-heading text-2xl font-black tracking-tight text-foreground sm:text-3xl">
                 Explore World-Class Brands
               </h1>
               <p className="max-w-xl text-xs leading-relaxed text-muted-foreground sm:text-sm">
@@ -203,7 +203,7 @@ export default function BrandDirectoryPage() {
 
                       {/* Middle Content */}
                       <div className="mt-4">
-                        <h3 className="font-heading text-base font-bold text-foreground transition-colors group-hover:text-primary">
+                        <h3 className="font-heading text-sm font-bold text-foreground transition-colors group-hover:text-primary sm:text-base">
                           {brand.name}
                         </h3>
                         <p className="mt-0.5 text-xs text-muted-foreground">
@@ -227,7 +227,7 @@ export default function BrandDirectoryPage() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted text-muted-foreground">
                 <FaSearch className="text-xl" />
               </div>
-              <h3 className="font-heading text-lg font-bold text-foreground">
+              <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                 No Brands Found
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">

@@ -114,7 +114,7 @@ export default function AboutPage() {
               <FaBolt size={14} />
               Our Story
             </span>
-            <h1 className="mt-4 font-heading text-3xl leading-tight font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <h1 className="mt-4 font-heading text-2xl leading-tight font-black tracking-tight text-white sm:text-3xl">
               Powering Bangladesh&apos;s Tech Enthusiasts Since 2014
             </h1>
             <p className="mt-4 max-w-xl text-base text-inverse-on-surface/85">
@@ -230,7 +230,7 @@ export default function AboutPage() {
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-muted text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                     <Icon className="size-6" />
                   </div>
-                  <h3 className="font-heading text-base font-bold text-foreground">
+                  <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                     {value.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -263,7 +263,7 @@ export default function AboutPage() {
                 <span className="font-heading text-2xl font-extrabold text-primary">
                   {milestone.year}
                 </span>
-                <h3 className="mt-2 font-heading text-base font-bold text-foreground">
+                <h3 className="mt-2 font-heading text-sm font-bold text-foreground sm:text-base">
                   {milestone.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -295,7 +295,7 @@ export default function AboutPage() {
                 <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-muted text-primary">
                   <FaUsers className="size-7" />
                 </div>
-                <h3 className="font-heading text-base font-bold text-foreground">
+                <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                   {member.name}
                 </h3>
                 <p className="mt-0.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">

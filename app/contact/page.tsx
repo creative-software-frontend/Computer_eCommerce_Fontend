@@ -71,7 +71,7 @@ export default function ContactPage() {
               <FaPhoneAlt size={14} />
               Get In Touch
             </span>
-            <h1 className="mt-4 font-heading text-3xl leading-tight font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <h1 className="mt-4 font-heading text-2xl leading-tight font-black tracking-tight text-white sm:text-3xl">
               We&apos;re Here To Help You Build &amp; Upgrade
             </h1>
             <p className="mt-4 max-w-xl text-base text-inverse-on-surface/85">
@@ -95,7 +95,7 @@ export default function ContactPage() {
                     <Icon className="size-5" />
                   </div>
                   <div>
-                    <h3 className="font-heading text-sm font-bold text-foreground">
+                    <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                       {contact.title}
                     </h3>
                     {contact.lines.map((line) => (
@@ -200,7 +200,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-4 lg:col-span-5">
             <Card className="rounded-xl border-border bg-card py-0 shadow-sm">
               <CardContent className="p-5">
-                <h3 className="font-heading text-sm font-bold text-foreground">
+                <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                   Visit Our Flagship Store
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
@@ -214,7 +214,7 @@ export default function ContactPage() {
 
             <Card className="rounded-xl border-border bg-card py-0 shadow-sm">
               <CardContent className="p-5">
-                <h3 className="font-heading text-sm font-bold text-foreground">
+                <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                   Business Hours
                 </h3>
                 <div className="mt-3 space-y-2 text-xs">
@@ -242,7 +242,7 @@ export default function ContactPage() {
 
             <Card className="rounded-xl border-border bg-card py-0 shadow-sm">
               <CardContent className="p-5">
-                <h3 className="font-heading text-sm font-bold text-foreground">
+                <h3 className="font-heading text-sm font-bold text-foreground sm:text-base">
                   Follow Us
                 </h3>
                 <div className="mt-3 flex items-center gap-2">

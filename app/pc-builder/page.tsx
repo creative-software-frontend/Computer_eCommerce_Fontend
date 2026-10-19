@@ -60,7 +60,7 @@ export default function PcBuilderPage() {
 
           <div className="flex flex-col justify-between gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm md:flex-row md:items-center">
             <div className="space-y-1">
-              <h1 className="font-heading text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+              <h1 className="font-heading text-2xl font-black tracking-tight text-foreground sm:text-3xl">
                 PC Builder - Build Your Custom Rig
               </h1>
               <p className="text-xs text-muted-foreground sm:text-sm">
@@ -147,7 +147,7 @@ export default function PcBuilderPage() {
                     <Icon className="text-base" />
                   </div>
                   <div>
-                    <h3 className="flex items-center gap-1.5 font-heading text-sm font-bold text-foreground">
+                    <h3 className="flex items-center gap-1.5 font-heading text-sm font-bold text-foreground sm:text-base">
                       {category.name}
                       {category.required && (
                         <span className="text-xs text-destructive">*</span>

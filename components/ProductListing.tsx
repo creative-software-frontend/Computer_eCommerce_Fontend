@@ -130,7 +130,7 @@ function ProductListingContent({
         {/* Breadcrumb & Page Title */}
         <div className="mb-6">
           <BreadcrumbComponent urlList={breadcrumbs} />
-          <h1 className="font-heading text-2xl font-extrabold text-foreground capitalize sm:text-3xl">
+          <h1 className="font-heading text-2xl font-black tracking-tight text-foreground capitalize sm:text-3xl">
             {title}
           </h1>
         </div>
@@ -147,7 +147,7 @@ function ProductListingContent({
             <div className="space-y-6 rounded-xl border border-border bg-card p-5 shadow-sm">
               {/* Mobile Filter Header */}
               <div className="flex items-center justify-between border-b border-border pb-3 lg:hidden">
-                <h3 className="text-base font-bold">Filters</h3>
+                <h3 className="text-sm font-bold sm:text-base">Filters</h3>
                 <Button
                   variant="ghost"
                   size="icon"

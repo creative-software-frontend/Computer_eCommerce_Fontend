@@ -37,7 +37,7 @@ export default function SubMenuList({ items }: SubMenuListProps) {
             >
               <span className="truncate">{subItem.name}</span>
               {hasChildren && (
-                <FaChevronRight className="ml-2 shrink-0 text-[9px] text-muted-foreground" />
+                <FaChevronRight className="ml-2 shrink-0 text-[10px] text-muted-foreground" />
               )}
             </Link>
 

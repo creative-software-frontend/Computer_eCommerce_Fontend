@@ -113,7 +113,7 @@ export default function FavoritesPage() {
                   </div>
 
                   <div className="space-y-1">
-                    <h3 className="line-clamp-2 text-xs leading-relaxed font-bold text-foreground">
+                    <h3 className="line-clamp-2 text-sm leading-relaxed font-bold text-foreground sm:text-base">
                       {item.name}
                     </h3>
                     {item.spec && (
