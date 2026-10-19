@@ -5,11 +5,16 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
-import { flashProducts } from "@/lib/data/flashProducts.data"
 import { FaArrowRight, FaFire, FaStar } from "react-icons/fa"
 import { BiShoppingBag } from "react-icons/bi"
+import { Product } from "@/lib/data/types"
+import ProductCard from "../ui/ProductCard"
 
-export default function FlashDeals() {
+export default function FlashDeals({
+  flashProducts,
+}: {
+  flashProducts: Product[]
+}) {
   // Live Countdown Timer State (Strict allocation quota style)
   const [timeLeft, setTimeLeft] = useState({
     days: "02",
@@ -106,124 +111,7 @@ export default function FlashDeals() {
       {/* 4 Flash Deal Product Cards Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {flashProducts.map((product) => (
-          <Card
-            key={product.id}
-            className="group relative flex flex-col justify-between rounded-xl border-border bg-card p-4 shadow-sm transition-all duration-200 hover:shadow-md"
-          >
-            <div className="flex grow flex-col">
-              <div className="relative mb-3 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-muted p-2">
-                <span className="absolute top-2 left-2 z-10 rounded bg-tertiary-fixed px-2 py-0.5 text-[11px] font-extrabold text-on-tertiary-fixed uppercase">
-                  {product.discount}
-                </span>
-                {/* <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-8 w-8 rounded-full bg-card shadow-sm hover:text-primary"
-                    title="Add to Wishlist"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">
-                      favorite
-                    </span>
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    className="h-8 w-8 rounded-full bg-card shadow-sm hover:text-primary"
-                    title="Compare Product"
-                  >
-                    <span className="material-symbols-outlined text-[16px]">
-                      compare_arrows
-                    </span>
-                  </Button>
-                </div> */}
-                <Image
-                  width={600}
-                  height={600}
-                  src={product.image}
-                  alt={product.title}
-                  className="h-full w-full object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-
-              <div className="mb-1 flex items-center gap-2">
-                <span className="text-[11px] font-bold text-muted-foreground uppercase">
-                  {product.brand}
-                </span>
-                <span className="text-muted-foreground">·</span>
-                <div className="flex items-center text-xs text-amber-500">
-                  <FaStar />
-                  <span className="ml-0.5 font-bold text-foreground">
-                    {product.rating}
-                  </span>
-                  <span className="ml-0.5 text-muted-foreground">
-                    ({product.reviews})
-                  </span>
-                </div>
-              </div>
-
-              <h3 className="line-clamp-2 font-heading text-sm leading-snug font-bold text-foreground transition-colors group-hover:text-primary">
-                {product.title}
-              </h3>
-
-              <div className="mt-2 flex flex-wrap gap-1">
-                {product.specs.map((spec, idx) => (
-                  <span
-                    key={idx}
-                    className="rounded bg-muted px-1.5 py-0.5 text-[11px] text-muted-foreground outline"
-                  >
-                    {spec}
-                  </span>
-                ))}
-              </div>
-
-              {/* Stock Progress Indicator */}
-              <div className="mt-auto">
-                <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full rounded-full bg-tertiary"
-                    style={{ width: product.claimedPercent }}
-                  ></div>
-                </div>
-                <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
-                  <span>
-                    Sold:{" "}
-                    <strong className="text-foreground">
-                      {product.soldCount}
-                    </strong>
-                  </span>
-                  <span className="font-bold text-tertiary">
-                    {product.claimedPercent} Claimed
-                  </span>
-                </div>
-
-                <div className="mt-4 flex items-baseline gap-2 pt-2">
-                  <span className="text-lg font-extrabold text-foreground">
-                    {product.price}
-                  </span>
-                  <span className="text-xs text-muted-foreground line-through">
-                    {product.oldPrice}
-                  </span>
-                  <span className="ml-auto text-[11px] font-semibold text-emerald-600">
-                    {product.save}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              <Button
-                // variant="secondary"
-                className="w-full cursor-pointer bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high"
-              >
-                <BiShoppingBag />
-                <span>Add</span>
-              </Button>
-              <Button className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90">
-                Buy Now
-              </Button>
-            </div>
-          </Card>
+          <ProductCard product={product} key={product.id} />
         ))}
       </div>
     </section>

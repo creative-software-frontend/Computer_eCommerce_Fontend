@@ -1,12 +1,27 @@
-import { BiShoppingBag } from "react-icons/bi"
 import { Button } from "./button"
 import { Card } from "./card"
 import { Product } from "@/lib/data/types"
 import { formatBdt } from "@/lib/data/products.data"
 import Image from "next/image"
-import { FaStar } from "react-icons/fa"
+import { FaCheck, FaShoppingCart, FaStar } from "react-icons/fa"
+import { useState } from "react"
+import { useShop } from "@/context/ShopContext"
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const { addToCart, openBuyNow } = useShop()
+  const [isAdded, setIsAdded] = useState(false)
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.title,
+      price: product.price,
+      image: product.image,
+    })
+    setIsAdded(true)
+    setTimeout(() => setIsAdded(false), 1500)
+  }
+
   return (
     <Card
       key={product.id}
@@ -40,8 +55,8 @@ const ProductCard = ({ product }: { product: Product }) => {
                   </Button>
                 </div> */}
           <Image
-            width={600}
-            height={600}
+            width={400}
+            height={400}
             src={product.image}
             alt={product.title}
             className="h-full w-full object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
@@ -119,13 +134,38 @@ const ProductCard = ({ product }: { product: Product }) => {
 
       <div className="mt-4 grid grid-cols-2 gap-2">
         <Button
+          onClick={handleAddToCart}
+          disabled={product.stock !== "inStock"}
           // variant="secondary"
-          className="w-full cursor-pointer bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high"
+          className={`w-full cursor-pointer bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high ${
+            isAdded
+              ? "bg-emerald-600 text-white hover:bg-emerald-700"
+              : "bg-surface-container text-primary hover:bg-surface-container-high"
+          }`}
         >
-          <BiShoppingBag />
-          <span>Add</span>
+          {isAdded ? (
+            <>
+              <FaCheck className="text-xs" />
+              <span>Added</span>
+            </>
+          ) : (
+            <>
+              <FaShoppingCart className="text-xs" />
+              <span>Add</span>
+            </>
+          )}
         </Button>
-        <Button className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90">
+        <Button
+          onClick={() =>
+            openBuyNow({
+              id: product.id,
+              name: product.title,
+              price: product.price,
+              image: product.image,
+            })
+          }
+          className="w-full cursor-pointer bg-primary py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
+        >
           Buy Now
         </Button>
       </div>
