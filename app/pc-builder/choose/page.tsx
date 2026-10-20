@@ -54,7 +54,6 @@ function ChooseComponentContent() {
         },
       ]}
       productData={products}
-      isBuilderMode={true}
       onSelect={(product) => handleSelect(product)}
     />
   )
