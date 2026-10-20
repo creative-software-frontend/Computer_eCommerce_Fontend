@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { FaBolt, FaClock } from "react-icons/fa"
+import { FaBolt } from "react-icons/fa"
 import BreadcrumbComponent from "@/components/BreadCrumb"
 import { getFlashDealProducts } from "@/lib/api/product.api"
 import { Product } from "@/lib/data/types"

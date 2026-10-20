@@ -59,8 +59,6 @@ export default function BrandDirectoryPage() {
     })
   }, [searchTerm, selectedLetter])
 
-  const featuredBrands = brands.filter((b) => b.featured)
-
   return (
     <div className="min-h-screen bg-background px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-10">
@@ -99,45 +97,6 @@ export default function BrandDirectoryPage() {
                 className="rounded-xl border-border bg-background py-5 pl-10 text-xs shadow-md"
               />
             </div>
-          </div>
-        </div>
-
-        {/* Featured Top Brands Carousel/Grid Section */}
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="font-heading text-xl font-extrabold text-foreground">
-              Featured Partner Brands
-            </h2>
-            <span className="text-xs font-medium text-muted-foreground">
-              Top Industry Leaders
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            {featuredBrands
-              .filter((brand) => brand.logo)
-              .map((brand) => (
-                <Link key={brand.id} href={`/brands/${brand.slug}`}>
-                  <Card className="group relative flex h-36 flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-border bg-card p-5 text-center shadow-sm transition-all hover:border-primary/50 hover:shadow-md">
-                    <div className="relative mb-3 flex h-22 w-32 items-center justify-center">
-                      <Image
-                        width={300}
-                        height={300}
-                        src={brand.logo || ""}
-                        alt={brand.name}
-                        className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110"
-                      />
-                    </div>
-                    {/* <span className="line-clamp-1 font-heading text-xs font-bold text-foreground transition-colors group-hover:text-primary">
-                        {brand.name}
-                      </span> */}
-                    <span className="mt-0.5 text-[10px] text-muted-foreground">
-                      {brand.productCount} Products
-                    </span>
-                  </Card>
-                </Link>
-              ))}
           </div>
         </div>
 

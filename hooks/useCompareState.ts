@@ -24,11 +24,6 @@ function subscribeCompare(callback: () => void) {
   }
 }
 
-function getCompareSnapshot() {
-  if (typeof window === "undefined") return "[]"
-  return localStorage.getItem(storageKey) || "[]"
-}
-
 export default function useCompareState() {
   const compareJson = useSyncExternalStore(
     subscribeCompare,

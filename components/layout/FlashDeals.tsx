@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { FaArrowRight, FaFire } from "react-icons/fa"

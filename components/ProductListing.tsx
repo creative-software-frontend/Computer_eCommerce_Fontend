@@ -61,7 +61,6 @@ function ProductListingContent({
   productData,
   title,
   breadcrumbs,
-  isBuilderMode = false,
   onSelect,
 }: FullProductListingProps) {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
