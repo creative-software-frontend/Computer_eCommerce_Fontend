@@ -236,7 +236,6 @@ function ProductListingContent({
                   <ProductCard
                     key={product.id}
                     product={product}
-                    mode="builder"
                     onSelect={() => onSelect?.(product)}
                   />
                 ))}
