@@ -167,7 +167,7 @@ export default function AboutPage() {
       <section className="mx-auto w-full max-w-7xl px-4 pt-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <div className="relative flex items-center justify-center overflow-hidden rounded-2xl border border-border bg-linear-to-br from-primary-container to-primary p-10 shadow-sm">
+            <div className="relative flex items-center justify-center overflow-hidden rounded-2xl border border-border bg-linear-to-br from-primary-container/50 to-primary/70 p-10 shadow-sm">
               <div className="pointer-events-none absolute top-0 right-0 h-40 w-40 rounded-bl-full bg-white/10"></div>
               <Image
                 src={LogoImage}
@@ -186,8 +186,8 @@ export default function AboutPage() {
               We believe everyone deserves access to reliable, high-performance
               technology without the guesswork. Our mission is to make
               world-class computer and electronic products accessible,
-              affordable, and genuinely supported — from your first budget
-              build to the ultimate enthusiast rig.
+              affordable, and genuinely supported — from your first budget build
+              to the ultimate enthusiast rig.
             </p>
             <div className="mt-6 space-y-3">
               {[

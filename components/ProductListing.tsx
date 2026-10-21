@@ -1,79 +1,62 @@
 "use client"
 
 import { useState } from "react"
-import { FaFilter, FaTimes } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
-import ProductCard from "@/components/ui/ProductCard"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Product } from "@/lib/data/types"
 import BreadcrumbComponent, { ListingBreadcrumb } from "./BreadCrumb"
-import { useInfiniteScroll } from "@/hooks/useInfiniteScroll"
+import ProductGrid from "./listing/ProductGrid"
+import ProductSidebar from "./listing/ProductSidebar"
+import ProductToolbar from "./listing/ProductToolbar"
+import { ProductGridSkeleton } from "./skeletons/ProductGridSkeleton"
 
 const ITEMS_PER_PAGE = 36
 
-type ProductListingProps = {
+export type ProductListingStatus =
+  | { state: "loading" }
+  | { state: "success" }
+  | { state: "error"; message: string; onRetry?: () => void }
+
+type ProductListingBaseProps = {
   productData: Product[]
   title: string
   breadcrumbs: ListingBreadcrumb[]
-  onSelect?: (product: any) => void
+  status?: ProductListingStatus
 }
 
-type FullProductListingProps = ProductListingProps & {
-  currentPage: number
-  totalPages: number
-}
-
-const BRANDS = ["ASUS", "MSI", "Gigabyte", "Corsair", "Samsung", "Lian Li"]
+type ProductListingProps = ProductListingBaseProps &
+  (
+    | { mode?: "default" | "grab"; onSelect?: never }
+    | { mode: "build"; onSelect: (product: Product) => void }
+  )
 
 export default function ProductListing({
   productData,
   title,
   breadcrumbs,
   onSelect,
+  mode,
+  status = { state: "success" },
 }: ProductListingProps) {
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
   const searchParams = useSearchParams()
-  const totalPages = Math.max(1, Math.ceil(productData.length / ITEMS_PER_PAGE))
+  const pathname = usePathname()
+  const { replace } = useRouter()
+  const isSuccess = status.state === "success"
+  const totalPages = Math.max(
+    1,
+    Math.ceil((isSuccess ? productData.length : 0) / ITEMS_PER_PAGE)
+  )
   const rawPage = Number(searchParams.get("page") ?? "1")
   const currentPage =
     Number.isNaN(rawPage) || rawPage < 1 ? 1 : Math.min(rawPage, totalPages)
 
-  return (
-    <ProductListingContent
-      key={currentPage}
-      currentPage={currentPage}
-      totalPages={totalPages}
-      productData={productData}
-      title={title}
-      breadcrumbs={breadcrumbs}
-      onSelect={onSelect}
-    />
-  )
-}
-
-function ProductListingContent({
-  currentPage,
-  totalPages,
-  productData,
-  title,
-  breadcrumbs,
-  onSelect,
-}: FullProductListingProps) {
-  const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
-
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const { replace } = useRouter()
-
-  // Current page items slice
-  const products = productData.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  )
-
-  const { visibleItems, hasMore, sentinelRef } = useInfiniteScroll(products, {
-    initialCount: 6,
-    step: 4,
-  })
+  const products = isSuccess
+    ? productData.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+      )
+    : []
 
   const handleProductPage = (pageNumber: number) => {
     const nextPage = Math.min(Math.max(pageNumber, 1), totalPages)
@@ -95,151 +78,59 @@ function ProductListingContent({
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
-          {/* Left Sidebar Filters */}
-          <aside
-            className={`lg:block ${
-              mobileFilterOpen
-                ? "fixed inset-0 z-50 block overflow-y-auto bg-background/80 p-4 backdrop-blur-sm"
-                : "hidden"
-            }`}
-          >
-            <div className="space-y-6 rounded-xl border border-border bg-card p-5 shadow-sm">
-              {/* Mobile Filter Header */}
-              <div className="flex items-center justify-between border-b border-border pb-3 lg:hidden">
-                <h3 className="text-sm font-bold sm:text-base">Filters</h3>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setMobileFilterOpen(false)}
-                >
-                  <FaTimes />
-                </Button>
-              </div>
-
-              {/* Price Filter */}
-              <div>
-                <h4 className="mb-3 text-xs font-bold tracking-wider text-foreground uppercase">
-                  Price Range
-                </h4>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    className="w-full rounded-lg border border-border bg-background p-2 text-xs"
-                  />
-                  <span className="text-muted-foreground">-</span>
-                  <input
-                    type="number"
-                    placeholder="Max"
-                    className="w-full rounded-lg border border-border bg-background p-2 text-xs"
-                  />
-                </div>
-              </div>
-
-              {/* Brands Filter */}
-              <div className="border-t border-border pt-4">
-                <h4 className="mb-3 text-xs font-bold tracking-wider text-foreground uppercase">
-                  Brands
-                </h4>
-                <div className="space-y-2 text-xs">
-                  {BRANDS.map((brand) => (
-                    <label
-                      key={brand}
-                      className="flex cursor-pointer items-center gap-2 text-muted-foreground hover:text-foreground"
-                    >
-                      <input
-                        type="checkbox"
-                        className="rounded border-border text-primary focus:ring-primary"
-                      />
-                      <span>{brand}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Availability Filter */}
-              <div className="border-t border-border pt-4">
-                <h4 className="mb-3 text-xs font-bold tracking-wider text-foreground uppercase">
-                  Availability
-                </h4>
-                <div className="space-y-2 text-xs">
-                  <label className="flex cursor-pointer items-center gap-2 text-muted-foreground hover:text-foreground">
-                    <input
-                      type="checkbox"
-                      className="rounded border-border text-primary focus:ring-primary"
-                    />
-                    <span>In Stock Only</span>
-                  </label>
-                  <label className="flex cursor-pointer items-center gap-2 text-muted-foreground hover:text-foreground">
-                    <input
-                      type="checkbox"
-                      className="rounded border-border text-primary focus:ring-primary"
-                    />
-                    <span>Pre-Order Available</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Apply Filter Button */}
-              <Button className="w-full bg-primary py-2 text-xs font-bold text-primary-foreground">
-                Apply Filters
-              </Button>
-            </div>
-          </aside>
+          <ProductSidebar
+            isOpen={mobileFilterOpen}
+            onClose={() => setMobileFilterOpen(false)}
+          />
 
           {/* Right Main Content Area */}
           <div className="space-y-4 lg:col-span-3">
-            {/* Toolbar */}
-            <div className="flex flex-col items-center justify-between gap-3 rounded-xl border border-border bg-card p-3 shadow-sm sm:flex-row sm:p-4">
-              <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="gap-2 text-xs lg:hidden"
-                  onClick={() => setMobileFilterOpen(true)}
-                >
-                  <FaFilter className="text-xs" />
-                  <span>Filters</span>
-                </Button>
-                <p className="text-xs text-muted-foreground">
-                  Showing{" "}
-                  <span className="font-bold text-foreground">
-                    {products.length}{" "}
-                  </span>
-                  of{" "}
-                  <span className="font-bold text-foreground">
-                    {productData.length}{" "}
-                  </span>
-                  products on this page
-                </p>
-              </div>
-
-              <div className="flex w-full items-center justify-end gap-3 sm:w-auto">
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="hidden text-muted-foreground sm:inline">
-                    Sort by:
-                  </span>
-                  <select className="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground focus:ring-1 focus:ring-primary focus:outline-none">
-                    <option>Default (Featured)</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
-                    <option>Rating: High to Low</option>
-                  </select>
-                </div>
-              </div>
-            </div>
+            <ProductToolbar
+              productCount={products.length}
+              totalProductCount={isSuccess ? productData.length : 0}
+              onOpenFilters={() => setMobileFilterOpen(true)}
+              isLoading={status.state === "loading"}
+            />
 
             {/* Product Grid List */}
-            {products.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {visibleItems.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onSelect={() => onSelect?.(product)}
-                  />
-                ))}
+            {status.state === "loading" ? (
+              <ProductGridSkeleton />
+            ) : status.state === "error" ? (
+              <div
+                role="alert"
+                className="rounded-xl border border-border bg-card px-6 py-16 text-center shadow-sm"
+              >
+                <h2 className="text-lg font-bold text-foreground">
+                  Unable to load products
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {status.message}
+                </p>
+                {status.onRetry && (
+                  <Button
+                    variant="outline"
+                    className="mt-4"
+                    onClick={status.onRetry}
+                  >
+                    Try again
+                  </Button>
+                )}
               </div>
+            ) : products.length > 0 ? (
+              mode === "build" ? (
+                <ProductGrid
+                  key={currentPage}
+                  products={products}
+                  mode="build"
+                  onSelect={onSelect}
+                />
+              ) : (
+                <ProductGrid
+                  key={currentPage}
+                  products={products}
+                  mode={mode === "grab" ? "grab" : "default"}
+                />
+              )
             ) : (
               <div
                 role="status"
@@ -254,17 +145,8 @@ function ProductListingContent({
               </div>
             )}
 
-            {/* Sentinel element for Intersection Observer */}
-            {hasMore && (
-              <div
-                ref={sentinelRef}
-                className="h-10 w-full"
-                aria-hidden="true"
-              />
-            )}
-
             {/* Pagination */}
-            {productData.length > ITEMS_PER_PAGE && (
+            {isSuccess && productData.length > ITEMS_PER_PAGE && (
               <div className="flex items-center justify-center gap-2 pt-6">
                 <Button
                   variant="outline"

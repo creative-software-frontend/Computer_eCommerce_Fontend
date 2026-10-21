@@ -5,45 +5,82 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { useShop } from "@/context/ShopContext"
 import { getProductsByCategory } from "@/lib/api/product.api"
 import { Product } from "@/lib/data/types"
-import ProductListing from "@/components/ProductListing"
-import { PcProduct } from "@/hooks/usePcBuilderState"
+import ProductListing, {
+  ProductListingStatus,
+} from "@/components/ProductListing"
 
 function ChooseComponentContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { setPcBuildItem } = useShop()
-  const [products, setProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loadResult, setLoadResult] = useState<{
+    category: string
+    products: Product[]
+    status: ProductListingStatus
+  }>({
+    category: "",
+    products: [],
+    status: { state: "loading" },
+  })
+  const [retryCount, setRetryCount] = useState(0)
 
   const category = searchParams.get("cat") || "cpu"
+  const currentResult =
+    loadResult.category === category ? loadResult : undefined
+  const products = currentResult?.products ?? []
+  const status = currentResult?.status ?? { state: "loading" as const }
+
   useEffect(() => {
+    let cancelled = false
+
     const getProducts = async () => {
       try {
-        const products = await getProductsByCategory([category])
-        setProducts(products)
-      } catch (err) {
-        console.log(err)
-      } finally {
-        setLoading(false)
+        const fetchedProducts = await getProductsByCategory([category])
+        if (cancelled) return
+        setLoadResult({
+          category,
+          products: fetchedProducts,
+          status: { state: "success" },
+        })
+      } catch (error) {
+        console.error(
+          `Failed to load products for category "${category}"`,
+          error
+        )
+        if (cancelled) return
+        setLoadResult({
+          category,
+          products: [],
+          status: {
+            state: "error",
+            message: "Please try again in a moment.",
+            onRetry: () => setRetryCount((count) => count + 1),
+          },
+        })
       }
     }
-    getProducts()
-  }, [category])
 
-  const handleSelect = (product: PcProduct) => {
+    getProducts()
+    return () => {
+      cancelled = true
+    }
+  }, [category, retryCount])
+
+  const handleSelect = (product: Product) => {
     setPcBuildItem(category, {
       id: product.id,
       title: product.title,
       price: product.price,
       image: product.image,
-      spec: product.spec || "Standard Spec",
-      wattage: product.wattage || 65, // ডিফল্ট ওয়াটেজ বা প্রোডাক্টের ওয়াটেজ
+      spec: product.specs.join(", ") || "Standard Spec",
+      wattage: 65,
     })
     router.push("/pc-builder")
   }
 
   return (
     <ProductListing
+      mode="build"
       title={`Choose ${category.toUpperCase()}`}
       breadcrumbs={[
         { name: "PC Builder", url: "/pc-builder" },
@@ -54,6 +91,7 @@ function ChooseComponentContent() {
         },
       ]}
       productData={products}
+      status={status}
       onSelect={(product) => handleSelect(product)}
     />
   )

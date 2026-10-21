@@ -26,7 +26,9 @@ const HeaderCartButton = () => {
           Cart Value
         </span>
 
-        <span className="text-sm font-bold text-black">{totalAmount}৳</span>
+        <span className="text-sm font-bold text-black">
+          ৳ {totalAmount.toLocaleString()}
+        </span>
       </span>
     </Button>
   )
