@@ -34,3 +34,28 @@ export interface Brand {
   category: string
   featured?: boolean
 }
+
+export interface OrderItem {
+  name: string
+  qty: number
+  price: string
+}
+
+export interface TrackingStep {
+  title: string
+  date: string
+  completed: boolean
+  current: boolean
+  desc: string
+}
+
+export interface OrderDetails {
+  orderId: string
+  date: string
+  status: string
+  courier: string
+  estimatedDelivery: string
+  shippingAddress: string
+  items: OrderItem[]
+  steps: TrackingStep[]
+}

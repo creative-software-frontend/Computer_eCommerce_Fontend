@@ -1,23 +1,20 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { FaFilter, FaTimes } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import ProductCard from "@/components/ui/ProductCard"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { Product } from "@/lib/data/types"
 import BreadcrumbComponent, { ListingBreadcrumb } from "./BreadCrumb"
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll"
 
 const ITEMS_PER_PAGE = 36
-const INITIAL_VISIBLE_COUNT = 6
-const LOAD_MORE_STEP = 4
 
 type ProductListingProps = {
   productData: Product[]
   title: string
   breadcrumbs: ListingBreadcrumb[]
-  isBuilderMode?: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSelect?: (product: any) => void
 }
 
@@ -32,7 +29,6 @@ export default function ProductListing({
   productData,
   title,
   breadcrumbs,
-  isBuilderMode,
   onSelect,
 }: ProductListingProps) {
   const searchParams = useSearchParams()
@@ -49,7 +45,6 @@ export default function ProductListing({
       productData={productData}
       title={title}
       breadcrumbs={breadcrumbs}
-      isBuilderMode={isBuilderMode}
       onSelect={onSelect}
     />
   )
@@ -61,18 +56,13 @@ function ProductListingContent({
   productData,
   title,
   breadcrumbs,
-  isBuilderMode = false,
   onSelect,
 }: FullProductListingProps) {
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT)
 
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
-
-  const observerTarget = useRef<HTMLDivElement | null>(null)
-  const isLoadingRef = useRef(false)
 
   // Current page items slice
   const products = productData.slice(
@@ -80,41 +70,10 @@ function ProductListingContent({
     currentPage * ITEMS_PER_PAGE
   )
 
-  const visibleProducts = products.slice(0, visibleCount)
-
-  useEffect(() => {
-    isLoadingRef.current = false
-  }, [visibleCount])
-
-  // Intersection Observer for Infinite Scroll
-  useEffect(() => {
-    const target = observerTarget.current
-    if (!target || visibleCount >= products.length) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]
-        if (entry.isIntersecting && !isLoadingRef.current) {
-          isLoadingRef.current = true
-          setVisibleCount((count) =>
-            Math.min(count + LOAD_MORE_STEP, products.length)
-          )
-        }
-      },
-      {
-        root: null,
-        rootMargin: "200px",
-        threshold: 0.1,
-      }
-    )
-
-    observer.observe(target)
-
-    return () => {
-      if (target) observer.unobserve(target)
-      observer.disconnect()
-    }
-  }, [visibleCount, products.length])
+  const { visibleItems, hasMore, sentinelRef } = useInfiniteScroll(products, {
+    initialCount: 6,
+    step: 4,
+  })
 
   const handleProductPage = (pageNumber: number) => {
     const nextPage = Math.min(Math.max(pageNumber, 1), totalPages)
@@ -273,7 +232,7 @@ function ProductListingContent({
             {/* Product Grid List */}
             {products.length > 0 ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {visibleProducts.map((product) => (
+                {visibleItems.map((product) => (
                   <ProductCard
                     key={product.id}
                     product={product}
@@ -297,9 +256,9 @@ function ProductListingContent({
             )}
 
             {/* Sentinel element for Intersection Observer */}
-            {visibleProducts.length < products.length && (
+            {hasMore && (
               <div
-                ref={observerTarget}
+                ref={sentinelRef}
                 className="h-10 w-full"
                 aria-hidden="true"
               />

@@ -6,8 +6,14 @@ import { Badge } from "@/components/ui/badge"
 import BreadcrumbComponent from "@/components/BreadCrumb"
 import { categories, Category } from "@/lib/data/Categories.data"
 import Image from "next/image"
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll"
 
 export default function CategoryIndexPage() {
+  const { visibleItems, hasMore, sentinelRef } = useInfiniteScroll(categories, {
+    initialCount: 1,
+    step: 1,
+  })
+
   return (
     <div className="min-h-screen bg-background px-4 py-8 text-foreground sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-8">
@@ -23,7 +29,7 @@ export default function CategoryIndexPage() {
                 variant="outline"
                 className="border-primary px-3 py-1 text-xs font-extrabold text-primary"
               >
-                {categories?.length || 0} Categories
+                {visibleItems?.length || 0} Categories
               </Badge>
             </h1>
           </div>
@@ -36,7 +42,7 @@ export default function CategoryIndexPage() {
 
         {/* Categories Grid (Responsive & Production Grade) */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {categories.map((category: Category) => (
+          {visibleItems.map((category: Category) => (
             <Link
               key={category.id || category.slug}
               href={`/category/${category.slug}`}
@@ -88,6 +94,9 @@ export default function CategoryIndexPage() {
             </Link>
           ))}
         </div>
+        {hasMore && (
+          <div ref={sentinelRef} className="h-10 w-full" aria-hidden="true" />
+        )}
       </div>
     </div>
   )
