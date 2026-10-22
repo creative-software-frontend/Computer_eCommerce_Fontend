@@ -9,7 +9,7 @@ type ProductGridProps =
   | {
       products: Product[]
       mode: "build"
-      onSelect: (product: Product) => void
+      onSelect?: (product: Product) => void
     }
 
 export default function ProductGrid(props: ProductGridProps) {
@@ -27,14 +27,10 @@ export default function ProductGrid(props: ProductGridProps) {
               key={product.id}
               product={product}
               mode="builder"
-              onSelect={() => props.onSelect(product)}
+              onSelect={(product) => props?.onSelect?.(product)}
             />
           ) : (
-            <ProductCard
-              key={product.id}
-              product={product}
-              mode={props.mode}
-            />
+            <ProductCard key={product.id} product={product} mode={props.mode} />
           )
         )}
       </div>

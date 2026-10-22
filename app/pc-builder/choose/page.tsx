@@ -5,66 +5,57 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { useShop } from "@/context/ShopContext"
 import { getProductsByCategory } from "@/lib/api/product.api"
 import { Product } from "@/lib/data/types"
-import ProductListing, {
-  ProductListingStatus,
-} from "@/components/ProductListing"
+import ProductListing from "@/components/ProductListing"
+import { ListingPageSkeleton } from "@/components/skeletons/ListingPageSkeleton"
+
+export type ProductListingStatus =
+  | { state: "loading" }
+  | { state: "success" }
+  | { state: "error"; message: string; onRetry?: () => void }
 
 function ChooseComponentContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { setPcBuildItem } = useShop()
-  const [loadResult, setLoadResult] = useState<{
-    category: string
-    products: Product[]
-    status: ProductListingStatus
-  }>({
-    category: "",
-    products: [],
-    status: { state: "loading" },
+  const category = searchParams.get("cat") || "cpu"
+
+  const [products, setProducts] = useState<Product[]>([])
+  const [status, setStatus] = useState<ProductListingStatus>({
+    state: "loading",
   })
   const [retryCount, setRetryCount] = useState(0)
-
-  const category = searchParams.get("cat") || "cpu"
-  const currentResult =
-    loadResult.category === category ? loadResult : undefined
-  const products = currentResult?.products ?? []
-  const status = currentResult?.status ?? { state: "loading" as const }
 
   useEffect(() => {
     let cancelled = false
 
-    const getProducts = async () => {
+    const loadProducts = async () => {
+      setStatus({ state: "loading" })
       try {
         const fetchedProducts = await getProductsByCategory([category])
         if (cancelled) return
-        setLoadResult({
-          category,
-          products: fetchedProducts,
-          status: { state: "success" },
-        })
+        setProducts(fetchedProducts)
+        setStatus({ state: "success" })
       } catch (error) {
         console.error(
           `Failed to load products for category "${category}"`,
           error
         )
         if (cancelled) return
-        setLoadResult({
-          category,
-          products: [],
-          status: {
-            state: "error",
-            message: "Please try again in a moment.",
-            onRetry: () => setRetryCount((count) => count + 1),
-          },
+        setProducts([])
+        setStatus({
+          state: "error",
+          message: "Please try again in a moment.",
+          onRetry: () => setRetryCount((prev) => prev + 1), // রি-ট্রাই ট্রিগার করবে
         })
       }
     }
 
-    getProducts()
+    loadProducts()
+
     return () => {
       cancelled = true
     }
-  }, [category, retryCount])
+  }, [category, retryCount]) // এখন এটি সম্পূর্ণ নিরাপদ এবং কোনো ইনফিনিট লুপ তৈরি করবে না
 
   const handleSelect = (product: Product) => {
     setPcBuildItem(category, {
@@ -99,13 +90,7 @@ function ChooseComponentContent() {
 
 export default function ChooseComponentPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-screen items-center justify-center text-xs text-muted-foreground">
-          Loading components...
-        </div>
-      }
-    >
+    <Suspense fallback={<ListingPageSkeleton />}>
       <ChooseComponentContent />
     </Suspense>
   )
