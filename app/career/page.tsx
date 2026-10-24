@@ -270,15 +270,15 @@ export default function CareerPage() {
           </div>
 
           <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-xl border border-border bg-background p-5 sm:flex-row">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-muted text-primary">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="mx-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-muted text-primary">
                 <FaEnvelope className="size-5" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-center text-xs text-muted-foreground sm:text-left">
                   Don&apos;t see the right role?
                 </p>
-                <p className="text-sm font-bold text-foreground">
+                <p className="text-center text-sm font-bold text-foreground sm:text-left">
                   Send your CV to careers@technocoresolution.com.bd
                 </p>
               </div>

@@ -49,7 +49,7 @@ export default function FeaturedCategories() {
   return (
     <section className="mx-auto w-full max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
       {/* Section Header */}
-      <div className="mb-6 flex justify-between">
+      <div className="mb-6 flex flex-col justify-between gap-2 sm:flex-row">
         <div className="">
           <h2 className="font-heading text-2xl font-extrabold tracking-tight text-foreground">
             Featured Categories

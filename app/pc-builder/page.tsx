@@ -130,7 +130,6 @@ export default function PcBuilderPage() {
           {PC_CATEGORIES.map((category) => {
             const Icon = category.icon
             const selectedProduct = pcBuild[category.id]
-            console.log(selectedProduct)
             return (
               <Card
                 key={category.id}

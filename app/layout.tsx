@@ -10,6 +10,7 @@ import { Metadata } from "next"
 import LayoutWrapper from "@/components/LayoutWrapper"
 import AuthModal from "@/components/modal/AuthModal"
 import { AuthProvider } from "@/context/AuthContext"
+import BottomNav from "@/components/BottomNav"
 
 const dmSansHeading = DM_Sans({
   subsets: ["latin"],
@@ -112,12 +113,13 @@ export default function RootLayout({
           <ShopProvider>
             <LayoutWrapper>{children}</LayoutWrapper>
             <CartSidebar />
+            <BottomNav />
             <FloatingCartButton />
             <BuyNowModal />
             <AuthModal />
           </ShopProvider>
         </AuthProvider>
-        <Toaster />
+        <Toaster position="top-right" />
       </body>
     </html>
   )

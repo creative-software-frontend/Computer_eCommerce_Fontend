@@ -68,9 +68,9 @@ export default function BrandDirectoryPage() {
             urlList={[{ name: "Brands", active: true, url: null }]}
           />
 
-          <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-border bg-linear-to-r from-primary/10 via-emerald-500/5 to-background p-6 shadow-sm sm:p-10 md:flex-row">
+          <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-border bg-linear-to-r from-primary/10 via-emerald-500/5 to-background px-4 py-6 shadow-sm sm:p-10 md:flex-row">
             <div className="space-y-2 text-center md:text-left">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold tracking-wider text-primary uppercase">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-left text-xs font-bold tracking-wider text-primary uppercase outline">
                 <FaShieldAlt className="text-xs" /> Official Authorized
                 Distributors
               </span>

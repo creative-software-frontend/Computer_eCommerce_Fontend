@@ -80,7 +80,7 @@ export default function FlashDealsPage() {
               onClick={() => setSelectedCategory(cat)}
               className={`rounded-xl px-4 py-2 text-xs font-bold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
+                  ? "bg-primary text-primary-foreground shadow-md shadow-primary/40"
                   : "border border-border bg-card text-muted-foreground hover:bg-muted/50 hover:text-foreground"
               }`}
             >

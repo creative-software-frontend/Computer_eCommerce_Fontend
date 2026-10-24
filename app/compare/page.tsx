@@ -23,7 +23,6 @@ export default function ComparePage() {
         {/* Top Header & Navigation */}
         <div className="flex flex-col items-start justify-between gap-4 border-b border-border pb-6 sm:flex-row sm:items-center">
           <div className="space-y-2">
-            {/* Standard Breadcrumb Component Integration */}
             <BreadcrumbComponent
               urlList={[
                 { name: "Product Comparison", url: null, active: true },
@@ -54,42 +53,27 @@ export default function ComparePage() {
           )}
         </div>
 
-        {/* Content Section */}
+        {/* Content Section - Responsive Card Grid */}
         {compareItems.length > 0 ? (
-          <div className="overflow-x-auto pb-4">
-            <div className="grid min-w-[700px] grid-cols-5 divide-x divide-border rounded-2xl border border-border bg-card shadow-sm">
-              {/* Row Labels Column */}
-              <div className="col-span-1 flex flex-col divide-y divide-border rounded-l-2xl bg-muted/30 text-xs font-bold text-muted-foreground">
-                <div className="flex h-64 items-center p-4">
-                  Product Details
-                </div>
-                <div className="flex h-16 items-center p-4">Price</div>
-                <div className="flex h-16 items-center p-4">Category</div>
-                <div className="flex h-16 items-center p-4">
-                  Power Consumption
-                </div>
-                <div className="flex h-24 items-center p-4">Specification</div>
-                <div className="flex h-20 items-center p-4">Actions</div>
-              </div>
-
-              {/* Product Columns (Dynamic Map up to 4 items) */}
-              {compareItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="group relative col-span-1 flex flex-col divide-y divide-border"
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {compareItems.map((item) => (
+              <div
+                key={item.id}
+                className="group relative flex flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:shadow-md"
+              >
+                {/* Remove Button */}
+                <button
+                  onClick={() => removeFromCompare(item.id)}
+                  className="absolute top-3 right-3 z-10 cursor-pointer rounded-full border border-border bg-background/80 p-2 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-rose-500/10 hover:text-rose-500"
+                  title="Remove from comparison"
                 >
-                  {/* Remove Button */}
-                  <button
-                    onClick={() => removeFromCompare(item.id)}
-                    className="absolute top-3 right-3 z-10 cursor-pointer rounded-full border border-border bg-background/80 p-2 text-muted-foreground backdrop-blur-sm transition-colors hover:bg-rose-500/10 hover:text-rose-500"
-                    title="Remove from comparison"
-                  >
-                    <FaTrash className="text-xs" />
-                  </button>
+                  <FaTrash className="text-xs" />
+                </button>
 
+                <div className="space-y-4">
                   {/* 1. Image & Title */}
-                  <div className="flex h-64 flex-col items-center justify-between p-4 text-center">
-                    <div className="mb-2 flex h-36 w-full items-center justify-center rounded-xl bg-muted/20 p-2">
+                  <div className="flex flex-col items-center space-y-3 text-center">
+                    <div className="flex h-40 w-full items-center justify-center rounded-xl bg-muted/20 p-2">
                       <Image
                         width={300}
                         height={300}
@@ -103,74 +87,82 @@ export default function ComparePage() {
                     </h3>
                   </div>
 
-                  {/* 2. Price */}
-                  <div className="flex h-16 items-center justify-center p-4">
-                    <span className="text-sm font-black text-primary">
-                      ${item.price.toFixed(2)}
-                    </span>
-                  </div>
+                  {/* 2. Specs List with Row Labels */}
+                  <div className="space-y-3 divide-y divide-border pt-2 text-xs">
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="font-semibold text-muted-foreground">
+                        Price
+                      </span>
+                      <span className="text-sm font-black text-primary">
+                        ${item.price.toFixed(2)}
+                      </span>
+                    </div>
 
-                  {/* 3. Category */}
-                  <div className="flex h-16 items-center justify-center p-4">
-                    <Badge
-                      variant="secondary"
-                      className="text-[10px] font-bold tracking-wider uppercase"
-                    >
-                      {item.category || "General"}
-                    </Badge>
-                  </div>
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="font-semibold text-muted-foreground">
+                        Category
+                      </span>
+                      <Badge
+                        variant="secondary"
+                        className="text-[10px] font-bold tracking-wider uppercase"
+                      >
+                        {item.category || "General"}
+                      </Badge>
+                    </div>
 
-                  {/* 4. Wattage / Power */}
-                  <div className="flex h-16 items-center justify-center p-4 text-xs font-semibold text-muted-foreground">
-                    {item.wattage ? `${item.wattage}W` : "N/A"}
-                  </div>
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="font-semibold text-muted-foreground">
+                        Power
+                      </span>
+                      <span className="font-semibold text-foreground">
+                        {item.wattage ? `${item.wattage}W` : "N/A"}
+                      </span>
+                    </div>
 
-                  {/* 5. Specification */}
-                  <div className="line-clamp-3 flex h-24 items-center justify-center p-4 text-center text-xs text-muted-foreground">
-                    {item.spec || "No specific details available."}
-                  </div>
-
-                  {/* 6. Actions */}
-                  <div className="flex h-20 items-center justify-center p-4">
-                    <Button
-                      onClick={() => {
-                        addToCart({
-                          id: item.id,
-                          name: item.name,
-                          price: item.price,
-                          image: item.image,
-                          spec: item.spec,
-                        })
-                        openCart()
-                      }}
-                      className="w-full cursor-pointer gap-1.5 bg-primary text-xs font-bold text-primary-foreground hover:bg-primary/90"
-                    >
-                      <FaShoppingCart className="text-xs" /> Add to Cart
-                    </Button>
+                    <div className="flex flex-col space-y-1 pt-2">
+                      <span className="font-semibold text-muted-foreground">
+                        Specification
+                      </span>
+                      <p className="line-clamp-3 text-left text-muted-foreground">
+                        {item.spec || "No specific details available."}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              ))}
 
-              {/* Empty placeholder columns if items are less than 4 */}
-              {Array.from({ length: Math.max(0, 4 - compareItems.length) }).map(
-                (_, index) => (
-                  <div
-                    key={index}
-                    className="col-span-1 flex flex-col divide-y divide-border opacity-40"
+                {/* 3. Action Button */}
+                <div className="pt-6">
+                  <Button
+                    onClick={() => {
+                      addToCart({
+                        id: item.id,
+                        name: item.name,
+                        price: item.price,
+                        image: item.image,
+                        spec: item.spec,
+                      })
+                      openCart()
+                    }}
+                    className="w-full cursor-pointer gap-1.5 bg-primary text-xs font-bold text-primary-foreground hover:bg-primary/90"
                   >
-                    <div className="flex h-64 flex-col items-center justify-center border-dashed border-border p-4 text-center text-xs text-muted-foreground">
-                      <FaExchangeAlt className="mb-2 text-2xl text-muted-foreground/40" />
-                      Empty Slot
-                    </div>
-                    <div className="h-16 p-4"></div>
-                    <div className="h-16 p-4"></div>
-                    <div className="h-16 p-4"></div>
-                    <div className="h-24 p-4"></div>
-                    <div className="h-20 p-4"></div>
-                  </div>
-                )
-              )}
-            </div>
+                    <FaShoppingCart className="text-xs" /> Add to Cart
+                  </Button>
+                </div>
+              </div>
+            ))}
+
+            {/* Empty placeholder cards if items are less than 4 (Only visible on desktop) */}
+            {Array.from({ length: Math.max(0, 4 - compareItems.length) }).map(
+              (_, index) => (
+                <div
+                  key={index}
+                  className="hidden min-h-[400px] flex-col items-center justify-center space-y-3 rounded-2xl border border-dashed border-border bg-card/40 p-6 text-center text-xs text-muted-foreground opacity-40 lg:flex"
+                >
+                  <FaExchangeAlt className="text-3xl text-muted-foreground/40" />
+                  <span>Empty Slot</span>
+                </div>
+              )
+            )}
           </div>
         ) : (
           /* Empty State */

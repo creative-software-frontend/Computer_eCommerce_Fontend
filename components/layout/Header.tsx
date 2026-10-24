@@ -8,7 +8,6 @@ import {
   FaStore,
   FaTruck,
   FaMagnifyingGlass,
-  FaBars,
   FaScrewdriverWrench,
   FaArrowRightArrowLeft,
   FaUser,
@@ -56,7 +55,7 @@ export default function Header() {
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/95 shadow-xs backdrop-blur-md">
       {/* 1. Utility Bar */}
       <div className="bg-foreground text-background">
-        <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-4 px-4 text-xs font-medium sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-2 px-4 text-xs font-medium sm:gap-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6">
             <a
               href="tel:16580"
@@ -74,11 +73,10 @@ export default function Header() {
               Sat - Thu: 9:30 AM - 8:00 PM
             </span>
           </div>
-
-          <div className="hidden items-center gap-3 sm:flex">
+          <div className="flex items-center gap-3">
             <Link
               href="/stores"
-              className="flex items-center gap-1 transition-opacity hover:opacity-80"
+              className="hidden items-center gap-1 transition-opacity hover:opacity-80 min-[360px]:flex"
             >
               <FaStore className="size-4" />
               Store Locator
@@ -86,7 +84,7 @@ export default function Header() {
 
             <Separator
               orientation="vertical"
-              className="h-4 bg-background/30"
+              className="hidden h-4 bg-background/30 min-[390px]:flex"
             />
 
             <Link
@@ -99,10 +97,10 @@ export default function Header() {
 
             <Separator
               orientation="vertical"
-              className="h-4 bg-background/30"
+              className="hidden h-4 bg-background/30 sm:flex"
             />
 
-            <span className="flex items-center gap-1">
+            <span className="hidden items-center gap-1 sm:flex">
               <FaBangladeshiTakaSign className="size-4" />
               BDT (৳) / EN
             </span>
@@ -122,7 +120,7 @@ export default function Header() {
             {/* logo */}
             <Image src={LogoImage} alt="Logo" width={200} height={200} />
           </Link>
-          <div className="flex flex-1 items-center justify-between pt-3">
+          <div className="flex flex-1 items-center justify-end pt-3">
             {/* Search */}
             <div className="mx-2 hidden max-w-2xl flex-1 flex-col gap-1 lg:flex">
               <form
@@ -189,7 +187,7 @@ export default function Header() {
               <Button
                 asChild
                 variant="outline"
-                className="hidden border-primary/30 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground xl:inline-flex"
+                className="hidden border-primary/30 bg-primary/5 text-primary hover:bg-primary hover:text-primary-foreground sm:inline-flex"
               >
                 <Link href="/pc-builder">
                   <FaScrewdriverWrench className="size-4" />
@@ -227,24 +225,6 @@ export default function Header() {
               {/* Cart */}
               <HeaderCartButton />
 
-              {/* Sign In & Sign Up Buttons (Visible on sm+ screens) */}
-              {/* <div className="ml-1 hidden items-center gap-1.5 sm:flex">
-                <Button
-                  asChild
-                  variant="ghost"
-                  size="sm"
-                  className="text-sm font-semibold hover:text-primary"
-                >
-                  <Link href="/login">Sign In</Link>
-                </Button>
-                <Button
-                  asChild
-                  size="sm"
-                  className="bg-primary text-sm font-bold text-primary-foreground shadow-sm hover:bg-primary/90"
-                >
-                  <Link href="/register">Sign Up</Link>
-                </Button>
-              </div> */}
               {/* User */}
 
               <Button
@@ -252,6 +232,7 @@ export default function Header() {
                 variant="ghost"
                 onClick={() => openLoginModal("login")}
                 size="icon"
+                className="hidden sm:flex"
                 aria-label="Account"
               >
                 <Avatar className="size-8">
@@ -260,22 +241,6 @@ export default function Header() {
                   </AvatarFallback>
                 </Avatar>
               </Button>
-              {/* Mobile User Icon (Visible on small screens only) */}
-              {/* <Button
-                asChild
-                variant="ghost"
-                size="icon"
-                aria-label="Account"
-                className="sm:hidden"
-              >
-                <Link href="/login">
-                  <Avatar className="size-8">
-                    <AvatarFallback className="bg-primary text-primary-foreground">
-                      <FaUser className="size-4" />
-                    </AvatarFallback>
-                  </Avatar>
-                </Link>
-              </Button> */}
             </div>
           </div>
         </div>
@@ -286,13 +251,7 @@ export default function Header() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-2">
             {/* Categories */}
-            <div className="group relative rounded-lg bg-primary transition-all hover:rounded-b-none">
-              <Button type="button" className="flex w-68 justify-start">
-                <FaBars className="size-5" />
-                <span className="hidden sm:inline">All Categories</span>
-              </Button>
-              <CategoriesSidebar className="absolute hidden group-hover:block" />
-            </div>
+            <CategoriesSidebar />
 
             {/* Navigation Links */}
             <nav

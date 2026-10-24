@@ -361,21 +361,21 @@ export default function CheckoutPage() {
           <div className="space-y-6 lg:col-span-5">
             <div className="space-y-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
               {/* Coupon Section */}
-              <div className="flex items-center justify-between gap-3 rounded-xl border border-rose-100 bg-rose-50/50 p-4">
-                <div className="flex items-center gap-2 text-sm font-medium text-rose-600">
-                  <FiTag className="h-4 w-4" />
-                  <span>Have Coupon / Voucher?</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setShowVoucherField((visible) => !visible)}
-                  aria-expanded={showVoucherField}
-                  aria-controls="voucher-field"
-                  className="cursor-pointer text-xs font-bold text-rose-600 hover:underline"
-                >
-                  {showVoucherField ? "Hide Voucher" : "Apply Voucher"}
-                </button>
-              </div>
+              {/* <div className="flex items-center justify-between gap-3 rounded-xl border border-rose-100 bg-rose-50/50 p-4"> */}
+              {/* <div className="flex items-center gap-2 text-sm font-medium text-rose-600">
+                  <span></span>
+                </div> */}
+              <button
+                type="button"
+                onClick={() => setShowVoucherField((visible) => !visible)}
+                aria-expanded={showVoucherField}
+                aria-controls="voucher-field"
+                className="flex cursor-pointer items-center gap-2 text-sm font-bold text-rose-600 underline hover:underline"
+              >
+                <FiTag className="h-4 w-4" />
+                Have Coupon / Voucher?
+              </button>
+              {/* </div> */}
               {showVoucherField && (
                 <div id="voucher-field" className="mt-3">
                   <Label htmlFor="voucher-code" className="sr-only">

@@ -130,7 +130,7 @@ export default function ReturnsPolicyPage() {
                 </div>
 
                 {section.content && (
-                  <p className="pl-13 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                  <p className="text-center text-xs leading-relaxed text-muted-foreground sm:text-sm">
                     {section.content}
                   </p>
                 )}

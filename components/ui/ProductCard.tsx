@@ -74,7 +74,8 @@ const ProductCard = (props: ProductCardProps) => {
           <span className="absolute top-2 left-2 z-10 rounded bg-tertiary-fixed px-2 py-0.5 text-xs font-extrabold text-on-tertiary-fixed uppercase">
             {product.discount}% OFF
           </span>
-          <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+          <div className="absolute top-2 right-2 z-10 flex flex-col gap-1">
+            {/* <div className="absolute top-2 right-2 z-10 flex flex-col gap-1 opacity-0 transition-opacity group-hover:opacity-100"> */}
             <Button
               size="icon"
               onClick={handleToggleFavorite}

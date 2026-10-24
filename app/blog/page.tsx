@@ -182,7 +182,7 @@ export default function BlogIndexPage() {
                 <p className="text-xs text-muted-foreground sm:text-sm">
                   {featuredPost.excerpt}
                 </p>
-                <div className="flex items-center justify-between border-t border-border pt-4">
+                <div className="flex flex-col justify-between gap-4 border-t border-border pt-4 sm:flex-row sm:items-center sm:gap-0">
                   <span className="flex items-center gap-2 text-xs font-bold text-foreground">
                     <FaUser className="text-xs text-primary" />{" "}
                     {featuredPost.author} &bull;{" "}

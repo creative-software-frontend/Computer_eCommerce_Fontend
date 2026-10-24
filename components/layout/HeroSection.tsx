@@ -46,9 +46,9 @@ export default function HeroSection() {
 
           {/* Main Copy & Pricing Highlight */}
           <div className="relative z-10 my-6 max-w-xl">
-            <h1 className="font-heading text-2xl leading-tight font-black tracking-tight text-white sm:text-3xl">
+            <h2 className="font-heading text-2xl leading-tight font-black tracking-tight text-white sm:text-3xl">
               NEXT-GEN AI GAMING RIGS &amp; RTX 4090 SERIES
-            </h1>
+            </h2>
             <p className="mt-3 max-w-lg text-base text-inverse-on-surface/85">
               Unleash unstoppable performance with custom water-cooled prebuilts
               &amp; 14th Gen Intel Core i9 CPUs. Precision tuned for esports
@@ -69,7 +69,7 @@ export default function HeroSection() {
 
           {/* Carousel Navigation & Action Row (Using shadcn Button) */}
           <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-4">
-            <div className="flex items-center gap-3">
+            <div className="-ml-4 flex items-center gap-3">
               <Button
                 asChild
                 className="bg-primary text-sm font-bold text-primary-foreground shadow-md hover:bg-primary/90"

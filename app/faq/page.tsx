@@ -137,14 +137,14 @@ export default function FAQPage() {
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex scrollbar-none items-center justify-center gap-2 overflow-x-auto pb-2">
+        <div className="flex w-full scrollbar-none items-center gap-2 overflow-x-auto px-1 pb-2">
           {faqCategories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`cursor-pointer rounded-xl px-4 py-2 text-xs font-bold whitespace-nowrap transition-all ${
+              className={`shrink-0 cursor-pointer rounded-xl px-4 py-2 text-xs font-bold whitespace-nowrap transition-all ${
                 selectedCategory === cat
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
+                  ? "sha bg-primary text-primary-foreground shadow-md shadow-primary/40"
                   : "border border-border bg-card text-muted-foreground hover:bg-muted/50 hover:text-foreground"
               }`}
             >
@@ -169,7 +169,7 @@ export default function FAQPage() {
               >
                 <button
                   onClick={() => toggleAccordion(faq.id)}
-                  className="flex w-full items-center justify-between p-5 text-left text-sm font-extrabold text-foreground transition-colors sm:text-base"
+                  className="flex w-full cursor-pointer items-center justify-between p-5 text-left text-sm font-extrabold text-foreground transition-colors sm:text-base"
                 >
                   <div className="flex items-center gap-3 pr-4">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs text-primary">

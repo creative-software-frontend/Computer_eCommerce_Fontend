@@ -45,7 +45,7 @@ export default function FloatingCartButton() {
     <button
       onClick={toggleCart}
       aria-label="Open Cart"
-      className="group fixed right-4 bottom-20 z-40 flex w-17.5 cursor-pointer flex-col overflow-hidden rounded-xl border border-border/40 shadow-2xl transition-all duration-300 hover:scale-105 print:hidden"
+      className="group fixed right-4 bottom-20 z-40 hidden w-17.5 cursor-pointer flex-col overflow-hidden rounded-xl border border-border/40 shadow-2xl transition-all duration-300 hover:scale-105 sm:flex print:hidden"
     >
       {/* উপরের অংশ: ব্যাকগ্রাউন্ড কালার ও আইটেম কাউন্ট */}
       <div className="flex flex-col items-center justify-center gap-1 bg-surface px-3 py-2 text-card-foreground">

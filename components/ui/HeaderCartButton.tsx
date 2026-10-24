@@ -8,7 +8,7 @@ const HeaderCartButton = () => {
   const { toggleCart, itemCount, totalAmount } = useShop()
   return (
     <Button
-      className="w-30.75 gap-3 rounded-lg bg-surface-container p-6 hover:bg-surface-container-high sm:px-3"
+      className="hidden w-30.75 gap-3 rounded-lg bg-surface-container p-6 hover:bg-surface-container-high min-[486px]:flex sm:px-3"
       onClick={toggleCart}
     >
       <span className="relative">
@@ -21,7 +21,7 @@ const HeaderCartButton = () => {
         )}
       </span>
 
-      <span className="hidden flex-col items-start sm:flex">
+      <span className="flex flex-col items-start">
         <span className="text-xs leading-none text-muted-foreground">
           Cart Value
         </span>
