@@ -1,3 +1,5 @@
+"use client"
+
 import { useShop } from "@/context/ShopContext"
 import { Product } from "@/lib/data/types"
 import { cn } from "cn"

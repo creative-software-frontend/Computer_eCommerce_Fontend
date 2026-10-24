@@ -1,7 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import Link from "next/link"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm, type SubmitHandler } from "react-hook-form"
+import { z } from "zod"
 import {
   FaUser,
   FaMobileAlt,
@@ -14,58 +17,102 @@ import {
 } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { useAuth } from "@/context/AuthContext"
 
-interface AuthModalProps {
-  isOpen?: boolean
-  onClose?: (open: boolean) => void
-  trigger?: React.ReactNode
-  defaultMode?: "login" | "register"
-}
+const phoneSchema = z
+  .string()
+  .trim()
+  .regex(/^(?:\+?880|0)1[3-9]\d{8}$/, "Enter a valid mobile number.")
 
-export default function AuthModal({
-  isOpen,
-  onClose,
-  trigger,
-  defaultMode = "login",
-}: AuthModalProps) {
-  const [mode, setMode] = useState<"login" | "register">(defaultMode)
-  const [authMethod, setAuthMethod] = useState<"mobile" | "email">("mobile")
-  const [step, setStep] = useState<"request" | "verify">("request")
-
-  const [formData, setFormData] = useState({
-    fullName: "",
-    identifier: "",
-    otp: "",
+const createRequestSchema = (
+  authMethod: "mobile" | "email",
+  mode: "login" | "register"
+) =>
+  z.object({
+    fullName:
+      mode === "register"
+        ? z.string().trim().min(2, "Enter your full name.")
+        : z.string(),
+    identifier:
+      authMethod === "mobile"
+        ? phoneSchema
+        : z.string().trim().email("Enter a valid email address."),
   })
 
-  // Switch mode helper (resets steps & fields if needed)
+const otpSchema = z.object({
+  otp: z.string().regex(/^\d{4}$/, "Enter the 4-digit OTP."),
+})
+
+type AuthRequestValues = z.infer<ReturnType<typeof createRequestSchema>>
+type OtpValues = z.infer<typeof otpSchema>
+
+function createUserId() {
+  return `usr_${Math.random().toString(36).slice(2, 11)}`
+}
+
+export default function AuthModal() {
+  const {
+    isLoginModalOpen,
+    openLoginModal,
+    closeLoginModal,
+    modalMode,
+    login,
+  } = useAuth()
+
+  const [authMethod, setAuthMethod] = useState<"mobile" | "email">("mobile")
+  const [step, setStep] = useState<"request" | "verify">("request")
+  const requestSchema = useMemo(
+    () => createRequestSchema(authMethod, modalMode),
+    [authMethod, modalMode]
+  )
+  const requestForm = useForm<AuthRequestValues>({
+    resolver: zodResolver(requestSchema),
+    defaultValues: { fullName: "", identifier: "" },
+  })
+  const otpForm = useForm<OtpValues>({
+    resolver: zodResolver(otpSchema),
+    defaultValues: { otp: "" },
+  })
+
   const switchMode = (newMode: "login" | "register") => {
-    setMode(newMode)
+    openLoginModal(newMode)
     setStep("request")
-    setFormData({ fullName: "", identifier: "", otp: "" })
+    requestForm.reset({ fullName: "", identifier: "" })
+    otpForm.reset({ otp: "" })
   }
 
-  const handleSendOtp = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (mode === "register" && !formData.fullName) return
-    if (formData.identifier) {
-      setStep("verify")
-    }
+  const handleSendOtp: SubmitHandler<AuthRequestValues> = () => {
+    otpForm.reset({ otp: "" })
+    setStep("verify")
   }
 
-  const handleSubmitAuth = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (mode === "login") {
-      console.log("Logging in with OTP:", formData)
-    } else {
-      console.log("Registering with OTP:", formData)
+  const handleSubmitAuth: SubmitHandler<OtpValues> = () => {
+    const requestValues = requestForm.getValues()
+    const userData = {
+      id: createUserId(),
+      name:
+        requestValues.fullName.trim() ||
+        (authMethod === "mobile" ? "Mobile User" : "Valued Customer"),
+      identifier: requestValues.identifier.trim(),
     }
+
+    login(userData, "tech_core_jwt_token_secure")
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+    <Dialog
+      open={isLoginModalOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          closeLoginModal()
+          setAuthMethod("mobile")
+          setStep("request")
+          requestForm.reset({ fullName: "", identifier: "" })
+          otpForm.reset({ otp: "" })
+        }
+      }}
+    >
       <DialogContent className="overflow-hidden p-0 sm:max-w-4xl">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left Side: Brand Showcase & Value Pillars */}
@@ -125,10 +172,10 @@ export default function AuthModal({
           <div className="relative flex flex-col justify-between bg-background p-6 sm:p-8 lg:p-10">
             <div className="mb-6 pt-4 md:pt-0">
               <h3 className="font-heading text-sm font-bold tracking-tight text-foreground sm:text-base">
-                {mode === "login" ? "Welcome Back" : "Create Account"}
+                {modalMode === "login" ? "Welcome Back" : "Create Account"}
               </h3>
               <p className="mt-1 text-xs text-muted-foreground">
-                {mode === "login"
+                {modalMode === "login"
                   ? "Login to your account to continue securely via OTP."
                   : "Join our community today with secure OTP verification."}
               </p>
@@ -141,6 +188,8 @@ export default function AuthModal({
                 onClick={() => {
                   setAuthMethod("mobile")
                   setStep("request")
+                  requestForm.resetField("identifier")
+                  otpForm.reset({ otp: "" })
                 }}
                 className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold transition-all ${
                   authMethod === "mobile"
@@ -156,6 +205,8 @@ export default function AuthModal({
                 onClick={() => {
                   setAuthMethod("email")
                   setStep("request")
+                  requestForm.resetField("identifier")
+                  otpForm.reset({ otp: "" })
                 }}
                 className={`flex cursor-pointer items-center justify-center gap-2 rounded-lg py-2 text-xs font-bold transition-all ${
                   authMethod === "email"
@@ -170,9 +221,12 @@ export default function AuthModal({
 
             {/* Step 1: Request OTP Form */}
             {step === "request" ? (
-              <form onSubmit={handleSendOtp} className="space-y-4">
-                {/* Full Name field (Only shown in Register mode) */}
-                {mode === "register" && (
+              <form
+                onSubmit={requestForm.handleSubmit(handleSendOtp)}
+                noValidate
+                className="space-y-4"
+              >
+                {modalMode === "register" && (
                   <div>
                     <label className="mb-1.5 block text-xs font-bold text-foreground">
                       Full Name
@@ -182,16 +236,28 @@ export default function AuthModal({
                         <FaUser className="text-xs" />
                       </span>
                       <Input
+                        id="auth-full-name"
                         type="text"
                         placeholder="Enter your name"
-                        value={formData.fullName}
-                        onChange={(e) =>
-                          setFormData({ ...formData, fullName: e.target.value })
+                        aria-invalid={!!requestForm.formState.errors.fullName}
+                        aria-describedby={
+                          requestForm.formState.errors.fullName
+                            ? "auth-full-name-error"
+                            : undefined
                         }
                         className="pl-9 text-xs"
-                        required
+                        {...requestForm.register("fullName")}
                       />
                     </div>
+                    {requestForm.formState.errors.fullName && (
+                      <p
+                        id="auth-full-name-error"
+                        role="alert"
+                        className="mt-1.5 text-xs text-destructive"
+                      >
+                        {requestForm.formState.errors.fullName.message}
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -210,20 +276,32 @@ export default function AuthModal({
                       )}
                     </span>
                     <Input
+                      id="auth-identifier"
                       type={authMethod === "mobile" ? "tel" : "email"}
                       placeholder={
                         authMethod === "mobile"
                           ? "01XXXXXXXXX"
                           : "name@example.com"
                       }
-                      value={formData.identifier}
-                      onChange={(e) =>
-                        setFormData({ ...formData, identifier: e.target.value })
+                      aria-invalid={!!requestForm.formState.errors.identifier}
+                      aria-describedby={
+                        requestForm.formState.errors.identifier
+                          ? "auth-identifier-error"
+                          : undefined
                       }
                       className="pl-9 text-xs"
-                      required
+                      {...requestForm.register("identifier")}
                     />
                   </div>
+                  {requestForm.formState.errors.identifier && (
+                    <p
+                      id="auth-identifier-error"
+                      role="alert"
+                      className="mt-1.5 text-xs text-destructive"
+                    >
+                      {requestForm.formState.errors.identifier.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="pt-2">
@@ -238,7 +316,11 @@ export default function AuthModal({
               </form>
             ) : (
               /* Step 2: Verify OTP Form */
-              <form onSubmit={handleSubmitAuth} className="space-y-4">
+              <form
+                onSubmit={otpForm.handleSubmit(handleSubmitAuth)}
+                noValidate
+                className="space-y-4"
+              >
                 <div>
                   <div className="mb-1.5 flex items-center justify-between">
                     <label className="block text-xs font-bold text-foreground">
@@ -257,21 +339,41 @@ export default function AuthModal({
                       <FaKey className="text-xs" />
                     </span>
                     <Input
+                      id="auth-otp"
                       type="text"
+                      inputMode="numeric"
                       maxLength={4}
                       placeholder="••••"
-                      value={formData.otp}
-                      onChange={(e) =>
-                        setFormData({ ...formData, otp: e.target.value })
+                      autoComplete="one-time-code"
+                      aria-invalid={!!otpForm.formState.errors.otp}
+                      aria-describedby={
+                        otpForm.formState.errors.otp
+                          ? "auth-otp-error"
+                          : undefined
                       }
                       className="pl-9 text-xs font-bold tracking-widest"
-                      required
+                      {...otpForm.register("otp", {
+                        onChange: (event) => {
+                          event.target.value = event.target.value
+                            .replace(/\D/g, "")
+                            .slice(0, 4)
+                        },
+                      })}
                     />
                   </div>
+                  {otpForm.formState.errors.otp && (
+                    <p
+                      id="auth-otp-error"
+                      role="alert"
+                      className="mt-1.5 text-xs text-destructive"
+                    >
+                      {otpForm.formState.errors.otp.message}
+                    </p>
+                  )}
                   <p className="mt-1.5 text-xs text-muted-foreground">
                     OTP sent to{" "}
                     <span className="font-semibold text-foreground">
-                      {formData.identifier}
+                      {requestForm.getValues("identifier")}
                     </span>
                   </p>
                 </div>
@@ -282,7 +384,7 @@ export default function AuthModal({
                     className="w-full bg-emerald-600 py-2.5 text-xs font-bold text-white shadow-lg transition-all hover:bg-emerald-700"
                   >
                     <span>
-                      {mode === "login"
+                      {modalMode === "login"
                         ? "Verify & Login Now"
                         : "Verify & Create Account"}
                     </span>
@@ -292,9 +394,9 @@ export default function AuthModal({
               </form>
             )}
 
-            {/* Footer Links (Switch between Login & Register) */}
+            {/* Footer Links */}
             <div className="mt-8 space-y-4 text-center">
-              {mode === "login" ? (
+              {modalMode === "login" ? (
                 <p className="text-xs text-muted-foreground">
                   Don&apos;t have an account?{" "}
                   <button

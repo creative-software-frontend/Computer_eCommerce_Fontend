@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "./button"
 import { Card } from "./card"
 import { Product } from "@/lib/data/types"

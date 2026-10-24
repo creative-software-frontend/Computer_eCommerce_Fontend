@@ -9,6 +9,7 @@ import BuyNowModal from "@/components/modal/BuyNowModal"
 import { Metadata } from "next"
 import LayoutWrapper from "@/components/LayoutWrapper"
 import AuthModal from "@/components/modal/AuthModal"
+import { AuthProvider } from "@/context/AuthContext"
 
 const dmSansHeading = DM_Sans({
   subsets: ["latin"],
@@ -23,8 +24,70 @@ const fontMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Technocore - PC Builder & E-Commerce",
-  description: "Build your dream PC with high-performance components",
+  metadataBase: new URL("https://technocoresolution.com.bd"),
+  applicationName: "TechnoCore Solution",
+  title: {
+    default: "TechnoCore Solution | PC Builder & Computer Store in Bangladesh",
+    template: "%s | TechnoCore Solution",
+  },
+  description:
+    "Shop genuine computer components, gaming PCs, laptops, accessories, and custom builds in Bangladesh with expert support and nationwide delivery.",
+  keywords: [
+    "TechnoCore Solution",
+    "computer store Bangladesh",
+    "PC builder",
+    "gaming PC",
+    "laptop",
+    "desktop",
+    "computer accessories",
+    "motherboard",
+    "graphics card",
+    "monitor",
+    "peripheral",
+  ],
+  authors: [{ name: "TechnoCore Solution" }],
+  creator: "TechnoCore Solution",
+  publisher: "TechnoCore Solution",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_BD",
+    url: "/",
+    siteName: "TechnoCore Solution",
+    title: "TechnoCore Solution | PC Builder & Computer Store in Bangladesh",
+    description:
+      "Discover premium computer hardware, custom PC builds, and tech accessories with trusted support and fast delivery across Bangladesh.",
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: "TechnoCore Solution",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TechnoCore Solution | PC Builder & Computer Store in Bangladesh",
+    description:
+      "Build your dream PC with high-performance components and genuine tech products from Bangladesh's trusted computer store.",
+    images: ["/icon.png"],
+  },
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 }
 
 export default function RootLayout({
@@ -45,13 +108,15 @@ export default function RootLayout({
       )}
     >
       <body>
-        <ShopProvider>
-          <LayoutWrapper>{children}</LayoutWrapper>
-          <CartSidebar />
-          <FloatingCartButton />
-          <BuyNowModal />
-          {/* <AuthModal /> */}
-        </ShopProvider>
+        <AuthProvider>
+          <ShopProvider>
+            <LayoutWrapper>{children}</LayoutWrapper>
+            <CartSidebar />
+            <FloatingCartButton />
+            <BuyNowModal />
+            <AuthModal />
+          </ShopProvider>
+        </AuthProvider>
         <Toaster />
       </body>
     </html>

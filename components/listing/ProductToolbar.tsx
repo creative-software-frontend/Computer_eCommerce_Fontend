@@ -47,7 +47,9 @@ export default function ProductToolbar({
 
       <div className="flex w-full items-center justify-end gap-3 sm:w-auto">
         <div className="flex items-center gap-2 text-xs">
-          <span className="hidden text-muted-foreground sm:inline">Sort by:</span>
+          <span className="hidden text-muted-foreground sm:inline">
+            Sort by:
+          </span>
           <select
             aria-label="Sort products"
             className="rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground focus:ring-1 focus:ring-primary focus:outline-none"

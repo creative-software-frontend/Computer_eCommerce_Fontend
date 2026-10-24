@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { useShop } from "@/context/ShopContext"
 import { Product } from "@/lib/data/types"

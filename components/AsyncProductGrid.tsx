@@ -17,7 +17,6 @@ export function AsyncProductGrid({
   onSelect,
   onProductsLoaded,
 }: AsyncProductGridProps) {
-  console.log(productsPromise)
   const products = use(productsPromise)
 
   useEffect(() => {

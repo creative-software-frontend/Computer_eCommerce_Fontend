@@ -1,9 +1,6 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  FaShieldHalved,
-  FaScaleBalanced,
-} from "react-icons/fa6"
+import { FaShieldHalved, FaScaleBalanced } from "react-icons/fa6"
 
 export const metadata = {
   title: "Terms & Conditions | TechnoCore Solution",

@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import {
   FaBangladeshiTakaSign,
@@ -22,9 +24,9 @@ import { FaRegHeart } from "react-icons/fa"
 import CategoriesSidebar from "./CategoriesSidebar"
 import Image from "next/image"
 import LogoImage from "@/public/images/logo.png"
-import AuthModal from "../modal/AuthModal"
 import HeaderCartButton from "../ui/HeaderCartButton"
 import { useShop } from "@/context/ShopContext"
+import { useAuth } from "@/context/AuthContext"
 
 type NavigationItem = {
   label: string
@@ -49,6 +51,7 @@ const trendingKeywords: string[] = [
 
 export default function Header() {
   const { favoriteItemCount, compareItemsCount } = useShop()
+  const { openLoginModal } = useAuth()
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/95 shadow-xs backdrop-blur-md">
       {/* 1. Utility Bar */}
@@ -243,23 +246,20 @@ export default function Header() {
                 </Button>
               </div> */}
               {/* User */}
-              <AuthModal
-                trigger={
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="icon"
-                    aria-label="Account"
-                  >
-                    <Avatar className="size-8">
-                      <AvatarFallback className="bg-primary text-primary-foreground">
-                        <FaUser className="size-4" />
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                }
-              />
 
+              <Button
+                asChild
+                variant="ghost"
+                onClick={() => openLoginModal("login")}
+                size="icon"
+                aria-label="Account"
+              >
+                <Avatar className="size-8">
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    <FaUser className="size-4" />
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
               {/* Mobile User Icon (Visible on small screens only) */}
               {/* <Button
                 asChild

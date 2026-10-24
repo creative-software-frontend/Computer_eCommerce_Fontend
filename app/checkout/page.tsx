@@ -11,7 +11,6 @@ import { z } from "zod"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import AuthModal from "@/components/modal/AuthModal"
 import {
   Dialog,
   DialogContent,
@@ -32,7 +31,7 @@ import {
   FiTruck,
   FiCreditCard,
 } from "react-icons/fi"
-import { useShop } from "@/context/ShopContext"
+import { useAuth } from "@/context/AuthContext"
 
 const checkoutSchema = z.object({
   name: z.string().trim().min(2, "Please enter your full name."),
@@ -65,10 +64,10 @@ export default function CheckoutPage() {
   const router = useRouter()
   const [showVoucherField, setShowVoucherField] = useState(false)
   const [isOtpDialogOpen, setIsOtpDialogOpen] = useState(false)
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [otpPhone, setOtpPhone] = useState("")
   const [otp, setOtp] = useState("")
   const [otpError, setOtpError] = useState("")
+  const { openLoginModal } = useAuth()
 
   // ডেমো লগইন স্টেট (আপনার প্রজেক্টের Auth Context বা Session থেকে এটি কন্ট্রোল করবেন)
   const isLoggedIn = false
@@ -127,10 +126,7 @@ export default function CheckoutPage() {
             </div>
             <button
               type="button"
-              onClick={() => {
-                // এখানে আপনার তৈরি করা লগইন মডাল ওপেন করার ফাংশন দিতে পারেন
-                console.log("Open your login modal")
-              }}
+              onClick={() => openLoginModal("login")}
               className="hover:primary-80 flex cursor-pointer items-center gap-1 text-sm font-semibold text-primary/90 transition-colors hover:underline"
             >
               Click here to login <FiArrowRight className="h-4 w-4" />
@@ -621,10 +617,7 @@ export default function CheckoutPage() {
                 type="button"
                 variant="link"
                 className="h-auto p-0"
-                onClick={() => {
-                  setIsOtpDialogOpen(false)
-                  setIsAuthModalOpen(true)
-                }}
+                onClick={() => openLoginModal("login")}
               >
                 Log in
               </Button>
@@ -632,11 +625,6 @@ export default function CheckoutPage() {
           </form>
         </DialogContent>
       </Dialog>
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={setIsAuthModalOpen}
-        defaultMode="login"
-      />
     </div>
   )
 }
