@@ -64,7 +64,7 @@ export default function CartSidebar() {
       }}
       direction="right"
     >
-      <DrawerContent className="h-dvh max-h-dvh w-full max-w-md gap-0 rounded-none p-0 before:inset-0 before:rounded-none before:border-0">
+      <DrawerContent className="h-dvh max-h-dvh w-[90vw]! gap-0 rounded-none p-0 outline before:inset-0 before:rounded-none before:border-0 sm:w-full sm:max-w-md">
         <div className="flex min-h-0 flex-1 flex-col bg-card">
           {/* Header */}
           <DrawerHeader className="flex-row items-center justify-between border-b border-border bg-muted/40 p-4 text-left">
@@ -217,7 +217,7 @@ export default function CartSidebar() {
                   <FaChevronDown />
                 </Button>
               ) : (
-                <div className="animate-in flex flex-col gap-2 duration-200 fade-in">
+                <div className="flex animate-in flex-col gap-2 duration-200 fade-in">
                   <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
                     <span>Enter promo code</span>
                     <Button

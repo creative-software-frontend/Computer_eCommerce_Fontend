@@ -39,6 +39,7 @@ const navigationItems: NavigationItem[] = [
   { label: "Monitors", href: "/monitors" },
   { label: "Gaming Console", href: "/gaming-console" },
   { label: "Storage Devices", href: "/storage-devices" },
+  { label: "Latest Products", href: "/latest-products" },
 ]
 
 const trendingKeywords: string[] = [

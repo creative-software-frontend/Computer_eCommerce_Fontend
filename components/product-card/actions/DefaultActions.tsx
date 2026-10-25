@@ -6,14 +6,20 @@ import { Product } from "@/lib/data/types"
 import { cn } from "cn"
 import { useState } from "react"
 import { FaCheck, FaShoppingCart } from "react-icons/fa"
+import { toast } from "sonner"
 type ActionProps = { product: Product }
 
 export function DefaultActions({ product }: ActionProps) {
-  const { openBuyNow, addToCart } = useShop()
+  const { openBuyNow, addToCart, totalAmount } = useShop()
   const [isAdded, setIsAdded] = useState(false)
 
   // add to cart
   const handleAddToCart = () => {
+    if (totalAmount.toString().length >= 6) {
+      toast.info("Maximum total amount allowed is 9,99,999")
+      return
+    }
+
     addToCart({
       id: product.id,
       name: product.title,

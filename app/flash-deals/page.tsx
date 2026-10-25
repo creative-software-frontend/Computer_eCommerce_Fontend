@@ -1,12 +1,11 @@
-"use client"
-
-import { useState, useEffect } from "react"
 import { FaBolt } from "react-icons/fa"
 import BreadcrumbComponent from "@/components/BreadCrumb"
 import { getFlashDealProducts } from "@/lib/api/product.api"
-import { Product } from "@/lib/data/types"
-import ProductCard from "@/components/ui/ProductCard"
 import FlashDealCounter from "@/components/FlashDealCounter"
+import FilterTabs from "@/components/FilterTabs"
+import { FlashProductsListing } from "./FlashProductsListing"
+import { Suspense } from "react"
+import ProductCardSkeleton from "@/components/skeletons/ProductCardSkeleton"
 
 const categoriesFilter = [
   "All Deals",
@@ -17,27 +16,33 @@ const categoriesFilter = [
   "Storage",
 ]
 
-export default function FlashDealsPage() {
-  const [flashDealProducts, setFlashDealProducts] = useState<Product[]>()
-  const [selectedCategory, setSelectedCategory] = useState("All Deals")
+export default async function FlashDealsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ cat: string }>
+}) {
+  const cat = (await searchParams)?.cat || ""
+  const flashDealProducts = getFlashDealProducts()
+  // const [flashDealProducts, setFlashDealProducts] = useState<Product[]>()
+  // const [selectedCategory, setSelectedCategory] = useState("All Deals")
 
   // fetch deals product
-  useEffect(() => {
-    async function getProducts() {
-      try {
-        const products = await getFlashDealProducts()
-        setFlashDealProducts(products)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    getProducts()
-  }, [])
+  // useEffect(() => {
+  //   async function getProducts() {
+  //     try {
+  //       const products = await getFlashDealProducts()
+  //       setFlashDealProducts(products)
+  //     } catch (err) {
+  //       console.log(err)
+  //     }
+  //   }
+  //   getProducts()
+  // }, [])
 
-  const filteredProducts =
-    selectedCategory === "All Deals"
-      ? flashDealProducts
-      : flashDealProducts?.filter((p) => p.category === selectedCategory)
+  // const filteredProducts =
+  //   selectedCategory === "All Deals"
+  //     ? flashDealProducts
+  //     : flashDealProducts?.filter((p) => p.category === selectedCategory)
 
   return (
     <div className="min-h-screen bg-background px-4 py-8 text-foreground sm:px-6 lg:px-8">
@@ -73,7 +78,10 @@ export default function FlashDealsPage() {
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex scrollbar-none items-center gap-2 overflow-x-auto pb-2">
+
+        <FilterTabs filterTabsData={categoriesFilter} />
+
+        {/* <div className="flex scrollbar-none items-center gap-2 overflow-x-auto pb-2">
           {categoriesFilter.map((cat) => (
             <button
               key={cat}
@@ -87,13 +95,19 @@ export default function FlashDealsPage() {
               {cat}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {filteredProducts?.map((product) => (
-            <ProductCard product={product} key={product.id} mode="grab" />
-          ))}
+          <Suspense
+            fallback={Array.from({ length: 4 }).map((_, index) => (
+              <ProductCardSkeleton key={index} />
+            ))}
+          >
+            <FlashProductsListing
+              flashDealProductsPromise={flashDealProducts}
+            />
+          </Suspense>
         </div>
       </div>
     </div>

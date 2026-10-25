@@ -4,6 +4,12 @@ import { products } from "../data/products.data"
 export async function getAllProducts() {
   return products
 }
+
+// fetch latest products
+export async function getLatestProducts() {
+  return products.sort()
+}
+
 // fetch products by id
 export async function getProductsByCategory(categorySlug: string[]) {
   const currentSlug = categorySlug.at(-1)?.toLowerCase()

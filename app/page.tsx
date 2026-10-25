@@ -3,9 +3,11 @@ import FeaturedCategories from "@/components/layout/FeaturedCategories"
 import FlashDeals from "@/components/layout/FlashDeals"
 import HeroSection from "@/components/layout/HeroSection"
 import HurryUpDeals from "@/components/layout/HurryUpDeals"
+import LatestProductsSection from "@/components/layout/LatestProductsSection"
 import ValuePillars from "@/components/layout/ValuePillars"
 import { getFlashDealProducts } from "@/lib/api/product.api"
 import type { Metadata } from "next"
+import { Suspense } from "react"
 
 export const metadata: Metadata = {
   title: "Home",
@@ -22,6 +24,13 @@ export default async function Page() {
       <ValuePillars />
       <FeaturedCategories />
       <FlashDeals flashProducts={flashProducts} />
+      <Suspense
+        fallback={
+          <div className="h-96 animate-pulse rounded-2xl bg-muted/20" />
+        }
+      >
+        <LatestProductsSection />
+      </Suspense>
       <BrandsMarquee />
     </>
   )
