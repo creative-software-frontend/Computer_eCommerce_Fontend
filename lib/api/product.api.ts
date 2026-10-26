@@ -21,7 +21,7 @@ export async function getProductsByCategory(categorySlug: string[]) {
   )
 }
 // fetch flash deal products
-export async function getFlashDealProducts(category: string | undefined) {
+export async function getFlashDealProducts(category?: string | undefined) {
   const flashDealProducts = products.slice(0, 4)
   if (category?.toLowerCase().includes("all")) return flashDealProducts
   return flashDealProducts.filter(
