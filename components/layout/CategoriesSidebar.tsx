@@ -11,13 +11,13 @@ import {
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { categories, type Category } from "@/lib/data/Categories.data"
 
 import SubMenuList from "../SubMenuItem"
@@ -93,7 +93,7 @@ function CategoryLinks({ items }: { items: Category[] }) {
               key={category.id}
               className="flex min-h-9 items-center border-b border-border last:border-b-0"
             >
-              <DrawerClose asChild>
+              <SheetClose asChild>
                 <Link
                   href={`/category/${category.slug}`}
                   className="flex min-w-0 flex-1 items-center gap-3 px-3 py-2 text-xs text-foreground transition-colors hover:bg-muted hover:text-primary"
@@ -101,7 +101,7 @@ function CategoryLinks({ items }: { items: Category[] }) {
                   <Icon className="size-4 shrink-0 text-muted-foreground" />
                   <span className="truncate">{category.name}</span>
                 </Link>
-              </DrawerClose>
+              </SheetClose>
             </div>
           )
         }
@@ -113,7 +113,7 @@ function CategoryLinks({ items }: { items: Category[] }) {
             className="border-0 border-b border-border last:border-b-0 data-open:bg-transparent"
           >
             <div className="mr-4 flex min-h-9 items-center">
-              <DrawerClose asChild>
+              <SheetClose asChild>
                 <Link
                   href={`/category/${category.slug}`}
                   className="flex min-w-0 flex-1 items-center gap-3 px-3 py-2 text-xs text-foreground transition-colors hover:bg-muted hover:text-primary"
@@ -121,7 +121,7 @@ function CategoryLinks({ items }: { items: Category[] }) {
                   <Icon className="size-4 shrink-0 text-muted-foreground" />
                   <span className="truncate">{category.name}</span>
                 </Link>
-              </DrawerClose>
+              </SheetClose>
               <AccordionTrigger
                 aria-label={`Expand ${category.name} categories`}
                 className="w-9 shrink-0 justify-center gap-0 px-0 py-2 hover:no-underline"
@@ -141,7 +141,7 @@ export default function CategoriesSidebar() {
   return (
     <>
       <div className="group relative hidden rounded-lg bg-primary transition-all hover:rounded-b-none sm:block">
-        <Button type="button" className="flex w-68 justify-start">
+        <Button type="button" className="flex w-59 justify-start">
           <FaBars aria-hidden="true" />
           <span>All Categories</span>
         </Button>
@@ -151,22 +151,26 @@ export default function CategoriesSidebar() {
       </div>
 
       <div className="sm:hidden">
-        <Drawer direction="left">
-          <DrawerTrigger asChild>
+        <Sheet>
+          <SheetTrigger asChild>
             <Button type="button" className="w-auto justify-start gap-2">
               <FaBars aria-hidden="true" />
               <span>All Categories</span>
             </Button>
-          </DrawerTrigger>
-          <DrawerContent className="h-dvh max-h-dvh w-[min(86vw,20rem)] max-w-none gap-0 rounded-none p-0 before:inset-0 before:rounded-none before:border-0">
-            <DrawerHeader className="flex-row items-center justify-between gap-2 rounded-t-none bg-primary px-3 py-2 text-primary-foreground">
+          </SheetTrigger>
+          <SheetContent
+            side="left"
+            showCloseButton={false}
+            className="h-dvh max-h-dvh w-[min(86vw,20rem)] max-w-none gap-0 rounded-none border-none bg-background p-0"
+          >
+            <SheetHeader className="flex-row items-center justify-between gap-2 rounded-t-none bg-primary px-3 py-2 text-primary-foreground">
               <div className="flex min-w-0 items-center gap-2">
                 <FaBars aria-hidden="true" />
-                <DrawerTitle className="truncate text-xs font-semibold text-primary-foreground">
+                <SheetTitle className="truncate text-xs font-semibold text-primary-foreground">
                   All Categories
-                </DrawerTitle>
+                </SheetTitle>
               </div>
-              <DrawerClose asChild>
+              <SheetClose asChild>
                 <Button
                   type="button"
                   variant="ghost"
@@ -176,16 +180,16 @@ export default function CategoriesSidebar() {
                 >
                   <FaTimes />
                 </Button>
-              </DrawerClose>
-            </DrawerHeader>
+              </SheetClose>
+            </SheetHeader>
             <nav
               aria-label="Product categories"
               className="min-h-0 flex-1 overflow-y-auto bg-background"
             >
               <CategoryLinks items={categories} />
             </nav>
-          </DrawerContent>
-        </Drawer>
+          </SheetContent>
+        </Sheet>
       </div>
     </>
   )

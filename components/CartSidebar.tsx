@@ -17,13 +17,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer"
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
 import {
   Empty,
   EmptyDescription,
@@ -35,6 +35,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import Image from "next/image"
 import { useShop } from "@/context/ShopContext"
+import { ScrollArea } from "./ui/scroll-area"
 
 export default function CartSidebar() {
   const {
@@ -57,31 +58,34 @@ export default function CartSidebar() {
   )
 
   return (
-    <Drawer
+    <Sheet
       open={isCartOpen}
       onOpenChange={(open) => {
         if (!open) closeCart()
       }}
-      direction="right"
     >
-      <DrawerContent className="h-dvh max-h-dvh w-[90vw]! gap-0 rounded-none p-0 outline before:inset-0 before:rounded-none before:border-0 sm:w-full sm:max-w-md">
+      <SheetContent
+        side="right"
+        showCloseButton={false}
+        className="h-dvh max-h-dvh w-[90vw]! gap-0 rounded-none border-0 bg-card p-0 sm:w-full sm:max-w-md"
+      >
         <div className="flex min-h-0 flex-1 flex-col bg-card">
           {/* Header */}
-          <DrawerHeader className="flex-row items-center justify-between border-b border-border bg-muted/40 p-4 text-left">
+          <SheetHeader className="flex-row items-center justify-between border-b border-border bg-muted/40 p-4 text-left">
             <div className="flex items-center gap-2.5">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
                 <FaShoppingCart className="text-sm" />
               </div>
               <div>
-                <DrawerTitle className="text-sm font-extrabold">
+                <SheetTitle className="text-sm font-extrabold">
                   Shopping Cart
-                </DrawerTitle>
-                <DrawerDescription className="text-xs">
+                </SheetTitle>
+                <SheetDescription className="text-xs">
                   {cartItems.length} items in your bag
-                </DrawerDescription>
+                </SheetDescription>
               </div>
             </div>
-            <DrawerClose asChild>
+            <SheetClose asChild>
               <Button
                 variant="ghost"
                 size="icon-sm"
@@ -90,8 +94,8 @@ export default function CartSidebar() {
               >
                 <FaTimes />
               </Button>
-            </DrawerClose>
-          </DrawerHeader>
+            </SheetClose>
+          </SheetHeader>
 
           {/* Free Shipping Progress Bar Banner */}
           <div className="flex flex-col gap-2 border-b border-border bg-primary/5 px-4 py-3">
@@ -111,7 +115,8 @@ export default function CartSidebar() {
           </div>
 
           {/* Cart Items List */}
-          <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4">
+          {/* <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4"> */}
+          <ScrollArea className="flex min-h-0 w-fit flex-1 flex-col gap-3 rounded-none pr-4">
             {cartItems.length === 0 ? (
               <Empty className="h-full gap-3 p-6">
                 <EmptyHeader>
@@ -148,7 +153,7 @@ export default function CartSidebar() {
                   </div>
                   <CardContent className="min-w-0 flex-1 p-0">
                     <div className="flex items-start justify-between gap-1">
-                      <h4 className="truncate font-heading text-xs font-bold text-foreground">
+                      <h4 className="font-heading text-xs font-bold text-wrap text-foreground">
                         {item.name}
                       </h4>
                       <Button
@@ -199,7 +204,8 @@ export default function CartSidebar() {
                 </Card>
               ))
             )}
-          </div>
+            {/* </div> */}
+          </ScrollArea>
 
           {/* Cart Footer Summary & Checkout */}
           {cartItems.length > 0 && (
@@ -301,7 +307,7 @@ export default function CartSidebar() {
             </div>
           )}
         </div>
-      </DrawerContent>
-    </Drawer>
+      </SheetContent>
+    </Sheet>
   )
 }

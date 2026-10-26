@@ -127,7 +127,7 @@ export default function AboutPage() {
                 asChild
                 className="bg-primary text-sm font-bold text-primary-foreground shadow-md hover:bg-primary/90"
               >
-                <Link href="/products">
+                <Link href="/latest-products">
                   <span>Shop Components</span>
                   <FaArrowRight />
                 </Link>
@@ -325,7 +325,7 @@ export default function AboutPage() {
               asChild
               className="bg-primary text-sm font-bold text-primary-foreground hover:bg-primary/90"
             >
-              <Link href="/products">
+              <Link href="/latest-products">
                 <FaBoxOpen />
                 <span>Browse Products</span>
               </Link>

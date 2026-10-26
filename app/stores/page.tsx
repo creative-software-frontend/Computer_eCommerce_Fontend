@@ -23,7 +23,7 @@ const storeLocations = [
     phone: "+880 1620-009502",
     hours: "11:00 AM - 8:00 PM (Closed on Tuesday)",
     area: "Elephant Road",
-    image: "/products/zotac-rtx-5060-amp.webp",
+    image: "/latest-products/zotac-rtx-5060-amp.webp",
     features: [
       "Flagship Showroom",
       "PC Building & Testing",
@@ -38,7 +38,7 @@ const storeLocations = [
     phone: "+880 1700-000000",
     hours: "10:00 AM - 8:00 PM",
     area: "Agargaon",
-    image: "/products/gigabyte-gs27qa.webp",
+    image: "/latest-products/gigabyte-gs27qa.webp",
     features: [
       "Experience Zone",
       "Gaming Gear & Peripherals",

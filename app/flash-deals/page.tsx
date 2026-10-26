@@ -22,7 +22,7 @@ export default async function FlashDealsPage({
   searchParams: Promise<{ cat: string }>
 }) {
   const cat = (await searchParams)?.cat || ""
-  const flashDealProducts = getFlashDealProducts()
+  const flashDealProducts = getFlashDealProducts(cat)
   // const [flashDealProducts, setFlashDealProducts] = useState<Product[]>()
   // const [selectedCategory, setSelectedCategory] = useState("All Deals")
 

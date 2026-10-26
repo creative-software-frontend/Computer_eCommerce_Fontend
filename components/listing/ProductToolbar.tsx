@@ -19,15 +19,7 @@ export default function ProductToolbar({
   return (
     <div className="flex flex-col items-center justify-between gap-3 rounded-xl border border-border bg-card p-3 shadow-sm sm:flex-row sm:p-4">
       <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start">
-        <Button
-          variant="outline"
-          size="sm"
-          className="gap-2 text-xs lg:hidden"
-          onClick={onOpenFilters}
-        >
-          <FaFilter className="text-xs" />
-          <span>Filters</span>
-        </Button>
+        {/* show how many products available */}
         {isLoading ? (
           <p role="status" className="text-xs text-muted-foreground">
             Loading products…
@@ -44,8 +36,19 @@ export default function ProductToolbar({
           </p>
         )}
       </div>
+      <div className="flex w-full items-center gap-3 sm:w-auto">
+        {/* filter button */}
+        <Button
+          variant="outline"
+          size="sm"
+          className="gap-2 text-xs lg:hidden"
+          onClick={onOpenFilters}
+        >
+          <FaFilter className="text-xs" />
+          <span>Filters</span>
+        </Button>
 
-      <div className="flex w-full items-center justify-end gap-3 sm:w-auto">
+        {/* sort */}
         <div className="flex items-center gap-2 text-xs">
           <span className="hidden text-muted-foreground sm:inline">
             Sort by:

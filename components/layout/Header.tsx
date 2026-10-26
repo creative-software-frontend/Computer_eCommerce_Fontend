@@ -26,6 +26,7 @@ import LogoImage from "@/public/images/logo.png"
 import HeaderCartButton from "../ui/HeaderCartButton"
 import { useShop } from "@/context/ShopContext"
 import { useAuth } from "@/context/AuthContext"
+import { usePathname } from "next/navigation"
 
 type NavigationItem = {
   label: string
@@ -52,6 +53,8 @@ const trendingKeywords: string[] = [
 export default function Header() {
   const { favoriteItemCount, compareItemsCount } = useShop()
   const { openLoginModal } = useAuth()
+  const pathName = usePathname()
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/95 shadow-xs backdrop-blur-md">
       {/* 1. Utility Bar */}
@@ -266,7 +269,7 @@ export default function Header() {
                   variant="ghost"
                   size="sm"
                   className={
-                    item.href === "/"
+                    item.href === pathName
                       ? "bg-primary/10 font-semibold text-primary hover:bg-primary/15 hover:text-primary"
                       : "text-muted-foreground"
                   }

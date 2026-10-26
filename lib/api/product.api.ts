@@ -21,10 +21,13 @@ export async function getProductsByCategory(categorySlug: string[]) {
   )
 }
 // fetch flash deal products
-export async function getFlashDealProducts() {
-  return products.slice(0, 4)
+export async function getFlashDealProducts(category: string | undefined) {
+  const flashDealProducts = products.slice(0, 4)
+  if (category?.toLowerCase().includes("all")) return flashDealProducts
+  return flashDealProducts.filter(
+    (product) => product.category.toLowerCase() === category?.toLowerCase()
+  )
 }
-
 // fetch products by brand
 export async function getProductsByBrand(brandName: string) {
   const brandProducts = products.filter(

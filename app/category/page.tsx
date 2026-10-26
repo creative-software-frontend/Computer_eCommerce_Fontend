@@ -60,7 +60,7 @@ export default function CategoryIndexPage() {
                     src={
                       category.image ||
                       //   category.icon ||
-                      "/images/products/placeholder.webp"
+                      "/images/latest-products/placeholder.webp"
                     }
                     alt={category.name}
                     className="h-full object-contain transition-transform duration-500 group-hover:scale-110"
