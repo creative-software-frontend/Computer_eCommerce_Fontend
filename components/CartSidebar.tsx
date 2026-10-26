@@ -110,13 +110,13 @@ export default function CartSidebar() {
             <Progress
               value={progress}
               aria-label="Free shipping progress"
-              className="h-2"
+              className="h-2 bg-white/50"
             />
           </div>
 
           {/* Cart Items List */}
           {/* <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4"> */}
-          <ScrollArea className="flex min-h-0 w-fit flex-1 flex-col gap-3 rounded-none pr-4">
+          <ScrollArea className="flex min-h-0 w-fit flex-1 rounded-none p-2">
             {cartItems.length === 0 ? (
               <Empty className="h-full gap-3 p-6">
                 <EmptyHeader>
@@ -140,7 +140,7 @@ export default function CartSidebar() {
                 <Card
                   key={item.id}
                   size="sm"
-                  className="flex-row items-center gap-3 rounded-xl bg-background/50 p-3 shadow-none transition-colors hover:bg-background"
+                  className="m-2 flex-row items-center gap-3 rounded-xl bg-background/50 p-3 shadow-none transition-colors hover:bg-background"
                 >
                   <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted p-1">
                     <Image
