@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 import {
   FaBangladeshiTakaSign,
   FaClock,
@@ -62,14 +63,16 @@ export default function Header() {
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-2 px-4 text-xs font-medium sm:gap-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6">
             <a
-              href="tel:16580"
+              href={`tel:${SITE_CONFIG.contact.phone.primary}`}
               className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
-              aria-label="Call hotline 16580"
+              aria-label={`Call hotline ${SITE_CONFIG.contact.phone.primary}`}
             >
               <FaPhone className="size-4" />
               <span>Hotline:</span>
-              <strong>16580</strong>
-              <span className="hidden sm:inline">/ 09678-002003</span>
+              <strong>{SITE_CONFIG.contact.phone.primary}</strong>
+              <span className="hidden sm:inline">
+                / {SITE_CONFIG.contact.phone.secondary}
+              </span>
             </a>
 
             <span className="hidden items-center gap-1.5 opacity-75 md:flex">
@@ -106,7 +109,7 @@ export default function Header() {
 
             <span className="hidden items-center gap-1 sm:flex">
               <FaBangladeshiTakaSign className="size-4" />
-              BDT (৳) / EN
+              {SITE_CONFIG.currency.label}
             </span>
           </div>
         </div>
@@ -119,7 +122,7 @@ export default function Header() {
           <Link
             href="/"
             className="flex shrink-0 flex-col"
-            aria-label="TechnoCore Solution home"
+            aria-label={`${SITE_CONFIG.name} home`}
           >
             {/* logo */}
             <Image src={LogoImage} alt="Logo" width={200} height={200} />

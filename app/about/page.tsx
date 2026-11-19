@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -17,7 +18,7 @@ import {
 } from "react-icons/fa6"
 
 export const metadata = {
-  title: "About Us | TechnoCore Solution",
+  title: `About Us | ${SITE_CONFIG.name}`,
   description:
     "Bangladesh's premier retail destination for high-end gaming rigs, custom water cooling, and professional components.",
 }
@@ -61,7 +62,7 @@ const milestones = [
     year: "2014",
     title: "The First Store",
     description:
-      "TechnoCore Solution opened its doors in Dhaka with a small desk and a big passion for PC hardware.",
+      `${SITE_CONFIG.name} opened its doors in Dhaka with a small desk and a big passion for PC hardware.`,
   },
   {
     year: "2018",
@@ -119,7 +120,7 @@ export default function AboutPage() {
             </h1>
             <p className="mt-4 max-w-xl text-base text-inverse-on-surface/85">
               From budget office PCs to flagship water-cooled gaming rigs,
-              TechnoCore Solution is the trusted destination for genuine
+              {SITE_CONFIG.name} is the trusted destination for genuine
               components, expert advice, and unbeatable after-sales support.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -171,7 +172,7 @@ export default function AboutPage() {
               <div className="pointer-events-none absolute top-0 right-0 h-40 w-40 rounded-bl-full bg-white/10"></div>
               <Image
                 src={LogoImage}
-                alt="TechnoCore Solution"
+                alt={SITE_CONFIG.name}
                 width={280}
                 height={280}
                 className="relative z-10 h-auto w-48 object-contain drop-shadow-lg"

@@ -11,6 +11,7 @@ import LayoutWrapper from "@/components/LayoutWrapper"
 import AuthModal from "@/components/modal/AuthModal"
 import { AuthProvider } from "@/context/AuthContext"
 import BottomNav from "@/components/BottomNav"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 
 const dmSansHeading = DM_Sans({
   subsets: ["latin"],
@@ -25,16 +26,15 @@ const fontMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://technocoresolution.com.bd"),
-  applicationName: "TechnoCore Solution",
+  metadataBase: new URL(SITE_CONFIG.url),
+  applicationName: SITE_CONFIG.name,
   title: {
-    default: "TechnoCore Solution | PC Builder & Computer Store in Bangladesh",
-    template: "%s | TechnoCore Solution",
+    default: SITE_CONFIG.title,
+    template: `%s | ${SITE_CONFIG.name}`,
   },
-  description:
-    "Shop genuine computer components, gaming PCs, laptops, accessories, and custom builds in Bangladesh with expert support and nationwide delivery.",
+  description: SITE_CONFIG.description,
   keywords: [
-    "TechnoCore Solution",
+    SITE_CONFIG.name,
     "computer store Bangladesh",
     "PC builder",
     "gaming PC",
@@ -46,9 +46,9 @@ export const metadata: Metadata = {
     "monitor",
     "peripheral",
   ],
-  authors: [{ name: "TechnoCore Solution" }],
-  creator: "TechnoCore Solution",
-  publisher: "TechnoCore Solution",
+  authors: [{ name: SITE_CONFIG.name }],
+  creator: SITE_CONFIG.name,
+  publisher: SITE_CONFIG.name,
   robots: {
     index: true,
     follow: true,
@@ -64,8 +64,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_BD",
     url: "/",
-    siteName: "TechnoCore Solution",
-    title: "TechnoCore Solution | PC Builder & Computer Store in Bangladesh",
+    siteName: SITE_CONFIG.name,
+    title: SITE_CONFIG.title,
     description:
       "Discover premium computer hardware, custom PC builds, and tech accessories with trusted support and fast delivery across Bangladesh.",
     images: [
@@ -73,13 +73,13 @@ export const metadata: Metadata = {
         url: "/icon.png",
         width: 512,
         height: 512,
-        alt: "TechnoCore Solution",
+        alt: SITE_CONFIG.name,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TechnoCore Solution | PC Builder & Computer Store in Bangladesh",
+    title: SITE_CONFIG.title,
     description:
       "Build your dream PC with high-performance components and genuine tech products from Bangladesh's trusted computer store.",
     images: ["/icon.png"],

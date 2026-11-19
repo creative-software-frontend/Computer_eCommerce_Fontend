@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 import {
   FaUndo,
   FaBoxOpen,
@@ -84,7 +85,7 @@ export default function ReturnsPolicyPage() {
               Returns, Exchange & Refund Policy
             </h1>
             <p className="max-w-2xl text-xs text-muted-foreground sm:text-sm">
-              At TechnoCore, your satisfaction is our priority. We offer a
+              At {SITE_CONFIG.shortName}, your satisfaction is our priority. We offer a
               transparent and structured 7-day return and replacement policy for
               all eligible tech products.
             </p>
