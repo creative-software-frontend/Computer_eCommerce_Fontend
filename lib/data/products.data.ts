@@ -1,3 +1,4 @@
+import { SITE_CONFIG } from "@/lib/config/site.config"
 import type { Product } from "./types"
 
 type RawProduct = Omit<Product, "discount">
@@ -1117,8 +1118,8 @@ export const featuredProducts = products.filter((p) =>
   p.sections.includes("featured")
 )
 
-const bdtFormatter = new Intl.NumberFormat("en-IN")
+const bdtFormatter = new Intl.NumberFormat(SITE_CONFIG.currency.locale)
 
 export function formatBdt(value: number): string {
-  return `${bdtFormatter.format(value)}৳`
+  return `${bdtFormatter.format(value)}${SITE_CONFIG.currency.symbol}`
 }

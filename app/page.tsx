@@ -8,11 +8,11 @@ import ValuePillars from "@/components/layout/ValuePillars"
 import { getFlashDealProducts } from "@/lib/api/product.api"
 import type { Metadata } from "next"
 import { Suspense } from "react"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 
 export const metadata: Metadata = {
   title: "Home",
-  description:
-    "Explore premium tech products, custom computer builds, and exclusive deals from TechnoCore Solution in Bangladesh.",
+  description: `Explore premium tech products, custom computer builds, and exclusive deals from ${SITE_CONFIG.name} in Bangladesh.`,
 }
 
 export default async function Page() {

@@ -1,17 +1,17 @@
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { FaShieldHalved, FaScaleBalanced } from "react-icons/fa6"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 
 export const metadata = {
-  title: "Terms & Conditions | TechnoCore Solution",
-  description:
-    "The terms and conditions that govern your use of the TechnoCore Solution store.",
+  title: `Terms & Conditions | ${SITE_CONFIG.name}`,
+  description: `The terms and conditions that govern your use of the ${SITE_CONFIG.name} store.`,
 }
 
 const sections = [
   {
     title: "1. Acceptance Of Terms",
-    body: "By accessing or using the TechnoCore Solution website, placing an order, or creating an account, you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree with any part of these terms, please do not use our services.",
+    body: `By accessing or using the ${SITE_CONFIG.name} website, placing an order, or creating an account, you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree with any part of these terms, please do not use our services.`,
   },
   {
     title: "2. Eligibility & Accounts",
@@ -39,11 +39,11 @@ const sections = [
   },
   {
     title: "8. Intellectual Property",
-    body: "All content on this website, including logos, text, graphics, images, and software, is the property of TechnoCore Solution or its licensors and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works without our written permission.",
+    body: `All content on this website, including logos, text, graphics, images, and software, is the property of ${SITE_CONFIG.name} or its licensors and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works without our written permission.`,
   },
   {
     title: "9. Limitation Of Liability",
-    body: "To the maximum extent permitted by law, TechnoCore Solution shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or loss of profits, arising out of or related to the use of our products or services.",
+    body: `To the maximum extent permitted by law, ${SITE_CONFIG.name} shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or loss of profits, arising out of or related to the use of our products or services.`,
   },
   {
     title: "10. Governing Law",

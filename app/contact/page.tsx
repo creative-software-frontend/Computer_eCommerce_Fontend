@@ -15,36 +15,39 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa6"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 
 export const metadata = {
-  title: "Contact Us | TechnoCore Solution",
-  description:
-    "Get in touch with TechnoCore Solution for sales, support, and queries about your next build.",
+  title: `Contact Us | ${SITE_CONFIG.name}`,
+  description: `Get in touch with ${SITE_CONFIG.name} for sales, support, and queries about your next build.`,
 }
 
 const contacts = [
   {
     icon: FaPhoneAlt,
     title: "Hotline",
-    lines: ["16580 / 09678-002003", "Sun - Sat: 10:00 AM - 9:00 PM"],
+    lines: [
+      `${SITE_CONFIG.contact.phone.primary} / ${SITE_CONFIG.contact.phone.secondary}`,
+      "Sun - Sat: 10:00 AM - 9:00 PM",
+    ],
   },
   {
     icon: FaEnvelope,
     title: "Email Support",
-    lines: ["support@technocoresolution.com.bd", "Response within 24 hours"],
+    lines: [SITE_CONFIG.contact.email.support, "Response within 24 hours"],
   },
   {
     icon: FaMapMarkerAlt,
     title: "Head Office",
-    lines: ["AG Castle, 6th Floor", "IDB Bhaban Rd, Dhaka 1207"],
+    lines: SITE_CONFIG.contact.headOfficeAddress,
   },
 ]
 
 const socials = [
-  { icon: FaFacebookF, label: "Facebook" },
-  { icon: FaYoutube, label: "YouTube" },
-  { icon: FaInstagram, label: "Instagram" },
-  { icon: FaLinkedinIn, label: "LinkedIn" },
+  { icon: FaFacebookF, ...SITE_CONFIG.socials.facebook },
+  { icon: FaYoutube, ...SITE_CONFIG.socials.youtube },
+  { icon: FaInstagram, ...SITE_CONFIG.socials.instagram },
+  { icon: FaLinkedinIn, ...SITE_CONFIG.socials.linkedin },
 ]
 
 export default function ContactPage() {
@@ -204,7 +207,7 @@ export default function ContactPage() {
                   Visit Our Flagship Store
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  AG Castle, 6th Floor, IDB Bhaban Rd, Dhaka 1207
+                  {SITE_CONFIG.contact.headOfficeAddress.join(", ")}
                 </p>
                 <div className="mt-4 flex aspect-video items-center justify-center rounded-xl bg-muted text-xs text-muted-foreground">
                   Map Preview Coming Soon
@@ -251,7 +254,7 @@ export default function ContactPage() {
                     return (
                       <a
                         key={social.label}
-                        href="#"
+                        href={social.href}
                         aria-label={social.label}
                         className="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-muted-foreground transition-all hover:bg-primary hover:text-primary-foreground"
                       >

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 import {
   FaShoppingCart,
   FaTimes,
@@ -50,7 +51,7 @@ export default function CartSidebar() {
   const [promoCode, setPromoCode] = useState("")
   const [showPromo, setShowPromo] = useState(false)
 
-  const freeShippingThreshold = 2000
+  const freeShippingThreshold = SITE_CONFIG.shipping.freeShippingThreshold
   const progress = Math.min((itemCount / freeShippingThreshold) * 100, 100)
   const remainingForFreeShipping = Math.max(
     freeShippingThreshold - itemCount,
@@ -103,7 +104,7 @@ export default function CartSidebar() {
               <span className="text-foreground">
                 {remainingForFreeShipping === 0
                   ? "You got Free Shipping!"
-                  : `Add ${remainingForFreeShipping.toFixed(2)}৳ more for Free Shipping`}
+                  : `Add ${remainingForFreeShipping.toFixed(2)}${SITE_CONFIG.currency.symbol} more for Free Shipping`}
               </span>
               <span className="text-primary">{Math.round(progress)}%</span>
             </div>

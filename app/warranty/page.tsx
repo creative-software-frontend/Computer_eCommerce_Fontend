@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 import {
   FaShieldAlt,
   FaCheckCircle,
@@ -19,7 +20,7 @@ const warrantySections = [
     title: "General Warranty Terms",
     icon: FaShieldAlt,
     content:
-      "All hardware and tech products sold on TechnoCore are 100% genuine and come with official brand warranty backed by authorized distributors in Bangladesh. The warranty period begins strictly from the official date of purchase mentioned in your invoice.",
+      `All hardware and tech products sold on ${SITE_CONFIG.shortName} are 100% genuine and come with official brand warranty backed by authorized distributors in Bangladesh. The warranty period begins strictly from the official date of purchase mentioned in your invoice.`,
   },
   {
     id: "period",
@@ -61,7 +62,7 @@ const warrantySections = [
     title: "Dead on Arrival (DOA) Replacement Policy",
     icon: FaCheckCircle,
     content:
-      "If a purchased product is found to be dead on arrival or has major manufacturing defects within 7 days of purchase, it qualifies for our instant DOA replacement policy, subject to physical inspection and stock availability at TechnoCore.",
+      `If a purchased product is found to be dead on arrival or has major manufacturing defects within 7 days of purchase, it qualifies for our instant DOA replacement policy, subject to physical inspection and stock availability at ${SITE_CONFIG.shortName}.`,
   },
 ]
 
@@ -83,7 +84,7 @@ export default function WarrantyPolicyPage() {
               Warranty Claim Policy & Guidelines
             </h1>
             <p className="max-w-2xl text-xs text-muted-foreground sm:text-sm">
-              At TechnoCore, we ensure hassle-free warranty support for all your
+              At {SITE_CONFIG.shortName}, we ensure hassle-free warranty support for all your
               high-end PC components and gaming gear. Read through our policy
               guidelines below.
             </p>

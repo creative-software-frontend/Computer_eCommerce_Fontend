@@ -13,39 +13,9 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import BreadcrumbComponent from "@/components/BreadCrumb"
 import Image from "next/image"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 
-const storeLocations = [
-  {
-    id: "multiplan",
-    name: "ECS Computer City (Multiplan)",
-    placeId: "ChIJc-zbise4VTcRA3uOHA_suRI",
-    address: "69, 71 Elephant Rd, Dhaka 1205",
-    phone: "+880 1620-009502",
-    hours: "11:00 AM - 8:00 PM (Closed on Tuesday)",
-    area: "Elephant Road",
-    image: "/latest-products/zotac-rtx-5060-amp.webp",
-    features: [
-      "Flagship Showroom",
-      "PC Building & Testing",
-      "Official Warranty Point",
-    ],
-  },
-  {
-    id: "idb",
-    name: "IDB Bhaban Branch",
-    placeId: "ChIJhbGCgk7HVTcR_FveSe2dAl4",
-    address: "E/8-A, IDB Bhaban, Dhaka 1207",
-    phone: "+880 1700-000000",
-    hours: "10:00 AM - 8:00 PM",
-    area: "Agargaon",
-    image: "/latest-products/gigabyte-gs27qa.webp",
-    features: [
-      "Experience Zone",
-      "Gaming Gear & Peripherals",
-      "Corporate Sales",
-    ],
-  },
-]
+const storeLocations = SITE_CONFIG.stores
 
 export default function StoreLocatorPage() {
   const [searchQuery, setSearchQuery] = useState("")

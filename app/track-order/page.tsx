@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 import {
   FaTruck,
   FaSearch,
@@ -46,7 +47,7 @@ const mockOrders: Record<string, OrderDetails> = {
         date: "Oct 18, 02:15 PM",
         completed: true,
         current: false,
-        desc: "Items packed securely at TechnoCore warehouse.",
+        desc: `Items packed securely at ${SITE_CONFIG.shortName} warehouse.`,
       },
       {
         title: "Shipped / Handed over to Courier",

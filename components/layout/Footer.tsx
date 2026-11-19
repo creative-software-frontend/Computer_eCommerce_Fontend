@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa"
 import Image from "next/image"
 import LogoImage from "@/public/images/logo.png"
+import { SITE_CONFIG } from "@/lib/config/site.config"
 
 export default function Footer() {
   return (
@@ -55,17 +56,20 @@ export default function Footer() {
               <div className="flex items-center gap-2">
                 <FaPhoneAlt className="shrink-0 text-primary" />
                 <span>
-                  Hotline: <strong className="text-foreground">16580</strong> /
-                  09678-002003
+                  Hotline:{" "}
+                  <strong className="text-foreground">
+                    {SITE_CONFIG.contact.phone.primary}
+                  </strong>{" "}
+                  / {SITE_CONFIG.contact.phone.secondary}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <FaEnvelope className="shrink-0 text-primary" />
-                <span>Support: support@technocoresolution.com.bd</span>
+                <span>Support: {SITE_CONFIG.contact.email.support}</span>
               </div>
               <div className="flex items-start gap-2">
                 <FaMapMarkerAlt className="mt-0.5 shrink-0 text-primary" />
-                <span>AG Castle, 6th Floor, IDB Bhaban Rd, Dhaka 1207</span>
+                <span>{SITE_CONFIG.contact.headOfficeAddress.join(", ")}</span>
               </div>
             </div>
           </div>
@@ -248,25 +252,25 @@ export default function Footer() {
             </h4>
             <div className="flex items-center gap-2">
               <a
-                href="#"
+                href={SITE_CONFIG.socials.facebook.href}
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface-container text-muted-foreground transition-all hover:bg-primary hover:text-primary-foreground"
               >
                 <FaFacebookF className="text-sm" />
               </a>
               <a
-                href="#"
+                href={SITE_CONFIG.socials.youtube.href}
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface-container text-muted-foreground transition-all hover:bg-primary hover:text-primary-foreground"
               >
                 <FaYoutube className="text-sm" />
               </a>
               <a
-                href="#"
+                href={SITE_CONFIG.socials.instagram.href}
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface-container text-muted-foreground transition-all hover:bg-primary hover:text-primary-foreground"
               >
                 <FaInstagram className="text-sm" />
               </a>
               <a
-                href="#"
+                href={SITE_CONFIG.socials.linkedin.href}
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface-container text-muted-foreground transition-all hover:bg-primary hover:text-primary-foreground"
               >
                 <FaLinkedinIn className="text-sm" />
@@ -274,7 +278,7 @@ export default function Footer() {
             </div>
 
             <h4 className="mt-2 font-heading text-sm font-bold tracking-wider text-foreground uppercase">
-              Experience TechnoCore Solution App
+              Experience {SITE_CONFIG.name} App
             </h4>
             <div className="flex flex-col gap-2">
               <div className="flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-surface-container p-2 transition-colors hover:bg-surface-container/80">
@@ -295,7 +299,7 @@ export default function Footer() {
         {/* Bottom Bar: Copyright & Payment Partners */}
         <div className="flex flex-col items-center justify-between gap-4 pt-8 text-xs text-muted-foreground md:flex-row">
           <p>
-            &copy; {new Date().getFullYear()} TechnoCore Solution Ltd. All
+            &copy; {new Date().getFullYear()} {SITE_CONFIG.legalName}. All
             rights reserved.
           </p>
 

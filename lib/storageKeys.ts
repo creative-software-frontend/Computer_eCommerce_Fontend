@@ -1,6 +1,8 @@
+import { SITE_CONFIG } from "@/lib/config/site.config"
+
 export const STORAGE_KEYS = {
-  CART: "technocore_cart",
-  FAVORITES: "technocore_favorites",
-  PC_BUILD: "technocore_pc_build",
-  COMPARE: "technocore_compare",
+  CART: `${SITE_CONFIG.storageKeyPrefix}_cart`,
+  FAVORITES: `${SITE_CONFIG.storageKeyPrefix}_favorites`,
+  PC_BUILD: `${SITE_CONFIG.storageKeyPrefix}_pc_build`,
+  COMPARE: `${SITE_CONFIG.storageKeyPrefix}_compare`,
 } as const
